@@ -1,19 +1,17 @@
 #Ignoring cache directory
 Lab01_7Seg_LED_Ctrller/Lab01_7Seg_LED_Ctrller.cache/
 
-#Ignoring hw directory 
+#Ignoring hw directory
 Lab01_7Seg_LED_Ctrller/Lab01_7Seg_LED_Ctrller.hw/
 
-#Ignoring ip_user_files directory 
+#Ignoring ip_user_files directory
 Lab01_7Seg_LED_Ctrller/Lab01_7Seg_LED_Ctrller.ip_user_files/
 
-#Ignoring runs directory 
+#Ignoring runs directory
 Lab01_7Seg_LED_Ctrller/Lab01_7Seg_LED_Ctrller.runs/
 
-#Ignoring sim directory 
+#Ignoring sim directory
 Lab01_7Seg_LED_Ctrller/Lab01_7Seg_LED_Ctrller.sim/
 
-#Ignoring the Vivado Project File 
-Lab01_7Seg_LED_Ctrller/.xpr  
-
-
+#Ignoring the Vivado Project File
+Lab01_7Seg_LED_Ctrller/.xpr
