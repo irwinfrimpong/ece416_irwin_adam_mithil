@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2020.2 (64-bit)
+# SW Build 3064766 on Wed Nov 18 09:12:45 MST 2020
+# IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+# Start of session at: Thu Feb 11 15:18:43 2021
+# Process ID: 24648
+# Current directory: C:/Users/irwin/Desktop/ece416_irwin_adam_mithil/Lab01_7Seg_LED_Ctrller/Lab01_7Seg_LED_Ctrller.runs/impl_1
+# Command line: vivado.exe -log sevenseg_ext_top.vdi -applog -product Vivado -messageDb vivado.pb -mode batch -source sevenseg_ext_top.tcl -notrace
+# Log file: C:/Users/irwin/Desktop/ece416_irwin_adam_mithil/Lab01_7Seg_LED_Ctrller/Lab01_7Seg_LED_Ctrller.runs/impl_1/sevenseg_ext_top.vdi
+# Journal file: C:/Users/irwin/Desktop/ece416_irwin_adam_mithil/Lab01_7Seg_LED_Ctrller/Lab01_7Seg_LED_Ctrller.runs/impl_1\vivado.jou
+#-----------------------------------------------------------
+source sevenseg_ext_top.tcl -notrace

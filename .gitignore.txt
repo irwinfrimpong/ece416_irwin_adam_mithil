@@ -14,4 +14,4 @@ Lab01_7Seg_LED_Ctrller.runs
 Lab01_7Seg_LED_Ctrller.sim
 
 #Ignoring the Vivado Project File 
-.xpr
+.xpr 
