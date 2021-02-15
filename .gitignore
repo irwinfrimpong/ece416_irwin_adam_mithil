@@ -1,0 +1,17 @@
+#Ignoring cache directory
+.cache
+
+#Ignoring hw directory 
+.hw
+
+#Ignoring ip_user_files directory 
+.ip_user_files 
+
+#Ignoring runs directory 
+.runs
+
+#Ignoring sim directory 
+.sim 
+
+#Ignoring the Vivado Project File 
+.xpr
