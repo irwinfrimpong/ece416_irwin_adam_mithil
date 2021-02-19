@@ -22,10 +22,10 @@
 
 module sevenseg_ext_top(
     input logic [6:0] SW,
-    output logic [6:0] segs_n,
+    output logic [6:0] seg_n,
     output logic dp_n,
     output logic [7:0] an_n
- 
+
     );
 
     // Turning on the right most 7 Seg Display- Logic Low
