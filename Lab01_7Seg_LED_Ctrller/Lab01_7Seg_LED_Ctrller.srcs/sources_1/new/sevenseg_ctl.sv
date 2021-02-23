@@ -1,17 +1,17 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company:
-// Engineer:
+// Company: Lafayette College
+// Engineer: Irwin Frimpong , Adam Tunnell, Mithil Shah
 //
 // Create Date: 02/18/2021 01:15:00 PM
-// Design Name:
+// Design Name: 7-Segment LED Controller
 // Module Name: sevenseg_ctl
-// Project Name:
+// Project Name: 7-Segment LED Controller
 // Target Devices:
 // Tool Versions:
-// Description:
+// Description: Generates time multiplexed display of eight digits on the Nexys Board Seven-Seg displays
 //
-// Dependencies:
+// Dependencies: rate_enb, counter, dec_3_8_n, mux8,sevenseg_ext
 //
 // Revision:
 // Revision 0.01 - File Created

@@ -1,17 +1,17 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company:
-// Engineer:
+// Company: Lafayette College
+// Engineer: Irwin Frimpong , Adam Tunnell, Mithil Shah
 //
 // Create Date: 02/11/2021 02:21:49 PM
-// Design Name:
+// Design Name: 7-Segment LED Controller
 // Module Name: sevenseg_ext_top
-// Project Name:
+// Project Name: 7-Segment LED Controller
 // Target Devices:
 // Tool Versions:
-// Description:
+// Description: Top Level File for sevenseg_ext instantiation
 //
-// Dependencies:
+// Dependencies: sevenseg_ext
 //
 // Revision:
 // Revision 0.01 - File Created

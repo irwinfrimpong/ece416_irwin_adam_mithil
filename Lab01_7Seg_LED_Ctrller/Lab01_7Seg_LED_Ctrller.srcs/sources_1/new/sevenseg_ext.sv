@@ -1,15 +1,15 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company:
-// Engineer:
+// Company: Lafayette College
+// Engineer: Irwin Frimpong , Adam Tunnell, Mithil Shah
 //
 // Create Date: 02/11/2021 01:53:18 PM
-// Design Name:
+// Design Name: 7-Segment LED Controller
 // Module Name: sevenseg_ext
-// Project Name:
+// Project Name: 7-Segment LED Controller
 // Target Devices:
 // Tool Versions:
-// Description:
+// Description: Extended Seven-segment decoder module with active high d input and acitve low segs_n and dp_n output
 //
 // Dependencies:
 //
