@@ -1,17 +1,23 @@
 #Ignoring cache directory
 Lab01_7Seg_LED_Ctrller/Lab01_7Seg_LED_Ctrller.cache/
+Lab02_Serial_Data_Transmitter/Lab02_Serial_Data_Transmitter.cache/
 
 #Ignoring hw directory
 Lab01_7Seg_LED_Ctrller/Lab01_7Seg_LED_Ctrller.hw/
+Lab02_Serial_Data_Transmitter/Lab02_Serial_Data_Transmitter.hw/
 
 #Ignoring ip_user_files directory
 Lab01_7Seg_LED_Ctrller/Lab01_7Seg_LED_Ctrller.ip_user_files/
+Lab02_Serial_Data_Transmitter/Lab02_Serial_Data_Transmitter.ip_user_files/
 
 #Ignoring runs directory
 Lab01_7Seg_LED_Ctrller/Lab01_7Seg_LED_Ctrller.runs/
+Lab02_Serial_Data_Transmitter/Lab02_Serial_Data_Transmitter.runs/
 
 #Ignoring sim directory
 Lab01_7Seg_LED_Ctrller/Lab01_7Seg_LED_Ctrller.sim/
+Lab02_Serial_Data_Transmitter/Lab02_Serial_Data_Transmitter.sim/
 
 #Ignoring the Vivado Project File
 Lab01_7Seg_LED_Ctrller/.xpr
+Lab02_Serial_Data_Transmitter/.xpr
