@@ -25,13 +25,15 @@ module shift_reg(
     output logic txd);
 
     logic [9:0] d;
+    assign txd = 1'b1; // ADDED THIS to set it to one
 
     always_ff @(posedge clk)
     begin
+
         if(rst)
         begin
             txd <= 1'b1;
-            d <= 10'd0;  
+            d <= 10'd0;
         end
         else if(sh_ld)
         begin

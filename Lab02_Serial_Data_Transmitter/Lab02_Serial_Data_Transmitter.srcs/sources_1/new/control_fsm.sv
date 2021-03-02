@@ -47,61 +47,39 @@ module control_fsm(
                 ct_en = 1'b0;
                 sh_en = 1'b0;
                 sh_ld = 1'b0;
+
                 if(valid)
                 begin
                     next = SHIFT;
-                    // sh_ld = 1'b1;
-                    // //br_st = 1'b1;
-                    // ct_clr = 1'b1;
-                    // rdy = 1'b0;
+                    sh_ld = 1'b1;
+                    sh_idle = 1'b0;
+                    rdy = 1'b0;
+                    ct_clr = 1'b1;
                 end
                 else next = IDLE;
             end
+
             SHIFT:
             begin
-                ct_en = 1'b1;
-                sh_en = 1'b1;
+                // ct_en = 1'b1;
+                // sh_en = 1'b1;
                 sh_ld = 1'b0;
                 ct_clr = 1'b0;
-                rdy = 1'b0;
-                //br_st = 1'b0;
+
                 if(ct_eq9) next= IDLE;
                 else
                 begin
-                    // sh_ld =1'b0;
-                    // ct_en= 1'b1;
-                    // sh_en = 1'b1;
                     next = SHIFT;
+                    ct_en = 1'b1;
+                    sh_en = 1'b1;
                 end
+
+
             end
             default:
             next= IDLE ;
 
         endcase
 
-    end
-
-    always_ff @ (posedge clk)
-    begin
-            case(next)
-                IDLE: ct_clr <= 1'b1;
-                SHIFT:
-                begin
-                    if(state == IDLE) // Transition from idle to shift
-                    begin
-                        sh_ld <= 1'b1;
-                        ct_clr <= 1'b1;
-                        sh_idle <= 1'b0;
-                        rdy <= 1'b0;
-                    end
-                    else // Transitiion from shift to shift
-                    begin
-                        rdy <= 1'b0;
-                        sh_ld =1'b0;
-                        sh_idle <= 1'b0;
-                        ct_clr <= 1'b0;
-                    end
-                end
-            endcase
     end
 endmodule
