@@ -31,9 +31,9 @@ module datapath(
     rate_enb #(.RATE_HZ(BAUD_RATE)) RATE_EN(.clk(clk), .rst(rst), .clr(br_st), .enb_out(br_en));
 
     //Institating Shift Regsiter Used for Outputting TXP after every shift
-    shift_reg SHIFT_REG(.clk(br_en), .sh_ld(sh_ld), .sh_idle(sh_idle), .sh_en(sh_en), .rst(rst), .data(data), .txd(txd));
+    shift_reg SHIFT_REG(.clk(clk), .sh_ld(sh_ld),.sh_idle(sh_idle), .sh_en(sh_en), .rst(rst), .br_en(br_en), .data(data), .txd(txd));
 
     // Instantiating counter module used for counting the number of shifts
-    count10 COUNT10(.ct_clr(ct_clr),.clk(br_en), .rst(rst),.ct_en(ct_en),.ct_eq9(ct_eq9));
+    count10 COUNT10(.ct_clr(ct_clr),.clk(clk), .rst(rst),.ct_en(ct_en), .br_en(br_en),.ct_eq9(ct_eq9));
 
 endmodule

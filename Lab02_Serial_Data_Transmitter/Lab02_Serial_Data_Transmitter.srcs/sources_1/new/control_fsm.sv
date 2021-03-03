@@ -21,7 +21,7 @@
 
 
 module control_fsm(
-    input logic valid, clk, ct_eq9, rst,
+    input logic valid, clk, ct_eq9, rst,br_en,
     output logic rdy,sh_ld, sh_idle, sh_en, br_st, ct_clr, ct_en);
 
     typedef enum logic{
@@ -39,6 +39,13 @@ module control_fsm(
 
     always_comb
     begin
+        ct_clr = 1'b0;
+        ct_en = 1'b0 ;
+        sh_ld = 1'b0 ;
+        sh_idle= 1'b0 ;
+        rdy= 1'b1;
+        br_st= 1'b0 ;
+        sh_en= 1'b0 ;
         case(state)
             IDLE:
             begin
@@ -55,23 +62,31 @@ module control_fsm(
                     sh_idle = 1'b0;
                     rdy = 1'b0;
                     ct_clr = 1'b1;
+                    br_st = 1'b1 ;
                 end
-                else next = IDLE;
+                else
+                begin
+                    next = IDLE;
+                end
             end
 
             SHIFT:
             begin
-                // ct_en = 1'b1;
-                // sh_en = 1'b1;
+                ct_en = 1'b1;
+                sh_en = 1'b1;
                 sh_ld = 1'b0;
                 ct_clr = 1'b0;
-
-                if(ct_eq9) next= IDLE;
+                br_st = 1'b0;
+                if(ct_eq9)
+                begin
+                    next= IDLE;
+                    ct_clr = 1'b1;
+                end
                 else
                 begin
                     next = SHIFT;
-                    ct_en = 1'b1;
-                    sh_en = 1'b1;
+                    //ct_en = 1'b1;
+                    //sh_en = 1'b1;
                 end
 
 

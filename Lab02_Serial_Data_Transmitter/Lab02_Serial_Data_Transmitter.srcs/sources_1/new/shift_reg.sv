@@ -20,27 +20,20 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 module shift_reg(
-    input logic clk, sh_ld, sh_idle, sh_en, rst,
+    input logic clk, sh_ld, sh_idle, sh_en, rst,br_en,
     input logic [7:0] data,
     output logic txd);
 
     logic [9:0] d;
-    assign txd = 1'b1; // ADDED THIS to set it to one
 
     always_ff @(posedge clk)
     begin
-
         if(rst)
         begin
             txd <= 1'b1;
             d <= 10'd0;
         end
-        else if(sh_ld)
-        begin
-            d <= {1'b0,data,1'b1};
-            txd <= 1'b1;
-        end
-        else if(sh_en)
+        else if(sh_en && br_en)
         begin
             d[0] <= 0;
             d[1] <= d[0];
@@ -53,6 +46,11 @@ module shift_reg(
             d[8] <= d[7];
             d[9] <= d[8];
             txd <= d[9];
+        end
+        else if(sh_ld)
+        begin
+            d <= {1'b0,data,1'b1};
+            txd <= 1'b1;
         end
         else if(sh_idle)
         begin
