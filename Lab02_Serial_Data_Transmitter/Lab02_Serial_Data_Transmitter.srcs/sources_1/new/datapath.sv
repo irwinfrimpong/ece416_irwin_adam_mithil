@@ -23,10 +23,12 @@
 module datapath(
     input logic sh_ld, sh_idle, sh_en, br_st, ct_clr, clk, rst, ct_en,
     input logic [7:0] data,
-    output logic br_en, ct_eq9,txd
+    output logic ct_eq9,txd,br_en
     );
     parameter BAUD_RATE = 9600;
-
+    
+    //logic br_en ;
+    
     // Instantiating Rate Enable With Baud Rate of 9600
     rate_enb #(.RATE_HZ(BAUD_RATE)) RATE_EN(.clk(clk), .rst(rst), .clr(br_st), .enb_out(br_en));
 

@@ -24,7 +24,7 @@ module shift_reg(
     input logic [7:0] data,
     output logic txd);
 
-    logic [9:0] d;
+    logic [8:0] d;
 
     always_ff @(posedge clk)
     begin
@@ -35,22 +35,22 @@ module shift_reg(
         end
         else if(sh_en && br_en)
         begin
-            d[0] <= 0;
-            d[1] <= d[0];
-            d[2] <= d[1];
-            d[3] <= d[2];
-            d[4] <= d[3];
-            d[5] <= d[4];
-            d[6] <= d[5];
-            d[7] <= d[6];
-            d[8] <= d[7];
-            d[9] <= d[8];
-            txd <= d[9];
+//            d[0] <= '0;
+//            d[1] <= d[0];
+//            d[2] <= d[1];
+//            d[3] <= d[2];
+//            d[4] <= d[3];
+//            d[5] <= d[4];
+//            d[6] <= d[5];
+//            d[7] <= d[6];
+//            d[8] <= d[7];
+            d <= d >> 1;
+            txd <= d[0];
         end
         else if(sh_ld)
         begin
-            d <= {1'b0,data,1'b1};
-            txd <= 1'b1;
+            d <= {1'b1,data};
+            txd <= 1'd0;
         end
         else if(sh_idle)
         begin

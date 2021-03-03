@@ -26,17 +26,20 @@ module count10 (
 
     logic[3:0] Q ;  // Variable used for countiing
 
-    assign ct_eq9 = (Q == 4'd10);
+   //assign ct_eq9 = (Q == 4'd9);
 
     always_ff @(posedge clk)
     begin
-
         if (ct_clr || rst)
         begin
             ct_eq9 <= 1'b0;
             Q <= 4'b0;
         end
-        else if (ct_en && br_en) Q <= Q +1;
+        else if (ct_en && br_en) 
+        begin
+            Q <= Q +1;
+            ct_eq9 <= (Q == 4'd8);
+        end
         //else if (Q == 4'd9 ) ct_eq9 <= 1'b1;
         else Q <= Q ;
 

@@ -16,7 +16,7 @@
 // Revision:
 // Revision 0.01 - File Created
 // Additional Comments:
-// 
+//
 //////////////////////////////////////////////////////////////////////////////////
 
 
@@ -26,10 +26,12 @@ module lab02_top(
     output logic rdy_led, rdy_ext, txd, txd_ext
 
     );
-    logic valid, rdy_ext; //Valid wire
+    logic valid, pulse_output;
 
+    assign valid = pulse_output|BTND;
 
+    single_pulser SINGLE_PULSER(.clk(clk), .din(BTNU), .d_pulse(pulse_output));
     transmitter_top UART_XMIT(.clk(clk) , .rst(rst), .valid(valid), .data(sw), .txd(txd), .rdy(rdy_led));
     assign rdy_ext = rdy_led;
-
+    assign txd_ext = txd;
 endmodule

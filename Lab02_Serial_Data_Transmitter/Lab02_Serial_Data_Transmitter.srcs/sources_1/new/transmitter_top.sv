@@ -26,9 +26,11 @@ module transmitter_top(
     output logic txd, rdy
 
     );
-    parameter BAUD_RATE = 9600;
-    logic sh_ld, sh_idle, sh_en, br_st, br_en, ct_clr, ct_en, ct_eq9;
+        parameter BAUD_RATE = 9600;
+     //parameter BAUD_RATE = 1000000;
 
-    control_fsm CONTROLLER(.valid(valid), .clk(clk), .ct_eq9(ct_eq9), .rst(rst), .rdy(rdy), .sh_ld(sh_ld), .sh_idle(sh_idle), .sh_en(sh_en), .br_st(br_st), .ct_clr(ct_clr), .ct_en(ct_en));
-    datapath #(.BAUD_RATE(BAUD_RATE)) DATAPATH (.sh_ld(sh_ld), .sh_idle(sh_idle), .sh_en(sh_en), .br_st(br_st), .ct_clr(ct_clr), .clk(clk), .rst(rst), .ct_en(ct_en), .data(data), .br_en(br_en), .ct_eq9(ct_eq9), .txd(txd));
+    logic sh_ld, sh_idle, sh_en, br_st,ct_clr, ct_en, ct_eq9;
+
+    control_fsm CONTROLLER(.valid(valid), .clk(clk), .ct_eq9(ct_eq9), .rst(rst), .br_en(br_en), .rdy(rdy), .sh_ld(sh_ld), .sh_idle(sh_idle), .sh_en(sh_en), .br_st(br_st), .ct_clr(ct_clr), .ct_en(ct_en));
+    datapath #(.BAUD_RATE(BAUD_RATE)) DATAPATH (.sh_ld(sh_ld), .sh_idle(sh_idle), .sh_en(sh_en), .br_st(br_st), .ct_clr(ct_clr), .clk(clk), .rst(rst), .ct_en(ct_en), .data(data),.ct_eq9(ct_eq9), .txd(txd), .br_en(br_en));
 endmodule

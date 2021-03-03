@@ -48,7 +48,7 @@ module trans_top_sim;
         @(posedge clk);
         #20
         valid = 0;
-        #409;
+        #370;
         valid = 1 ;
         data = 8'b00110011;
         #20
