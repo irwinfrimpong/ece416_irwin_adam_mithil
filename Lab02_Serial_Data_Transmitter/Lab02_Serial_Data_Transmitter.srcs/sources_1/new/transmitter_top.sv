@@ -26,8 +26,8 @@ module transmitter_top(
     output logic txd, rdy
 
     );
-        parameter BAUD_RATE = 9600;
-     //parameter BAUD_RATE = 1000000;
+      parameter BAUD_RATE = 9600;
+      
 
     logic sh_ld, sh_idle, sh_en, br_st,ct_clr, ct_en, ct_eq9;
 

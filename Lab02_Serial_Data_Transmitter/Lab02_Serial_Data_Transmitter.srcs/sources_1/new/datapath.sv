@@ -26,6 +26,8 @@ module datapath(
     output logic ct_eq9,txd,br_en
     );
     parameter BAUD_RATE = 9600;
+     
+    
     
     //logic br_en ;
     

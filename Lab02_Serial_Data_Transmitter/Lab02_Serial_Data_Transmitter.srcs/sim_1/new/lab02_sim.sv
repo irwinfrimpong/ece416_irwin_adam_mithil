@@ -26,7 +26,7 @@ module lab02_sim;
     
     // Instantiating the Lab02 Top Level File
     
-    lab02_top DUV (.clk(clk), .rst(rst),.BTNU(BTNU),.BTND(BTND),.sw(sw),.txd(txd),.txd_ext(txd_ext),.rdy_led(rdy_led),.rdy_ext(rdy_ext));
+    lab02_top #(.BAUD_RATE(50000000)) DUV (.clk(clk), .rst(rst),.BTNU(BTNU),.BTND(BTND),.sw(sw),.txd(txd),.txd_ext(txd_ext),.rdy_led(rdy_led),.rdy_ext(rdy_ext));
     
         // Clock Generator
     always
@@ -45,7 +45,7 @@ module lab02_sim;
         rst = 1; #20;
         @(posedge clk);
         #1 rst = 0;
-        #10 sw = 8'b01010101;
+        #10 sw = 8'b00110011;
         #40 BTNU = 1; 
         BTND = 1;
         @(posedge clk);
@@ -54,7 +54,7 @@ module lab02_sim;
         BTND = 0;
         #370;
         BTNU = 1 ;
-        sw = 8'b00110011;
+        sw = 8'b00000000;
         #20
         BTNU=0 ;
      end
