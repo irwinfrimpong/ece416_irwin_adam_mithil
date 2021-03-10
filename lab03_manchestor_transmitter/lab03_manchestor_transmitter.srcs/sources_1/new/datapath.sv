@@ -29,7 +29,7 @@ module datapath(
     parameter BAUD_RATE = 9600;
     localparam BAUD_RATE2X = BAUD_RATE << 1 ;
     parameter IDLE_BITS = 2;
-    parameter SHIFT_COUNT = 8;
+    parameter SHIFT_COUNT = 7;
     logic NRZ_out, sq_wave;
 
     // Instantiating Baud Rate Enable Module

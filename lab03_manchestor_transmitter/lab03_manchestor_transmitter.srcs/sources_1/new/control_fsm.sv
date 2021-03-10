@@ -91,6 +91,7 @@ module control_fsm(
                 if(ct_eq7 && br_en)
                 begin
                     next= IDLEBITS;
+                    rdy= 1'b1; // Ready should be 1 one clock cycle before
                     sh_en= 1'b0;
                     ct_clr = 1'b1;
                     idle_clr = 1'b1;
@@ -98,6 +99,7 @@ module control_fsm(
                 else if (ct_eq7 && valid)
                 begin
                     next = SHIFT;
+                    rdy= 1'b1; // Ready should be 1 one clock cycle before
                     sh_ld = 1'b1;
                     sh_idle = 1'b0;
                     ct_clr = 1'b1;

@@ -45,15 +45,14 @@ module manchestor_sim;
         @(posedge clk);
         #1 rst = 0;
         #10 data = 8'b01010101;
-        #40 valid = 1;
+        #30 valid = 1;
         @(posedge clk);
         #20
         valid = 0;
-        #1690;
+        data = 8'b00110011;
+        #1560;
         valid = 1 ;
         #100
-        data = 8'b00110011;
-        #20
         valid =0 ;
     end
 
