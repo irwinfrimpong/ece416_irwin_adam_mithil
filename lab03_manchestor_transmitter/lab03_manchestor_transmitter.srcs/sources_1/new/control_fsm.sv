@@ -21,8 +21,8 @@
 
 
 module control_fsm(
-    input logic valid, clk, ct_eq7, rst, br_en, idle_biteq,
-    output logic rdy,sh_ld, sh_idle, sh_en, br_st, ct_clr, ct_en, br_2st, idle_clr, idle_en, txen,txd_idle_en);
+    input logic valid, clk, ct_eq15, rst, br_en,enb_2x, idle_biteq,
+    output logic rdy,sh_ld, sh_idle, sh_en, br_st, ct_clr, ct_en, br_2st, idle_clr, idle_en, txen,txd_idle_en,sq_clr);
 
     typedef enum logic [1:0]{
     IDLE = 2'b00,
@@ -51,6 +51,7 @@ module control_fsm(
         sh_en= 1'b0 ;
         txen = 1'b0;
         idle_en = 1'b0;
+        sq_clr= 1'b0;
         case(state)
             IDLE:
             begin
@@ -65,6 +66,7 @@ module control_fsm(
                 if(valid)
                 begin
                     next = SHIFT;
+                    sq_clr= 1'b1;
                     sh_ld = 1'b1;
                     sh_idle = 1'b0;
                     ct_clr = 1'b1;
@@ -88,23 +90,25 @@ module control_fsm(
                 rdy = 1'b0;
                 txen = 1'b1;
                 txd_idle_en = 1'b0;
-                if(ct_eq7 && br_en)
+                if(ct_eq15 && enb_2x)
                 begin
                     next= IDLEBITS;
+                    txd_idle_en = 1'b1;
                     rdy= 1'b1; // Ready should be 1 one clock cycle before
                     sh_en= 1'b0;
                     ct_clr = 1'b1;
                     idle_clr = 1'b1;
                 end
-                else if (ct_eq7 && valid)
+                else if (ct_eq15 && valid )
                 begin
                     next = SHIFT;
                     rdy= 1'b1; // Ready should be 1 one clock cycle before
                     sh_ld = 1'b1;
                     sh_idle = 1'b0;
                     ct_clr = 1'b1;
-                    br_st = 1'b1 ;
-                    br_2st= 1'b1;
+                    sq_clr= 1'b1;
+                    //br_st = 1'b1 ;
+                    //br_2st= 1'b1;
                 end
                 else next = SHIFT;
 

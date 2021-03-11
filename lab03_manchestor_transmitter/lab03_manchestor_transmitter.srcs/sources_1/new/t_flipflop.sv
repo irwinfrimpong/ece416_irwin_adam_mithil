@@ -21,14 +21,14 @@
 
 
 module t_flipflop(
-    input logic clk, rst, enb,
+    input logic clk, rst, enb,clr,
     output logic q
 
     );
 
 always @(posedge clk)
 begin
-    if(rst )
+    if(rst || clr )
     q <= 0;
     else if (enb)
     q <= ~q;

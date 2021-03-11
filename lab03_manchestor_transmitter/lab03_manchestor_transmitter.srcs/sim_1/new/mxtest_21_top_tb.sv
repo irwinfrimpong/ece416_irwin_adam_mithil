@@ -17,16 +17,16 @@ module mxtest_21_top_tb;
         rst = 1;
         btnu = 0;
         btnd = 1;
-        sw = 1;
+        sw = 2;
         @(posedge clk) #1;
         rst = 0;
         @(posedge clk) #1;
         #(1_000_000*CLK_PD);
-       sw = 2;
-       #(1_000_000*CLK_PD);
-        $stop;
-        sw=31;
-       #(2_000_000*CLK_PD);
+//       sw = 2;
+//       #(1_000_000*CLK_PD);
+//        $stop;
+//        sw=31;
+//       #(2_000_000*CLK_PD);
         $stop;
     end
 endmodule

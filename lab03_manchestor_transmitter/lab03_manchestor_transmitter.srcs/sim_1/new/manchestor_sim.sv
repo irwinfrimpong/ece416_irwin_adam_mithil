@@ -50,7 +50,12 @@ module manchestor_sim;
         #20
         valid = 0;
         data = 8'b00110011;
-        #1560;
+        #1510;
+        valid = 1 ;
+        #100
+        valid =0 ;
+        data = 8'b11110000;
+        #1510;
         valid = 1 ;
         #100
         valid =0 ;
