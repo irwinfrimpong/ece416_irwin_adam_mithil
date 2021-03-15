@@ -1,22 +1,16 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company:
-// Engineer:
+// Company: Lafayette College
+// Engineer: Irwin Frimpong, Adam Tunnell , Mithil Shah
 //
 // Create Date: 03/04/2021 03:01:32 PM
-// Design Name:
+// Design Name: Manchester Transmiter
 // Module Name: datapath
-// Project Name:
+// Project Name: Manchester Transmiter
 // Target Devices:
 // Tool Versions:
-// Description:
-//
-// Dependencies:
-//
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-//
+// Description: Datapath module for Machnester Trasnmitter
+// Dependencies: rate_enb, t_flipflop,counter, sh_reg, txd_output
 //////////////////////////////////////////////////////////////////////////////////
 
 

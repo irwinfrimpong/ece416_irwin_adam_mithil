@@ -1,17 +1,17 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company:
-// Engineer:
+// Company: Lafayette College
+// Engineer: Adam Tunnell, Irwin Frimpong, Mithil Shah
 //
 // Create Date: 03/04/2021 03:25:37 PM
-// Design Name:
+// Design Name: Manchester Transmiter
 // Module Name: manchester_xmit
-// Project Name:
+// Project Name: Manchester Transmitter
 // Target Devices:
 // Tool Versions:
-// Description:
+// Description: Top level module for Manchester Transmitter
 //
-// Dependencies:
+// Dependencies: datapath, control_fsm, dreg
 //
 // Revision:
 // Revision 0.01 - File Created

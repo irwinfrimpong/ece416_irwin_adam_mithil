@@ -1,22 +1,12 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company:
-// Engineer:
-//
+// Company: Lafayette College
+// Engineer: Adam Tunell, Irwin Frimpong, Mithil Shah
 // Create Date: 03/07/2021 05:38:14 PM
-// Design Name:
+// Design Name: Manchester Transmitter
 // Module Name: t_flipflop
-// Project Name:
-// Target Devices:
-// Tool Versions:
-// Description:
-//
-// Dependencies:
-//
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-//
+// Project Name: Manchester Transmiter
+// Description: t_flipflop used to generate square wave
 //////////////////////////////////////////////////////////////////////////////////
 
 

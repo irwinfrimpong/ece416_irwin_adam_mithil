@@ -1,22 +1,15 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company:
-// Engineer:
+// Company:lafayette College
+// Engineer:Mithil Shah, Adam Tunnell, Irwin Frimpong
 //
 // Create Date: 03/09/2021 08:49:05 PM
-// Design Name:
+// Design Name: Manchester Transmiter
 // Module Name: manchester_sctb
-// Project Name:
+// Project Name: Manchester Transmitter
 // Target Devices:
 // Tool Versions:
-// Description:
-//
-// Dependencies:
-//
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-//
+// Description: Self-checking testbench for a manchester transmitter
 //////////////////////////////////////////////////////////////////////////////////
 
 module manchester_sctb (
@@ -77,11 +70,7 @@ module manchester_sctb (
         end while (rdy == 1);
         valid = 0;
         wait(txen == 1);
-        //        #(BITPD_NS/4);
         for (int i = 0; i <= 15; i++) begin
-            //            check(txd, ~txd, rdy, 0, txen, 1);
-            //            if(i % 2) $display("%t inverted d", $time);
-            //            else $display("%t regular d", $time);
             $display("Checking i:%d at t:%t",i,$time);
             if(i % 2) check(txd, ~d[i/2], rdy, 0, txen, 1);
             else check(txd, d[i/2], rdy, 0, txen, 1);
@@ -102,12 +91,8 @@ module manchester_sctb (
         end while (rdy == 1);
         valid = 0;
         wait(txen == 1);
-        //        #(BITPD_NS/4);
         $display("1st Transmission");
         for (int i = 0; i <= 16; i++) begin
-            //            check(txd, ~txd, rdy, 0, txen, 1);
-            //            if(i % 2) $display("%t inverted d", $time);
-            //            else $display("%t regular d", $time);
             if(i % 2) check(txd, ~d1[i/2], rdy, 0, txen, 1);
             else check(txd, d1[i/2], rdy, 0, txen, 1);
             if(i !=15) #(BITPD_NS/2);
@@ -123,9 +108,6 @@ module manchester_sctb (
         #1 valid = 0;
         $display("2nd Transmission");
         for (int i = 0; i <= 16; i++) begin
-            //            check(txd, ~txd, rdy, 0, txen, 1);
-            //            if(i % 2) $display("%t inverted d", $time);
-            //            else $display("%t regular d", $time);
             if(i % 2) check(txd, ~d2[i/2], rdy, 0, txen, 1);
             else check(txd, d2[i/2], rdy, 0, txen, 1);
             if(i !=15) #(BITPD_NS/2);
@@ -141,9 +123,6 @@ module manchester_sctb (
         #1 valid = 0;
         $display("3rd Transmission");
         for (int i = 0; i <= 16; i++) begin
-            //            check(txd, ~txd, rdy, 0, txen, 1);
-            //            if(i % 2) $display("%t inverted d", $time);
-            //            else $display("%t regular d", $time);
             if(i % 2) check(txd, ~d3[i/2], rdy, 0, txen, 1);
             else check(txd, d3[i/2], rdy, 0, txen, 1);
             if(i !=15) #(BITPD_NS/2);
@@ -159,9 +138,6 @@ module manchester_sctb (
         #1 valid = 0;
         $display("4th Transmission");
         for (int i = 0; i <= 16; i++) begin
-            //            check(txd, ~txd, rdy, 0, txen, 1);
-            //            if(i % 2) $display("%t inverted d", $time);
-            //            else $display("%t regular d", $time);
             if(i % 2) check(txd, ~d4[i/2], rdy, 0, txen, 1);
             else check(txd, d4[i/2], rdy, 0, txen, 1);
             if(i !=15) #(BITPD_NS/2);
@@ -178,9 +154,6 @@ module manchester_sctb (
         $display("5th Transmission");
 
         for (int i = 0; i <= 16; i++) begin
-            //            check(txd, ~txd, rdy, 0, txen, 1);
-            //            if(i % 2) $display("%t inverted d", $time);
-            //            else $display("%t regular d", $time);
             if(i % 2) check(txd, ~d5[i/2], rdy, 0, txen, 1);
             else check(txd, d5[i/2], rdy, 0, txen, 1);
             if(i !=15) #(BITPD_NS/2);
@@ -193,10 +166,10 @@ module manchester_sctb (
         $monitor( /* add signals to monitor in console */ );
         reset_duv;
 
-        //$display("Single Transmission");
-        //single_transmission(8'b01010101);
-        //#(BITPD_NS*2)
-        //check(txd,1,rdy,1,txen,0);
+        $display("Single Transmission");
+        single_transmission(8'b01010101);
+        #(BITPD_NS*2)
+        check(txd,1,rdy,1,txen,0);
 
          $display("Multi Transmission");
          multi_transmission(8'b01010101,8'b11110000,8'b01010101,8'b11110000,8'b01010101);

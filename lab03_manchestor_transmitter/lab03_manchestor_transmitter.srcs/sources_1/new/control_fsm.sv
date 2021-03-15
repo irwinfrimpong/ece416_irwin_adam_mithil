@@ -1,22 +1,15 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company:
-// Engineer:
+// Company: Lafayette College
+// Engineer: Irwin Frimpong, Adam Tunnell , Mithil Shah
 //
 // Create Date: 03/04/2021 01:04:32 PM
-// Design Name:
+// Design Name: Manchester Transmiter
 // Module Name: control_fsm
-// Project Name:
+// Project Name: Manchester Transmitter
 // Target Devices:
 // Tool Versions:
-// Description:
-//
-// Dependencies:
-//
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-//
+// Description: Finite State Machine for Manchester Transmiter
 //////////////////////////////////////////////////////////////////////////////////
 
 
@@ -107,8 +100,6 @@ module control_fsm(
                     sh_idle = 1'b0;
                     ct_clr = 1'b1;
                     sq_clr= 1'b1;
-                    //br_st = 1'b1 ;
-                    //br_2st= 1'b1;
                 end
                 else next = SHIFT;
 

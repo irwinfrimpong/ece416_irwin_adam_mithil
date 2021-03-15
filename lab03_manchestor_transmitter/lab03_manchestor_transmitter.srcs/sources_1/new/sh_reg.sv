@@ -1,11 +1,12 @@
 //-----------------------------------------------------------------------------
 // Module Name   : sh_reg
-// Project       : RTL Hardware Design and Verification using SystemVerilog
+// Project       : Manchester Transmitter
 //-----------------------------------------------------------------------------
-// Author        : John Nestor  <nestorj@lafayette.edu>
-// Created       : Feb 2020
+// Author        : Adam Tunnell, Irwin Frimpong, Mithil Shah
+// Created       : 3/04/2020
 //-----------------------------------------------------------------------------
 // Description   : Shift register with parallel load parameterized by bitwidth
+//                 built to be used with a manchester transmitter
 //-----------------------------------------------------------------------------
 
 module sh_reg (

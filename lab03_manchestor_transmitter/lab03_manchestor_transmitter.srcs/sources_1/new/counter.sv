@@ -1,11 +1,12 @@
 //-----------------------------------------------------------------------------
 // Module Name   : counter
-// Project       : RTL Hardware Design and Verification using SystemVerilog
+// Project       : Manchester Transmitter
 //-----------------------------------------------------------------------------
-// Author        : John Nestor  <nestorj@lafayette.edu>
-// Created       : Jun 2020
+// Author        : Adam Tunnell, Mithil Shah, Irwin Frimpong
+// Created       : 03/04/2021
 //-----------------------------------------------------------------------------
-// Description   : Basic binary counter with enable & sync. reset
+// Description   : Counter with enable, clr, reset, that outputs ct_max when it
+// reaches its max value
 //-----------------------------------------------------------------------------
 
 module  counter #(parameter MAX_VAL = 2) (
@@ -14,7 +15,7 @@ module  counter #(parameter MAX_VAL = 2) (
     );
     localparam W = $clog2(MAX_VAL);
     logic[W-1:0] Q ;  // Variable used for countiing
-    
+
     always_ff @(posedge clk)
     begin
         if (ct_clr || rst)
@@ -27,7 +28,6 @@ module  counter #(parameter MAX_VAL = 2) (
             Q <= Q + 1;
             ct_max <= (Q == MAX_VAL - 1);
         end
-        //else if (Q == 4'd9 ) ct_eq9 <= 1'b1;
         else Q <= Q ;
 
     end

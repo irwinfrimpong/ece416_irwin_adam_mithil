@@ -1,22 +1,16 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company:
-// Engineer:
-//
+// Company: Lafayette College
+// Engineer: Adam Tunnell, Irwin Frimpong, Mithil Shah
 // Create Date: 03/04/2021 02:21:49 PM
-// Design Name:
+// Design Name: Manchester Transmitter
 // Module Name: txd_output
-// Project Name:
+// Project Name: Manchester Transmitter
 // Target Devices:
 // Tool Versions:
-// Description:
-//
-// Dependencies:
-//
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-//
+// Description: module that takes a NRZ signal and a square wave and XNORs them
+// in order to create a manchester coded output. The XNOR can also
+// be overwritten to only output a 1 using the txd_idle_en input
 //////////////////////////////////////////////////////////////////////////////////
 
 
