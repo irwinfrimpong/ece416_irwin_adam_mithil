@@ -1,7 +1,0 @@
-Running: xsim.dir/ringctr_sim_behav/xsimk.exe -simmode gui -wdb ringctr_sim_behav.wdb -simrunnum 0 -socket 64279
-Design successfully loaded
-Design Loading Memory Usage: 5820 KB (Peak: 5820 KB)
-Design Loading CPU Usage: 62 ms
-Simulation completed
-Simulation Memory Usage: 6400 KB (Peak: 6400 KB)
-Simulation CPU Usage: 93 ms
