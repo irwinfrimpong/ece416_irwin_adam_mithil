@@ -127,7 +127,7 @@ module controller(
                     set_valid = rxd;
                     set_ferr = !rxd;
                 end
-                else if(br_en) next = IDLE; //NEW HERE
+                else if(br_en) next = IDLE;
                 else next = STOPBIT;
             end
         endcase

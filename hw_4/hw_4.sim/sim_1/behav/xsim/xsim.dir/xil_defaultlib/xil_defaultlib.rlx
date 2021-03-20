@@ -1,0 +1,9 @@
+0.7
+2020.2
+Nov 18 2020
+09:47:47
+C:/Users/irwin/Desktop/ece416_irwin_adam_mithil/hw_4/hw_4.sim/sim_1/behav/xsim/glbl.v,1605673889,verilog,,,,glbl,,uvm,,,,,,
+C:/Users/irwin/Desktop/ece416_irwin_adam_mithil/hw_4/hw_4.srcs/sim_1/new/hw4_simulation.sv,1615069719,systemVerilog,,,,hw4_simulation,,uvm,,,,,,
+C:/Users/irwin/Desktop/ece416_irwin_adam_mithil/hw_4/hw_4.srcs/sim_1/new/ringctr_sim.sv,1615073029,systemVerilog,,,,ringctr_sim,,uvm,,,,,,
+C:/Users/irwin/Desktop/ece416_irwin_adam_mithil/hw_4/hw_4.srcs/sources_1/new/hw4_2.sv,1615070393,systemVerilog,,C:/Users/irwin/Desktop/ece416_irwin_adam_mithil/hw_4/hw_4.srcs/sim_1/new/hw4_simulation.sv,,hw4_2,,uvm,,,,,,
+C:/Users/irwin/Desktop/ece416_irwin_adam_mithil/hw_4/hw_4.srcs/sources_1/new/ring_ctr.sv,1615095901,systemVerilog,,C:/Users/irwin/Desktop/ece416_irwin_adam_mithil/hw_4/hw_4.srcs/sim_1/new/ringctr_sim.sv,,ring_ctr,,uvm,,,,,,
