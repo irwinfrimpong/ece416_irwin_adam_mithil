@@ -1,4 +1,0 @@
-Running: xsim.dir/uart_rcvr_sctb_top_behav/xsimk.exe -simmode gui -wdb uart_rcvr_sctb_top_behav.wdb -simrunnum 0 -socket 64450
-Design successfully loaded
-Design Loading Memory Usage: 5884 KB (Peak: 5884 KB)
-Design Loading CPU Usage: 46 ms
