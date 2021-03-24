@@ -26,7 +26,7 @@ module sh_reg #(parameter W=8)(
     );
 
     logic [7:0] d ;
-    assign data = sh_en ? d : data;
+    //assign data = sh_en ? d : data;
 
     always_ff @(posedge clk)
     if (rst || sh_rst)
@@ -35,5 +35,6 @@ module sh_reg #(parameter W=8)(
             data <= 8'd0;
         end
     else if (sh_ld && br_en) d <= {rxd,d[W-1:1]};
+    else if (sh_en) data <= d;
     else d <= d;
 endmodule

@@ -28,9 +28,11 @@ module uart_rcvr(
     parameter BAUD_RATE = 9600;
     logic set_oerr, clr_oerr, set_ferr, clr_ferr, br_en, br_st, ct_initclr,
     ct_initenb, ct_initeq, br_2en, br_2st, sh_en, sh_ld,sh_rst, ct_clr, ct_en, ct_eq,
-    clr_valid, set_valid;
+    clr_valid, set_valid, oerr_cntrl;
 
-    controller U_FSM_CNTRL(.clk(clk), .rst(rst), .rdy(rdy), .rxd(rxd), .br_en(br_en),.ct_initeq(ct_initeq), .br_2en(br_2en), .ct_eq(ct_eq),.valid(valid),
+    assign oerr_cntrl = oerr; // NEW 3/22/21
+
+    controller U_FSM_CNTRL(.clk(clk), .rst(rst), .rdy(rdy), .rxd(rxd), .br_en(br_en),.ct_initeq(ct_initeq), .br_2en(br_2en), .ct_eq(ct_eq),.valid(valid),.oerr_cntrl(oerr_cntrl),
     .set_oerr(set_oerr), .clr_oerr(clr_oerr), .set_ferr(set_ferr), .clr_ferr(clr_ferr), .br_st(br_st), .ct_initclr(ct_initclr), .ct_initenb(ct_initenb),
     .br_2st(br_2st), .sh_en(sh_en), .sh_ld(sh_ld),.sh_rst(sh_rst),.ct_clr(ct_clr), .ct_en(ct_en), .clr_valid(clr_valid), .set_valid(set_valid));
 
