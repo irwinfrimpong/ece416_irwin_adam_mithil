@@ -1,21 +1,13 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company:
-// Engineer:
+// Company: Lafayette College
+// Engineer: Mithil Shah, Adam Tunnell, Irwin Frimpong
 //
 // Create Date: 03/20/2021 03:53:43 PM
-// Design Name:
+// Design Name: UART Receiver
 // Module Name: uart_rcvr_sctb
-// Project Name:
-// Target Devices:
-// Tool Versions:
-// Description:
-//
-// Dependencies:
-//
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
+// Project Name: UART Receiver
+// Description: Self-checking testbench for uart receiver
 //
 //////////////////////////////////////////////////////////////////////////////////
 
@@ -32,25 +24,26 @@ module uart_rcvr_sctb(
     int errcount = 0;
     logic [9:0] d1;
     logic [9:0] d2;
+    logic oerr_store;
 
     task check( data, exp_data, oerr, exp_oerr, ferr, exp_ferr, valid, exp_valid);
         if (data != exp_data) begin
-            $display("%t error: expected data=%h actual data=%h",
+            $display("%t error: expected data=%b actual data=%b",
             $time, exp_data, data);
             errcount++;
         end
         if (oerr != exp_oerr) begin
-            $display("%t error: expected oerr=%h actual oerr=%h",
+            $display("%t error: expected oerr=%b actual oerr=%b",
             $time, exp_oerr, oerr);
             errcount++;
         end
         if (ferr != exp_ferr) begin
-            $display("%t error: expected ferr=%h actual ferr=%h",
+            $display("%t error: expected ferr=%b actual ferr=%b",
             $time, exp_ferr, ferr);
             errcount++;
         end
         if (valid != exp_valid) begin
-            $display("%t error: expected valid=%h actual valid=%h",
+            $display("%t error: expected valid=%b actual valid=%b",
             $time, exp_valid, valid);
             errcount++;
         end
@@ -79,7 +72,6 @@ module uart_rcvr_sctb(
             rxd = d1[i];
             rdy = 0;
 
-            // $display("Rxd: %d at: %t", rxd, $time);
             #(BITPD_NS);
         end
         rxd = 1;
@@ -87,7 +79,7 @@ module uart_rcvr_sctb(
         check(data,d,oerr,0,ferr,0,valid,1);
     endtask: single_transmission
 
-    task ferr_test(logic [7:0] d);/* add expected values to test */
+    task ferr_test(logic [7:0] d);
         d1 = {1'b0, d, 1'b0};
         $display("d: %b d1: %b",d,d1);
         for ( int i = 0; i <= 9; i++)
@@ -129,9 +121,10 @@ module uart_rcvr_sctb(
         end
         rxd = 1;
         rdy = 1 ;
+        oerr_store = oerr;
         #(BITPD_NS/2);
          $display("data: %b d3: %b",data,d3);
-        check(data,8'b00000000,oerr,1,ferr,0,valid,0);
+        check(data,d3,oerr_store,1,ferr,0,valid,0);
 
 
     endtask: oerr_test
@@ -150,22 +143,19 @@ module uart_rcvr_sctb(
         $display("Single Transmission 2");
         single_transmission(8'b00110011);
         #(BITPD_NS)
-        //
-        // $display("Single Transmission 3");
-        // single_transmission(8'b00001111);
-        // #(BITPD_NS)
 
-        // $display("Ferr Error");
-        // ferr_test(8'b10110000);
-        // #(BITPD_NS*2)
+        $display("Single Transmission 3");
+        single_transmission(8'b00001111);
+        #(BITPD_NS)
 
-        // $display("Oerr Error");
-        // oerr_test(8'b10110000,8'b01010101);
-        //  #(BITPD_NS/2)
-        //  single_transmission(8'b00001111);
+        $display("Ferr Error");
+        ferr_test(8'b10110000);
+        #(BITPD_NS*2)
 
-
-
+        $display("Oerr Error");
+        oerr_test(8'b10110000,8'b01010101);
+         #(BITPD_NS/2)
+         single_transmission(8'b00001111);
 
         report_errors;
         $finish;  // suspend simulation (use $finish to exit)

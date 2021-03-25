@@ -1,21 +1,15 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company:
-// Engineer:
+// Company: Lafayette College
+// Engineer: Adam Tunnell, Irwin Frimpong, Mithil Shah
 //
 // Create Date: 03/22/2021 06:05:27 PM
-// Design Name:
+// Design Name: UART Receiver
 // Module Name: datapath_uart_trans
-// Project Name:
-// Target Devices:
-// Tool Versions:
-// Description:
+// Project Name: UART Receiver
+// Description: Datapath for UART Receiver, connects to  FSM
 //
-// Dependencies:
-//
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
+// Dependencies: rate_enb, shift_reg, count10
 //
 //////////////////////////////////////////////////////////////////////////////////
 
@@ -26,10 +20,6 @@ module datapath_uart_trans(
     output logic ct_eq9,txd,br_en
     );
     parameter BAUD_RATE = 9600;
-
-    
-
-    //logic br_en ;
 
     // Instantiating Rate Enable With Baud Rate of 9600
     rate_enb #(.RATE_HZ(BAUD_RATE)) RATE_EN_TRANS(.clk(clk), .rst(rst), .clr(br_st), .enb_out(br_en));

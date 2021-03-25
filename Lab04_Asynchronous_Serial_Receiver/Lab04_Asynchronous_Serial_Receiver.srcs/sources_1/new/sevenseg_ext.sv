@@ -26,11 +26,6 @@ module sevenseg_ext(
     output logic dp_n // decimal point
     );
 
-    // data[6]: blank
-    //data[5]: dp
-    //data[4]: dash
-    //data[3:0]: binaryvalue
-
     always_comb
     begin
         // Decimal Point for when dp is asserted

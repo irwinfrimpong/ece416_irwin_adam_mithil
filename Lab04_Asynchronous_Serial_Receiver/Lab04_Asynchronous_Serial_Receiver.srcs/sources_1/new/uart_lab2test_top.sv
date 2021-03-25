@@ -1,21 +1,16 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company:
-// Engineer:
+// Company: Lafayette College
+// Engineer: Mithil Shah, Irwin Frimpong, Adam Tunnell
 //
 // Create Date: 03/22/2021 06:37:05 PM
-// Design Name:
+// Design Name: UART Receiver
 // Module Name: uart_lab2test_top
-// Project Name:
-// Target Devices:
-// Tool Versions:
-// Description:
+// Project Name: UART Receiver
+// Description: top-level module connecting uart reciever to uart transmitter
+// for simulation
 //
-// Dependencies:
-//
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
+// Dependencies: transmitter_top, uart_rcvr
 //
 //////////////////////////////////////////////////////////////////////////////////
 

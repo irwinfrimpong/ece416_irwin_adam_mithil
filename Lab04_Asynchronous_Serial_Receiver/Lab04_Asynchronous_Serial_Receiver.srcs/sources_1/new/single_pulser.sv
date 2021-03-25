@@ -9,7 +9,7 @@
 // on the input din
 //-----------------------------------------------------------------------------
 
-module single_pulser(input logic clk, din, 
+module single_pulser(input logic clk, din,
                     output logic d_pulse);
     logic dq1, dq2;
 

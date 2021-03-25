@@ -1,21 +1,14 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company:
-// Engineer:
+// Company: Lafayette College
+// Engineer: Adam Tunnell, Irwin Frimpong, Mithil Shah
 //
 // Create Date: 03/22/2021 06:09:11 PM
-// Design Name:
+// Design Name: UART Receiver
 // Module Name: uart_lab2_sctb
-// Project Name:
-// Target Devices:
-// Tool Versions:
-// Description:
+// Project Name: UART Receiver
+// Description: Self-Checking testbench for UART Receiver
 //
-// Dependencies:
-//
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
 //
 //////////////////////////////////////////////////////////////////////////////////
 
@@ -49,7 +42,6 @@ module uart_lab2_sctb(
             $time, exp_ferr, ferr);
             errcount++;
         end
-        // place additional tests here
     endtask: check
 
     task report_errors;
@@ -64,23 +56,6 @@ module uart_lab2_sctb(
         rst = 0;
         check(data_out,8'd0,oerr,0,ferr,0);
     endtask: reset_duv
-
-    // task single_transmission(logic [7:0] d);/* add expected values to test */
-    //     data_in = d;
-    //     #(BITPD_NS*10);
-    //     // $display("d: %b d1: %b",d,d1);
-    //     // for ( int i = 0; i <= 9; i++)
-    //     // begin
-    //     //     rxd = d1[i];
-    //     //     rdy = 0;
-    //     //
-    //     //     // $display("Rxd: %d at: %t", rxd, $time);
-    //     //     #(BITPD_NS);
-    //     // end
-    //     // rxd = 1;
-    //     // rdy = 1 ;
-    //     check(data_out,d,oerr,0,ferr,0);
-    // endtask: single_transmission
 
     task transmit_bytes(int n);
         for (int i = 1; i <= n; i++)
@@ -109,6 +84,6 @@ module uart_lab2_sctb(
             #(BITPD_NS*2)
 
             report_errors;
-            $finish;  // suspend simulation (use $finish to exit)
+            $finish;
         end
 endmodule

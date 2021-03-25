@@ -1,21 +1,13 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company:
-// Engineer:
+// Company: Lafayette College
+// Engineer: Irwin Frimpong, Mithil Shah, Adam Tunnell
 //
 // Create Date: 03/15/2021 10:40:42 AM
-// Design Name:
+// Design Name UART Receiver
 // Module Name: controller
-// Project Name:
-// Target Devices:
-// Tool Versions:
-// Description:
-//
-// Dependencies:
-//
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
+// Project Name: UART Receiver
+// Description: FSM for UART Receiver
 //
 //////////////////////////////////////////////////////////////////////////////////
 
@@ -30,7 +22,8 @@ module controller(
     IDLE = 3'd1,
     CHECKSTART = 3'd2,
     LOAD = 3'd3,
-    STOPBIT = 3'd4
+    STOPBIT = 3'd4,
+    STOPDELAY = 3'd5
     } states_t;
 
     states_t state, next;
@@ -84,18 +77,19 @@ module controller(
         end
         CHECKSTART:
         begin
-            ct_initenb = 1'd1;
+            ct_initenb = br_2en;
             if(ct_initeq)
             begin
                 if(!rxd)
                 begin
                     next = LOAD;
-                    set_valid = 1'd1;
                     br_st = 1'd1;
                     ct_clr = 1'd1;
+                    ct_initclr= 1'd1;
                     clr_ferr = 1'd1;
                     sh_rst = 1'd1;
                     set_oerr = valid && !rdy;
+                    clr_valid = 1'd1;
                 end
                 else
                 begin
@@ -106,41 +100,47 @@ module controller(
         end
         LOAD:
         begin
-            sh_ld = 1'd1;
-            ct_en = 1'd1;
-            clr_valid = 1'd1;
             if(ct_eq)
             begin
+                ct_clr = 1'd1;
                 ct_initclr = 1'd1;
                 br_2st = 1'd1;
-                br_st = 1'd1; // NEW HERE
-                sh_ld = 1'd0; // NEW HERE 3/22/21
+                br_st = 1'd1; 
+                sh_ld = 1'd0;
                 next = STOPBIT;
             end
-            else next = LOAD;
+            else
+            begin
+                sh_ld = br_en;
+                ct_en = br_en;
+                next = LOAD;
+            end
         end
         STOPBIT:
         begin
-            ct_initenb = 1'd1;
-            if(ct_initeq)
+            if(br_en)
             begin
-                next = STOPBIT;
-                if(oerr_cntrl) // NEW eorr_cntrl 3/22/21
+                if(rxd)
                 begin
-                    sh_en = !oerr_cntrl;
                     set_valid = !oerr_cntrl;
+                    next = IDLE;
                 end
                 else
                 begin
-                    sh_en = rxd ;
-                    set_valid = rxd ;
-                    set_ferr = !rxd;
-                    next = IDLE;
+                    set_ferr = 1'd1;
+                    next = STOPDELAY;
                 end
+                clr_valid = oerr_cntrl;
+                sh_en = 1'd1;
             end
-            else if(br_en) next = IDLE;
             else next = STOPBIT;
         end
+
+        STOPDELAY:
+            begin
+                if(br_en) next = IDLE;
+                else next = STOPDELAY;
+            end
         default:
            next = START ;
     endcase
