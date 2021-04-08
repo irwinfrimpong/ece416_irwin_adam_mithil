@@ -57,7 +57,7 @@ module correlator #(
          else begin
              csum <= csum_c;
              h_out <= (csum_c >= HTHRESH);
-             l_out <= (csum <= LTHRESH);
+             l_out <= (csum_c<= LTHRESH);
          end
       end
 

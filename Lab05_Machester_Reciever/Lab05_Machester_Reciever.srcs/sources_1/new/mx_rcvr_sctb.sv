@@ -31,7 +31,7 @@ module mx_rcvr_sctb(
     localparam BITPD_NS= 1_000_000_000/ BAUD_RATE; // bit period in ns
     int errcount = 0;
     logic [7:0] dat_trans;
-    logic [15:0] preamble, sfd ;
+    logic [15:0] preamble, sfd , trans;
     parameter  rand_bits = 10;
 
     task check(data, exp_data, valid, exp_valid, caret, exp_cardet, error, exp_error);
@@ -103,6 +103,22 @@ module mx_rcvr_sctb(
         end
     endtask: sfd_bits
 
+    task transmit_bits;
+        trans = 16'b01_10_01_10_01_01_01_10;
+        for (int i = 0; i <= 15; i++)
+        begin
+            rxd = trans[i];
+            #(BITPD_NS/2);
+        end
+    endtask: transmit_bits
+
+    task transmit_eof;
+        for (int i = 7; i >= 0; i--)
+        begin
+            rxd = 1;
+            #(BITPD_NS/2);
+        end
+    endtask: transmit_eof
 
     initial begin
         $timeformat(-9, 0, "ns", 6);
@@ -115,8 +131,14 @@ module mx_rcvr_sctb(
         preamble_bytes(5);
         $display("Transmitting SFD at %t", $time);
         sfd_bits;
+        $display("Transmitting data at %t", $time);
+        transmit_bits;
+        $display("Transmitting EOF at %t", $time);
+        transmit_eof;
 
-        #(BITPD_NS*10);
+        #(BITPD_NS*5);
+        rxd = 0;
+        #(BITPD_NS*5);
 
         report_errors;
         $finish;

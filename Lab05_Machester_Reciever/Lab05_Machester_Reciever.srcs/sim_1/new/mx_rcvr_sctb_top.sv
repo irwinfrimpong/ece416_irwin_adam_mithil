@@ -26,7 +26,7 @@ module mx_rcvr_sctb_top;
    parameter CLKPD = 10;
    parameter BAUD_RATE = 9600;
 
-   logic clk, rst, valid, cardet, error;
+   logic clk, rst, valid, cardet, error, rxd;
    logic [7:0] data;
 
    clk_gen #(.CLKPD(CLKPD)) CG(.clk(clk));
