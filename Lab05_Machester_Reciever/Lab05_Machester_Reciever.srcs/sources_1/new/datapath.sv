@@ -82,7 +82,7 @@ counter #(.MAX_VAL(3)) WAIT_COUNTER(.ct_clr(rst_wait), .clk(clk), .rst(rst), .ct
 counter #(.MAX_VAL(16)) TIMEOUT_COUNTER(.ct_clr(clr_tout), .clk(clk), .rst(rst), .ct_en(t_enb), .br_en(br_8en),.ct_max(timeout_eq));
 
 //SHIFT COUNTER
-counter #(.MAX_VAL(8)) SHIFT_COUNTER(.ct_clr(ct_rst), .clk(clk), .rst(rst), .ct_en(ct_enb), .br_en(1),.ct_max(ct_eq));
+counter #(.MAX_VAL(9)) SHIFT_COUNTER(.ct_clr(ct_rst), .clk(clk), .rst(rst), .ct_en(ct_enb), .br_en(1),.ct_max(ct_eq));
 
 //ERROR COUNTER
 counter #(.MAX_VAL(8)) ERR_COUNTER(.ct_clr(errct_rst), .clk(clk), .rst(rst), .ct_en(br_en), .br_en(br_en),.ct_max(errct_eq));

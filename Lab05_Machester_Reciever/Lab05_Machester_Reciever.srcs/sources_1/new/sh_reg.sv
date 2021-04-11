@@ -26,7 +26,7 @@ module sh_reg #(parameter W=8)(
             d <= 8'd0;
             data <= 8'd0;
         end
-    else if (sh_ld) d <= {edge_det, d[W-1:1]};
     else if (sh_en) data <= d;
+    else if (sh_ld) d <= {edge_det, d[W-1:1]};
     else d <= d;
 endmodule
