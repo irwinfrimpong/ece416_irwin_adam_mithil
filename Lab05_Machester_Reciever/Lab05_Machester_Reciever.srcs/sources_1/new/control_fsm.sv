@@ -21,8 +21,8 @@
 
 
 module control_fsm(
-    input logic clk, rst, sfd_cnt_eq, wait_eq, pre_det, sfd_det, eof_det, edgerise_det, edgefall_det, err_det, br_4en, br_8en, errct_eq, ct_eq, timeout_eq,
-    output logic sfd_cnt_rst, sfd_cnt_enb, enb_wait, rst_wait, rst_pre, rst_sfd, rst_eof, rst_edg, rst_err, br_4st, br_8st, errct_rst, ct_rst, ct_enb, sh_en, sh_ld, clr_cardet, set_cardet, clr_err_reg, set_err_reg, clr_valid, set_valid, clr_tout);
+    input logic clk, rst, sfd_cnt_eq, wait_eq, pre_det, sfd_det, eof_det, edgerise_det, edgefall_det, err_det,br_en, br_4en, br_8en, errct_eq, ct_eq, timeout_eq, sh_ct_max,
+    output logic sfd_cnt_rst, sfd_cnt_enb,t_enb, enb_wait, rst_wait, rst_pre, rst_sfd, rst_eof, rst_edg, rst_err,br_st, br_4st, br_8st, errct_rst, ct_rst, ct_enb, sh_en, sh_ld, clr_cardet, set_cardet, clr_err_reg, set_err_reg, clr_valid, set_valid, clr_tout, set_sh_max, clr_sh_max);
 
     typedef enum logic [2:0]{
     PREAMBLE = 3'd0,
@@ -32,7 +32,6 @@ module control_fsm(
     EDGEWAIT = 3'd4,
     ERRWAIT = 3'd5,
     EOF = 3'd6
-
     } state_t ;
 
     state_t state, next;
@@ -57,6 +56,7 @@ module control_fsm(
         rst_err = 0;
         br_4st = 0;
         br_8st = 0;
+        br_st= 0;
         errct_rst = 0;
         ct_rst = 0;
         ct_enb = 0;
@@ -69,10 +69,14 @@ module control_fsm(
         clr_valid = 0;
         set_valid = 0;
         clr_tout = 0;
+        clr_sh_max = 0;
+        t_enb = 0 ;
+        set_sh_max= 0;
 
         unique case(state)
         PREAMBLE:
         begin
+            clr_sh_max = 1;
             if(pre_det)
             begin
                 next = SFD;
@@ -89,6 +93,8 @@ module control_fsm(
             begin
                 next  = WAIT_LOAD;
                 br_4st = 1;
+                br_st = 1;
+                rst_wait = 1;
             end
             else if(sfd_cnt_eq)
             begin
@@ -102,7 +108,8 @@ module control_fsm(
 
         WAIT_LOAD:
         begin
-            if(br_4en)
+            enb_wait = 1;
+            if(wait_eq)
             begin
                 next = LOAD;
                 clr_err_reg = 1;
@@ -117,6 +124,9 @@ module control_fsm(
             ct_rst = ct_eq ;
             set_valid= ct_eq;
             errct_rst= ct_eq;
+            t_enb = br_8en;
+            set_sh_max = ct_eq;
+            set_err_reg = err_det;
 
             if(edgerise_det || edgefall_det)
             begin
@@ -163,7 +173,7 @@ module control_fsm(
         begin
             clr_valid = 1;
             clr_cardet = 1;
-            set_err_reg = !errct_eq;
+            set_err_reg = !sh_ct_max;
             if(!eof_det) next = PREAMBLE;
             else next = EOF;
         end

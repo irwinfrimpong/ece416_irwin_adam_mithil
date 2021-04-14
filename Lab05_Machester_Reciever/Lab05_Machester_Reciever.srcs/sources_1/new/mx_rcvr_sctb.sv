@@ -112,6 +112,15 @@ module mx_rcvr_sctb(
         end
     endtask: transmit_bits
 
+    task transmit_errorbits;
+        trans = 16'b10_01_00_01_10_10_01_10;
+        for (int i = 0; i <= 15; i++)
+        begin
+            rxd = trans[i];
+            #(BITPD_NS/2);
+        end
+    endtask: transmit_errorbits
+
     task transmit_eof;
         for (int i = 7; i >= 0; i--)
         begin
@@ -133,6 +142,8 @@ module mx_rcvr_sctb(
         sfd_bits;
         $display("Transmitting data at %t", $time);
         transmit_bits;
+        // $display("Transmitting ERROR data at %t", $time);
+        // transmit_errorbits;
         $display("Transmitting EOF at %t", $time);
         transmit_eof;
 
