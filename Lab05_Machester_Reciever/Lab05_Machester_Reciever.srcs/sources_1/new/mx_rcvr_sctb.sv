@@ -95,7 +95,7 @@ module mx_rcvr_sctb(
     endtask: preamble_bytes
 
     task sfd_bits;
-        sfd= 16'b10_10_01_10_01_01_01_01;
+        sfd= 16'b01_01_01_01_10_01_10_10;
         for (int i = 15; i >= 0; i--)
         begin
             rxd = sfd[i];

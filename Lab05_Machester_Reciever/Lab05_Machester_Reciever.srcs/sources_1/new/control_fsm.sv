@@ -120,12 +120,7 @@ module control_fsm(
 
         LOAD:
         begin
-            sh_en = ct_eq ;
-            ct_rst = ct_eq ;
-            set_valid= ct_eq;
-            errct_rst= ct_eq;
             t_enb = br_8en;
-            set_sh_max = ct_eq;
             set_err_reg = err_det;
 
             if(edgerise_det || edgefall_det)
@@ -149,8 +144,15 @@ module control_fsm(
 
         EDGEWAIT:
         begin
+            sh_en = ct_eq ;
+            set_valid= ct_eq;
+            errct_rst= ct_eq;
+            set_sh_max = ct_eq;
+
+
             enb_wait = br_4en;
-            clr_valid = 1;
+            //clr_valid = 1;
+            ct_rst = ct_eq ;
             // rst_edg= 1;
             if(br_4en) next = ERRWAIT;
             else next = EDGEWAIT;

@@ -93,7 +93,7 @@ counter #(.MAX_VAL(8)) ERR_COUNTER(.ct_clr(errct_rst), .clk(clk), .rst(rst), .ct
 
 
 //SHIFT REGISTER
-sh_reg SHIFT_REG (.clk(clk), .rst(rst), .edge_det(~edgerise_det), .sh_en(sh_en), .sh_rst(rst), .sh_ld(sh_ld), .data(data));
+sh_reg SHIFT_REG(.clk(clk), .rst(rst), .edge_det(~edgerise_det), .sh_en(sh_en), .sh_rst(rst), .sh_ld(sh_ld), .data(data));
 
 
 
