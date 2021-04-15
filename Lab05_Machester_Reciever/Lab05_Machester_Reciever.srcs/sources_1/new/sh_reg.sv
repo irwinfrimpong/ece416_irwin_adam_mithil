@@ -22,15 +22,12 @@ module sh_reg #(parameter W=8)(
 
     always_ff @(posedge clk)
     begin
-        if (rst || sh_rst)
-            begin
-                d <= 8'd0;
-                data <= 8'd0;
-            end
+        if (rst || sh_rst) data <= 8'd0;
         else if (sh_en) data <= d;
         else data <= data;
 
-        if (sh_ld) d <= {edge_det, d[W-1:1]};
+        if (rst || sh_rst) d <= 8'd0;
+        else if (sh_ld) d <= {edge_det, d[W-1:1]};
         else d <= d;
     end
 endmodule

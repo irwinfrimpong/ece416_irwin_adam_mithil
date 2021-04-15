@@ -30,11 +30,10 @@ module mx_rcvr_sctb(
     parameter BAUD_RATE = 9600;
     localparam BITPD_NS= 1_000_000_000/ BAUD_RATE; // bit period in ns
     int errcount = 0;
-    logic [7:0] dat_trans;
-    logic [15:0] preamble, sfd , trans;
+    logic [15:0] preamble, sfd, trans;
     parameter  rand_bits = 10;
 
-    task check(data, exp_data, valid, exp_valid, caret, exp_cardet, error, exp_error);
+    task check(data, exp_data, valid, exp_valid, cardet, exp_cardet, error, exp_error);
         if (data != exp_data) begin
             $display("%t error: expected data=%h actual data=%h",
             $time, exp_data, data);
@@ -72,17 +71,16 @@ module mx_rcvr_sctb(
 
     // Transmitting Random Bits
     task random_bits;
-        logic [2*rand_bits-1:0] dat_trans;
-        dat_trans =  {$random } % (4^rand_bits-1);
-        for (int i = 0; i < (2*rand_bits); i++)
+
+        for (int i = 0; i < 199; i++)
         begin
-            rxd = dat_trans[i];
+            rxd = {$random} % 2;
             #(BITPD_NS/2);
         end
     endtask: random_bits
 
 
-    task preamble_bytes(n);
+    task preamble_bytes(input int n);
         preamble= 16'b10_01_10_01_10_01_10_01;
         for (int i = 0; i <= n; i++)
         begin
@@ -91,6 +89,7 @@ module mx_rcvr_sctb(
                 rxd = preamble[j];
                 #(BITPD_NS/2);
             end
+            check(data, data, valid, 0, cardet, 1, error, 0);
         end
     endtask: preamble_bytes
 
@@ -101,24 +100,37 @@ module mx_rcvr_sctb(
             rxd = sfd[i];
             #(BITPD_NS/2);
         end
+        check(data, data, valid, 0, cardet, 1, error, 0);
     endtask: sfd_bits
 
-    task transmit_bits;
-        trans = 16'b01_10_01_10_01_01_01_10;
-        for (int i = 0; i <= 15; i++)
+    task transmit_bits(input logic [7:0] trans_bits);
+        // trans_bits= trans;
+        for (int i = 0; i <= 7; i++)
         begin
-            rxd = trans[i];
+            rxd = trans_bits[i];
+            #(BITPD_NS/2);
+            rxd = ~trans_bits[i];
             #(BITPD_NS/2);
         end
+        check(data, trans, valid, 1, cardet, 1, error, 0);
     endtask: transmit_bits
 
+    task transmit_bytes(input int n);
+        for (int i = 0; i < n; i++)
+        begin
+            transmit_bits(({$random } % 255));
+        end
+
+    endtask: transmit_bytes
+
     task transmit_errorbits;
-        trans = 16'b10_01_00_01_10_10_01_10;
+        trans = 16'b11_11_11_01_10_10_01_10;
         for (int i = 0; i <= 15; i++)
         begin
             rxd = trans[i];
             #(BITPD_NS/2);
         end
+        check(data, data, valid, 0, cardet, 0, error, 1);
     endtask: transmit_errorbits
 
     task transmit_eof;
@@ -127,29 +139,76 @@ module mx_rcvr_sctb(
             rxd = 1;
             #(BITPD_NS/2);
         end
+        check(data, data, valid, 0, cardet, 0, error, 0);
     endtask: transmit_eof
 
     initial begin
         $timeformat(-9, 0, "ns", 6);
-        //$monitor(ferr, oerr, data_in, data_out);
         reset_duv;
 
-        $display("Transmiting Random Bits at %t", $time);
-        random_bits;
+        // $display("Transmiting Random Bits at %t", $time);
+        // random_bits;
+
+        //Test 10a
+        // rxd = 1;
+        // #(BITPD_NS*5);
+        // $display("Transmitting Preamble at %t", $time);
+        // preamble_bytes(2);
+        // $display("Transmitting SFD at %t", $time);
+        // sfd_bits;
+        // $display("Transmitting data at %t", $time);
+        // transmit_bits(8'b10100110);
+        // $display("Transmitting EOF at %t", $time);
+        // transmit_eof;
+        // #(BITPD_NS*5);
+
+        //Test 10b
+        // rxd = 1;
+        // #(BITPD_NS*5);
+        // $display("Transmitting Preamble at %t", $time);
+        // preamble_bytes(2);
+        // $display("Transmitting SFD at %t", $time);
+        // sfd_bits;
+        // $display("Transmitting data at %t", $time);
+        // transmit_bytes(24);
+        // $display("Transmitting EOF at %t", $time);
+        // transmit_eof;
+        // #(BITPD_NS*5);
+
+        //Test 10c
+        // $display("Transmitting random values at %t", $time);
+        // random_bits;
+        // $display("Transmitting Preamble at %t", $time);
+        // preamble_bytes(2);
+        // $display("Transmitting SFD at %t", $time);
+        // sfd_bits;
+        // $display("Transmitting data at %t", $time);
+        // transmit_bytes(1);
+        // $display("Transmitting EOF at %t", $time);
+        // transmit_eof;
+        // $display("Transmitting random values at %t", $time);
+        // random_bits;
+        // #(BITPD_NS*5);
+
+        // Test 10d
+        // $display("Transmitting Preamble at %t", $time);
+        // preamble_bytes(2);
+        // $display("Transmitting SFD at %t", $time);
+        // sfd_bits;
+        // $display("Transmitting ERROR data at %t", $time);
+        // transmit_errorbits;
+
+
+
+        // Test 10e
         $display("Transmitting Preamble at %t", $time);
-        preamble_bytes(5);
+        preamble_bytes(2);
         $display("Transmitting SFD at %t", $time);
         sfd_bits;
         $display("Transmitting data at %t", $time);
-        transmit_bits;
-        // $display("Transmitting ERROR data at %t", $time);
-        // transmit_errorbits;
-        $display("Transmitting EOF at %t", $time);
-        transmit_eof;
-
+        transmit_bytes(1);
         #(BITPD_NS*5);
-        rxd = 0;
-        #(BITPD_NS*5);
+        check(data,data,valid,0,cardet,0,error,1);
 
         report_errors;
         $finish;

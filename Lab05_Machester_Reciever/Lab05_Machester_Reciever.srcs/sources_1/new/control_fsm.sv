@@ -122,6 +122,7 @@ module control_fsm(
         begin
             t_enb = br_8en;
             set_err_reg = err_det;
+            clr_cardet = err_det;
 
             if(edgerise_det || edgefall_det)
             begin
@@ -136,6 +137,7 @@ module control_fsm(
             else if(timeout_eq)
             begin
                 next = PREAMBLE;
+                clr_cardet = 1;
                 set_err_reg = 1;
             end
             else next =  LOAD;
