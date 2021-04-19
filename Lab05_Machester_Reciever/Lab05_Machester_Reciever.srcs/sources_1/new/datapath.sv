@@ -29,7 +29,7 @@ module datapath(
 parameter BIT_RATE = 9600;
 parameter CORLEN = 64;
 parameter CORW = $clog2(CORLEN)+1 ;
-logic l_out_pre, l_out_sfd, l_out_eof, l_out_err, br_st;
+logic l_out_pre, l_out_sfd, l_out_eof, l_out_err;
 logic [CORW-1:0] csum_pre, csum_sfd;
 logic [$clog2(8):0] csum_edgerise, csum_err;
 logic [$clog2(16):0] csum_eof;
@@ -86,7 +86,7 @@ counter #(.MAX_VAL(4)) WAIT_COUNTER(.ct_clr(rst_wait), .clk(clk), .rst(rst), .ct
 counter #(.MAX_VAL(16)) TIMEOUT_COUNTER(.ct_clr(clr_tout), .clk(clk), .rst(rst), .ct_en(t_enb), .br_en(br_8en),.ct_max(timeout_eq));
 
 //SHIFT COUNTER
-counter #(.MAX_VAL(8)) SHIFT_COUNTER(.ct_clr(ct_rst), .clk(clk), .rst(rst), .ct_en(ct_enb), .br_en(1),.ct_max(ct_eq));
+counter #(.MAX_VAL(8)) SHIFT_COUNTER(.ct_clr(ct_rst), .clk(clk), .rst(rst), .ct_en(ct_enb), .br_en(1'b1),.ct_max(ct_eq));
 
 //ERROR COUNTER
 counter #(.MAX_VAL(8)) ERR_COUNTER(.ct_clr(errct_rst), .clk(clk), .rst(rst), .ct_en(br_en), .br_en(br_en),.ct_max(errct_eq));
