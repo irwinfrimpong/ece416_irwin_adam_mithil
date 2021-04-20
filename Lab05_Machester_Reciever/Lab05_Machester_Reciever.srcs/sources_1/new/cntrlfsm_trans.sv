@@ -83,7 +83,35 @@ module cntrlfsm_trans(
                 rdy = 1'b0;
                 txen = 1'b1;
                 txd_idle_en = 1'b0;
-                if(ct_eq15 && enb_2x)
+                // if(ct_eq15 && enb_2x)
+                // begin
+                //     next= IDLEBITS;
+                //     txd_idle_en = 1'b1;
+                //     rdy= 1'b1; // Ready should be 1 one clock cycle before
+                //     sh_en= 1'b0;
+                //     ct_clr = 1'b1;
+                //     idle_clr = 1'b1;
+                // end
+                // else if (ct_eq15 && valid )
+                // begin
+                //     next = SHIFT;
+                //     rdy= 1'b1; // Ready should be 1 one clock cycle before
+                //     sh_ld = 1'b1;
+                //     sh_idle = 1'b0;
+                //     ct_clr = 1'b1;
+                //     sq_clr= 1'b1;
+                // end
+                if (ct_eq15 && valid )
+                begin
+                    next = SHIFT;
+                    rdy= 1'b1; // Ready should be 1 one clock cycle before
+                    sh_ld = 1'b1;
+                    br_st = 1'b1; // just added for lab 5
+                    sh_idle = 1'b0;
+                    ct_clr = 1'b1;
+                    sq_clr= 1'b1;
+                end
+                else if(ct_eq15 && enb_2x)
                 begin
                     next= IDLEBITS;
                     txd_idle_en = 1'b1;
@@ -91,15 +119,6 @@ module cntrlfsm_trans(
                     sh_en= 1'b0;
                     ct_clr = 1'b1;
                     idle_clr = 1'b1;
-                end
-                else if (ct_eq15 && valid )
-                begin
-                    next = SHIFT;
-                    rdy= 1'b1; // Ready should be 1 one clock cycle before
-                    sh_ld = 1'b1;
-                    sh_idle = 1'b0;
-                    ct_clr = 1'b1;
-                    sq_clr= 1'b1;
                 end
                 else next = SHIFT;
 

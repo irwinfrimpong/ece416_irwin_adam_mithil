@@ -28,7 +28,7 @@ module trans_rcvr_sctb_top;
 
     logic clk, rst, cardet, error, txen, send;
     logic [5:0] length;
-    logic [7:0] data_in, data_out;
+    logic [7:0] data_out;
 
     clk_gen #(.CLKPD(CLKPD)) CG(.clk(clk));
 

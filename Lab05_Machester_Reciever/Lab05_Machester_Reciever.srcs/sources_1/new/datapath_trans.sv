@@ -40,6 +40,6 @@ module datapath_trans(
 
     shreg_trans SH_REG(.clk(clk), .sh_ld(sh_ld), .sh_idle(sh_idle), .sh_en(sh_en), .rst(rst), .br_en(br_en), .data(data), .txd(NRZ_out));
 
-    txd_output txd_out( .clk(clk), .rst(rst), .NRZ(NRZ_out),.enb(enb2x_out),.sq_wave(~sq_wave), .txd_idle_en(txd_idle_en), .txd(txd));
+    txd_output txd_out( .clk(clk), .rst(rst), .NRZ(NRZ_out),.sq_wave(~sq_wave), .txd_idle_en(txd_idle_en), .txd(txd));
 
 endmodule

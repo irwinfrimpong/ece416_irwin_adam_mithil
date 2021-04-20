@@ -28,10 +28,10 @@ module manchester_xmit(
 
     parameter BAUD_RATE = 9600;
 
-    logic idle_clr, idle_en, idle_biteq, ct_en, ct_clr, ct_eq15, br_en, br_st, br2_st, sh_idle, sh_ld, sh_en, txd_idle_en,txen_reg, enb2x_out, sq_clr;
+    logic idle_clr, idle_en, idle_biteq, ct_en, ct_clr, ct_eq15, br_en, br_st, br2_st, sh_idle, sh_ld, sh_en, txd_idle_en, enb2x_out, sq_clr;
 
     datapath_trans #(.BAUD_RATE(BAUD_RATE)) DATAPATH(.clk(clk),.rst(rst),.idle_clr(idle_clr), .idle_en(idle_en), .ct_en(ct_en), .ct_clr(ct_clr), .br_st(br_st), .br2_st(br2_st), .sh_idle(sh_idle), .sh_ld(sh_ld), .sh_en(sh_en),.sq_clr(sq_clr),.data(data), .ct_eq15(ct_eq15), .idle_biteq(idle_biteq), .br_en(br_en), .txd(txd), .txd_idle_en(txd_idle_en), .enb2x_out(enb2x_out));
     cntrlfsm_trans CONTROLLER(.valid(valid), .clk(clk), .ct_eq15(ct_eq15),.enb_2x(enb2x_out),.rst(rst), .br_en(br_en), .idle_biteq(idle_biteq), .rdy(rdy), .sh_ld(sh_ld), .sh_idle(sh_idle), .sh_en(sh_en), .br_st(br_st), .ct_clr(ct_clr), .ct_en(ct_en), .br_2st(br2_st),
-    .idle_clr(idle_clr), .idle_en(idle_en), .txen(txen_reg), .txd_idle_en(txd_idle_en), .sq_clr(sq_clr));
-    dreg_trans #(.W(1)) DELAYTXEN(.clk(clk), .rst(rst),.enb(enb2x_out),.d(txen_reg), .q(txen));
+    .idle_clr(idle_clr), .idle_en(idle_en), .txen(txen), .txd_idle_en(txd_idle_en), .sq_clr(sq_clr));
+    // dreg_trans #(.W(1)) DELAYTXEN(.clk(clk), .rst(rst),.enb(enb2x_out),.d(txen_reg), .q(txen));
 endmodule

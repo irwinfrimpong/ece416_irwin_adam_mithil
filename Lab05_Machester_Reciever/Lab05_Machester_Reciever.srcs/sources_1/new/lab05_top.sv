@@ -40,6 +40,6 @@ module lab05_top(
     mx_rcvr #(.BIT_RATE(BAUD_RATE)) U_RECEIVER(.clk(clk), .rst(rst), .rxd(txd), .valid(valid), .cardet(cardet), .error(error), .data(data_out));
 
     // TRANSMITTER
-    manchester_xmit #(.BAUD_RATE(BAUD_RATE)) U_TRANSMITTER(.clk(clk),.rst(rst),.valid(valid), .data(data_in), .rdy(rdy), .txen(txen), .txd(txd));
+    manchester_xmit #(.BAUD_RATE(9696)) U_TRANSMITTER(.clk(clk),.rst(rst),.valid(valid), .data(data_in), .rdy(rdy), .txen(txen), .txd(txd));
 
 endmodule
