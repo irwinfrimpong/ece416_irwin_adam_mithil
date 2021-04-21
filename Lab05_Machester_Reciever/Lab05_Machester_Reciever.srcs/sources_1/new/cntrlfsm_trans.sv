@@ -106,7 +106,8 @@ module cntrlfsm_trans(
                     next = SHIFT;
                     rdy= 1'b1; // Ready should be 1 one clock cycle before
                     sh_ld = 1'b1;
-                    br_st = 1'b1; // just added for lab 5
+                    br_st = 1'b1; // just added for lab 5 (4/19)
+                    br_2st = 1'b1; // just added for lab 5(4/20)
                     sh_idle = 1'b0;
                     ct_clr = 1'b1;
                     sq_clr= 1'b1;

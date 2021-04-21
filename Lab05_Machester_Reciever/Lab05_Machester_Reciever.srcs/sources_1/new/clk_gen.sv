@@ -1,3 +1,4 @@
+`timescale 1ns / 1ps
 //-----------------------------------------------------------------------------
 // Module Name   : clk_gen
 // Project       : RTL Hardware Design and Verification using SystemVerilog
