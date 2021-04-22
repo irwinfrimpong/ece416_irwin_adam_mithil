@@ -1,33 +1,27 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company:
-// Engineer:
-//
+// Company: Lafayette College
+// Engineer: Adam Tunnell, Mithil Shah, Irwin Frimpong
 // Create Date: 04/15/2021 03:33:34 PM
-// Design Name:
+// Design Name: Manchester Reciever
 // Module Name: trans_rcvr_sctb
-// Project Name:
-// Target Devices:
-// Tool Versions:
-// Description:
-//
+// Project Name: Manchester Receiver Implementation
 // Dependencies:
-//
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-//
+// Description: Self checking testbench for macnhester reciever
 //////////////////////////////////////////////////////////////////////////////////
 
 
 module trans_rcvr_sctb(
     input logic clk, cardet, error, txen,
     input logic [7:0] data_rec,
-    output logic [7:0] data_trans,
+    //output logic [7:0] data_trans, 1% error 4/22
     output logic [5:0] length,
-    output logic rst, send,btnd
+    //output logic rst, send,btnd
+    output logic rst, send
     );
 
+
+    logic [7:0] data_trans; // 1% error 4/22
     parameter CLOCK_PD = 10;  // clock period in nanoseconds
     parameter BAUD_RATE = 9600;
     localparam BITPD_NS= 1_000_000_000/ BAUD_RATE; // bit period in ns
@@ -139,16 +133,14 @@ module trans_rcvr_sctb(
         // #(BITPD_NS*10);
         $display("Transmitting DATA at %t", $time);
         send = 1 ;
-        btnd = 0;
+        //btnd = 0;
         length= 'd32;
         #(CLOCK_PD)
         send = 0;
         $display("Transmitting EOF at %t", $time);
         // #(BITPD_NS*10);
         while(data_rec != "u") #(CLOCK_PD);
-        #(BITPD_NS)
-        btnd = 1;
-        #(BITPD_NS*15)
+        #(BITPD_NS*30);
 //MAX LENGTH TEST
         // $display("Transmitting Preamble at %t", $time);
         // transmit_preamble_bytes(1);

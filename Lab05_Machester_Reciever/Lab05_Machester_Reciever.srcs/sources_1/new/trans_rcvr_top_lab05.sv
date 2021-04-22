@@ -1,22 +1,16 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company:
-// Engineer:
+// Company: Lafayette College
+// Engineer:Mithil Shah, Irwin Frimpong, Adam Tunnell
 //
 // Create Date: 04/20/2021 09:18:29 PM
-// Design Name:
+// Design Name: Macnhester Reciever
 // Module Name: trans_rcvr_top_lab05
-// Project Name:
-// Target Devices:
-// Tool Versions:
-// Description:
+// Project Name: Manchester Receiver Implementation
 //
-// Dependencies:
+// Description: Top Level file for hardware
 //
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-//
+// Dependencies: single_pulser,mxtest_21,mx_rcvr,manchester_xmit, sync_fifo, uart_trans_top,sevenseg_ctl
 //////////////////////////////////////////////////////////////////////////////////
 
 
@@ -57,7 +51,7 @@ module trans_rcvr_top_lab05(
     // UART TRANSMITTER
     uart_trans_top UART_XMIT(.clk(clk) , .rst(rst), .valid(btnd_pulse),.data(buffer_out),.txd(uart_txd),.rdy(uart_rdy));
 
-    // SEVEN SEG DISPLAY
+    // SEVEN SEG DISPLAY - displaying fifo contents as they are popped on the seven seg display
     sevenseg_ctl SEVENSEG_CTL (.clk(clk), .rst(rst), .d7({datacon,buffer_out[7]}), .d6({datacon,buffer_out[6]}), .d5({datacon,buffer_out[5]}), .d4({datacon,buffer_out[4]}), .d3({datacon,buffer_out[3]}), .d2({datacon,buffer_out[2]}), .d1({datacon,buffer_out[1]}),.d0({datacon,buffer_out[0]}), .segs_n(segs_n),.dp_n(dp), .an_n(an_n));
-    //sevenseg_ctl SEVENSEG_CTL (.clk(clk), .rst(rst), .d7({datacon,data_out[7]}), .d6({datacon,data_out[6]}), .d5({datacon,data_out[5]}), .d4({datacon,data_out[4]}), .d3({datacon,data_out[3]}), .d2({datacon,data_out[2]}), .d1({datacon,data_out[1]}),.d0({datacon,data_out[0]}), .segs_n(segs_n),.dp_n(dp), .an_n(an_n));
+
 endmodule

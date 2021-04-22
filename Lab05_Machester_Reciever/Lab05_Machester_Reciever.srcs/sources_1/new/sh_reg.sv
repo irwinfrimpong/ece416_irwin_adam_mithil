@@ -4,10 +4,10 @@
 // Engineer: Adam Tunnell, Mithil Shah, Irwin Frimpong
 //
 // Create Date: 03/17/2021 09:35:37 PM
-// Design Name: UART Receiver
+// Design Name: Manchester Receiver
 // Module Name: sh_reg
-// Project Name: UART Receiver
-// Description: shift register for UART Receiver, shifts in one bit at a time
+// Project Name: Manchester Receiver Implementation
+// Description: shift register for Manchester Recever , shifts in one bit at a time
 // and outputs the stored bits on enable
 //
 //////////////////////////////////////////////////////////////////////////////////

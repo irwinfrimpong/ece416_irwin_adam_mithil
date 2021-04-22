@@ -1,22 +1,13 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company:
-// Engineer:
+// Company: Lafayette College
+// Engineer:Adam Tunnell, Mithil Shah, Irwin Frimpong
 //
 // Create Date: 04/07/2021 08:07:10 PM
-// Design Name:
+// Design Name: Manchester Reciever
 // Module Name: mx_rcvr_sctb
-// Project Name:
-// Target Devices:
-// Tool Versions:
-// Description:
-//
-// Dependencies:
-//
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-//
+// Project Name: Manchester Receiver Implementation
+// Description: Self checking testbemch for Manchester Reciever 
 //////////////////////////////////////////////////////////////////////////////////
 
 
@@ -105,14 +96,31 @@ module mx_rcvr_sctb(
 
     task transmit_bits(input logic [7:0] trans_bits);
         // trans_bits= trans;
+        int no_valid = 1;
         for (int i = 0; i <= 7; i++)
         begin
             rxd = trans_bits[i];
             #(BITPD_NS/2);
             rxd = ~trans_bits[i];
-            #(BITPD_NS/2);
+            // (BITPD_NS/2);
+            for(int a = 0; a < 100; a++)
+            begin
+                if(valid) no_valid = 0;
+                #(BITPD_NS/200);
+            end
         end
-        check(data, trans, valid, 1, cardet, 1, error, 0);
+        for(int a = 0; a < 20; a++)
+        begin
+            if(valid) no_valid = 0;
+            #(BITPD_NS/200);
+        end
+        check(data, trans, valid, valid, cardet, 1, error, 0);
+        if(no_valid)
+        begin
+            errcount++;
+            $display("%t error: no valid asserted at end of frame",
+                $time);
+        end
     endtask: transmit_bits
 
     task transmit_bytes(input int n);
@@ -146,58 +154,54 @@ module mx_rcvr_sctb(
         $timeformat(-9, 0, "ns", 6);
         reset_duv;
 
-        // $display("Transmiting Random Bits at %t", $time);
-        // random_bits;
-
-        //Test 10a
-        // rxd = 1;
-        // #(BITPD_NS*5);
-        // $display("Transmitting Preamble at %t", $time);
-        // preamble_bytes(2);
-        // $display("Transmitting SFD at %t", $time);
-        // sfd_bits;
-        // $display("Transmitting data at %t", $time);
-        // transmit_bits(8'b10100110);
-        // $display("Transmitting EOF at %t", $time);
-        // transmit_eof;
-        // #(BITPD_NS*5);
+        // //Test 10a
+        rxd = 1;
+        #(BITPD_NS*5);
+        $display("Transmitting Preamble at %t", $time);
+        preamble_bytes(2);
+        $display("Transmitting SFD at %t", $time);
+        sfd_bits;
+        $display("Transmitting data at %t", $time);
+        transmit_bits(8'b10100110);
+        $display("Transmitting EOF at %t", $time);
+        transmit_eof;
+        #(BITPD_NS*5);
 
         //Test 10b
-        // rxd = 1;
-        // #(BITPD_NS*5);
-        // $display("Transmitting Preamble at %t", $time);
-        // preamble_bytes(2);
-        // $display("Transmitting SFD at %t", $time);
-        // sfd_bits;
-        // $display("Transmitting data at %t", $time);
-        // transmit_bytes(24);
-        // $display("Transmitting EOF at %t", $time);
-        // transmit_eof;
-        // #(BITPD_NS*5);
+        rxd = 1;
+        #(BITPD_NS*5);
+        $display("Transmitting Preamble at %t", $time);
+        preamble_bytes(2);
+        $display("Transmitting SFD at %t", $time);
+        sfd_bits;
+        $display("Transmitting data at %t", $time);
+        transmit_bytes(24);
+        $display("Transmitting EOF at %t", $time);
+        transmit_eof;
+        #(BITPD_NS*5);
 
         //Test 10c
-        // $display("Transmitting random values at %t", $time);
-        // random_bits;
-        // $display("Transmitting Preamble at %t", $time);
-        // preamble_bytes(2);
-        // $display("Transmitting SFD at %t", $time);
-        // sfd_bits;
-        // $display("Transmitting data at %t", $time);
-        // transmit_bytes(1);
-        // $display("Transmitting EOF at %t", $time);
-        // transmit_eof;
-        // $display("Transmitting random values at %t", $time);
-        // random_bits;
-        // #(BITPD_NS*5);
+        $display("Transmitting random values at %t", $time);
+        random_bits;
+        $display("Transmitting Preamble at %t", $time);
+        preamble_bytes(2);
+        $display("Transmitting SFD at %t", $time);
+        sfd_bits;
+        $display("Transmitting data at %t", $time);
+        transmit_bytes(1);
+        $display("Transmitting EOF at %t", $time);
+        transmit_eof;
+        $display("Transmitting random values at %t", $time);
+        random_bits;
+        #(BITPD_NS*5);
 
         // Test 10d
-        // $display("Transmitting Preamble at %t", $time);
-        // preamble_bytes(2);
-        // $display("Transmitting SFD at %t", $time);
-        // sfd_bits;
-        // $display("Transmitting ERROR data at %t", $time);
-        // transmit_errorbits;
-
+        $display("Transmitting Preamble at %t", $time);
+        preamble_bytes(2);
+        $display("Transmitting SFD at %t", $time);
+        sfd_bits;
+        $display("Transmitting ERROR data at %t", $time);
+        transmit_errorbits;
 
 
         // Test 10e
