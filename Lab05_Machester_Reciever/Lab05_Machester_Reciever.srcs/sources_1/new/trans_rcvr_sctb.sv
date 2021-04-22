@@ -25,7 +25,7 @@ module trans_rcvr_sctb(
     input logic [7:0] data_rec,
     output logic [7:0] data_trans,
     output logic [5:0] length,
-    output logic rst, send
+    output logic rst, send,btnd
     );
 
     parameter CLOCK_PD = 10;  // clock period in nanoseconds
@@ -136,15 +136,19 @@ module trans_rcvr_sctb(
         //transmit_preamble_bytes(1);
         //$display("Transmitting SFD at %t", $time);
         //transmit_sfd;
+        // #(BITPD_NS*10);
         $display("Transmitting DATA at %t", $time);
         send = 1 ;
+        btnd = 0;
         length= 'd32;
         #(CLOCK_PD)
         send = 0;
         $display("Transmitting EOF at %t", $time);
-        // #(BITPD_NS*50);
-        while(data_rec != "E") #(BITPD_NS);
-
+        // #(BITPD_NS*10);
+        while(data_rec != "u") #(CLOCK_PD);
+        #(BITPD_NS)
+        btnd = 1;
+        #(BITPD_NS*15)
 //MAX LENGTH TEST
         // $display("Transmitting Preamble at %t", $time);
         // transmit_preamble_bytes(1);
