@@ -7,7 +7,7 @@
 // Design Name: Manchester Reciever
 // Module Name: mx_rcvr_sctb
 // Project Name: Manchester Receiver Implementation
-// Description: Self checking testbemch for Manchester Reciever 
+// Description: Self checking testbemch for Manchester Reciever
 //////////////////////////////////////////////////////////////////////////////////
 
 

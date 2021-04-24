@@ -24,14 +24,6 @@ module trans_rcvr_sctb_top;
     logic [7:0] data_out;
     clk_gen #(.CLKPD(CLKPD)) CG(.clk(clk));
 
-    //lab05_top #(.BAUD_RATE(BAUD_RATE)) DUV(.clk(clk), .rst(rst), .data_in(data_in), .cardet(cardet), .error(error), .txen(txen), .data_out(data_out),.send(send),.length(length));
-    //lab05_top #(.BAUD_RATE(BAUD_RATE)) DUV(.clk(clk), .rst(rst),.cardet(cardet), .error(error), .txen(txen), .data_out(data_out),.send(send),.length(length), .btnd(btnd));
-
-
-    //trans_rcvr_sctb #(.BAUD_RATE(BAUD_RATE)) SCTB(.clk(clk), .rst(rst), .cardet(cardet), .error(error), .txen(txen), .data_trans(data_in), .data_rec(data_out), .send(send), .length(length));
-    //trans_rcvr_sctb #(.BAUD_RATE(BAUD_RATE)) SCTB(.clk(clk), .rst(rst), .cardet(cardet), .error(error), .txen(txen), .data_rec(data_out), .send(send), .length(length),.btnd(btnd));
-
-    // 4/22 1%
     lab05_top #(.BAUD_RATE(BAUD_RATE)) DUV(.clk(clk), .rst(rst),.cardet(cardet), .error(error), .txen(txen), .data_out(data_out),.send(send),.length(length));
     trans_rcvr_sctb #(.BAUD_RATE(BAUD_RATE)) SCTB(.clk(clk), .rst(rst), .cardet(cardet), .error(error), .txen(txen),.data_rec(data_out), .send(send), .length(length));
 endmodule

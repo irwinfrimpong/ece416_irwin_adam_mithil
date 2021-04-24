@@ -6,7 +6,7 @@
 // Design Name: Manchester Reciever
 // Module Name: control_fsm
 // Project Name: Manchester Receiver Implementation
-// Description: Control FSM for Manchester Reciever 
+// Description: Control FSM for Manchester Reciever
 //////////////////////////////////////////////////////////////////////////////////
 
 module control_fsm(

@@ -139,7 +139,7 @@ module trans_rcvr_sctb(
         send = 0;
         $display("Transmitting EOF at %t", $time);
         // #(BITPD_NS*10);
-        while(data_rec != "u") #(CLOCK_PD);
+        while(data_rec != "E") #(CLOCK_PD);
         #(BITPD_NS*30);
 //MAX LENGTH TEST
         // $display("Transmitting Preamble at %t", $time);

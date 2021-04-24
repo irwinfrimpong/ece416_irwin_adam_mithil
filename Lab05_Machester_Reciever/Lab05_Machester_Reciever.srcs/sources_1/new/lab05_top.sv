@@ -30,15 +30,9 @@ module lab05_top(
     // RECIEVER
     mx_rcvr #(.BIT_RATE(BAUD_RATE)) U_RECEIVER(.clk(clk), .rst(rst), .rxd(txd), .valid(buffer_valid), .cardet(cardet), .error(error), .data(data_out));
 
-    //single_pulser U_SP (.clk(clk), .din(buffer_valid), .d_pulse(buffer_pulse));
-
     // TRANSMITTER
-    manchester_xmit #(.BAUD_RATE(9696)) U_TRANSMITTER(.clk(clk),.rst(rst),.valid(valid), .data(data_in), .rdy(rdy), .txen(txen), .txd(txd));
+    manchester_xmit #(.BAUD_RATE(BAUD_RATE)) U_TRANSMITTER(.clk(clk),.rst(rst),.valid(valid), .data(data_in), .rdy(rdy), .txen(txen), .txd(txd));
 
-    // FIFO
-    //sync_fifo #(.DEPTH(32)) U_FIFO(.clk(clk), .rst(rst), .push(buffer_pulse),.pop(btnd),.din(data_out),.dout(buffer_out),.full(full),.empty(empty));
 
-    // UART TRANSMITTER
-    //uart_trans_top UART_XMIT(.clk(clk) , .rst(rst), .valid(btnd),.data(buffer_out),.txd(uart_txd),.rdy(uart_rdy));
 
 endmodule

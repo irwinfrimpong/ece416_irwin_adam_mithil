@@ -45,6 +45,7 @@ module cntrlfsm_trans(
         txen = 1'b0;
         idle_en = 1'b0;
         sq_clr= 1'b0;
+        txd_idle_en= 1'b0;
         case(state)
             IDLE:
             begin
