@@ -106,6 +106,8 @@ module control_fsm(
                 next = LOAD;
                 clr_err_reg = 1;
                 ct_rst = 1;
+                clr_tout = 1; // added 4/27 lab 6
+                clr_sh_max = 1; // added 4/27 lab 6
             end
             else next = WAIT_LOAD;
         end
@@ -124,6 +126,7 @@ module control_fsm(
                 clr_tout= 1'b1;
                 errwaitct_rst = 1'b1;
                 br_8st = 1'b1;
+                clr_sh_max = ~ct_eq; //added 4/27 for lab 6
                 next= EDGEWAIT;
             end
             else if(eof_det) next= EOF;
