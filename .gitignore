@@ -4,6 +4,7 @@ Lab02_Serial_Data_Transmitter/Lab02_Serial_Data_Transmitter.cache/
 lab03_manchestor_transmitter/lab03_manchestor_transmitter.cahce/
 Lab04_Asynchronous_Serial_Receiver/Lab04_Asynchronous_Serial_Receiver.cache/
 Lab05_Machester_Reciever/Lab05_Machester_Reciever.cache/
+Lab05_Constrained_Random_Simulation/Lab05_Constrained_Random_Simulation.cache/
 
 #Ignoring hw directory
 Lab01_7Seg_LED_Ctrller/Lab01_7Seg_LED_Ctrller.hw/
@@ -11,13 +12,14 @@ Lab02_Serial_Data_Transmitter/Lab02_Serial_Data_Transmitter.hw/
 lab03_manchestor_transmitter/lab03_manchestor_transmitter.hw/
 Lab04_Asynchronous_Serial_Receiver/Lab04_Asynchronous_Serial_Receiver.hw/
 Lab05_Machester_Reciever/Lab05_Machester_Reciever.hw/
-
+Lab05_Constrained_Random_Simulation/Lab05_Constrained_Random_Simulation.hw/
 #Ignoring ip_user_files directory
 Lab01_7Seg_LED_Ctrller/Lab01_7Seg_LED_Ctrller.ip_user_files/
 Lab02_Serial_Data_Transmitter/Lab02_Serial_Data_Transmitter.ip_user_files/
 lab03_manchestor_transmitter/lab03_manchestor_transmitter.ip_user_files/
 Lab04_Asynchronous_Serial_Receiver/Lab04_Asynchronous_Serial_Receiver.ip_user_files/
 Lab05_Machester_Reciever/Lab05_Machester_Reciever.ip_user_files/
+Lab05_Constrained_Random_Simulation/Lab05_Constrained_Random_Simulation.ip_user_files/
 
 #Ignoring runs directory
 Lab01_7Seg_LED_Ctrller/Lab01_7Seg_LED_Ctrller.runs/
@@ -25,6 +27,7 @@ Lab02_Serial_Data_Transmitter/Lab02_Serial_Data_Transmitter.runs/
 lab03_manchestor_transmitter/lab03_manchestor_transmitter.runs/
 Lab04_Asynchronous_Serial_Receiver/Lab04_Asynchronous_Serial_Receiver.runs/
 Lab05_Machester_Reciever/Lab05_Machester_Reciever.runs/
+Lab05_Constrained_Random_Simulation/Lab05_Constrained_Random_Simulation.runs/
 
 
 #Ignoring sim directory
