@@ -1,0 +1,41 @@
+
+ Options Set are : 
+
+   Command Line               : xcrg -report_format html -dir xsim.covdb
+   Help                       : 0
+   File                       : 
+   Input Dir[s]               : xsim.covdb
+   Merge Dir                  : xsim.covdb
+   Merge DB Name              : xcrg_mdb
+   Report Directory           : ./xcrg_report
+   Report Format              : html
+   Code Coverage DB Path      : 
+   Merge Code Coverage        : false 
+   Show Full File in Report   : false 
+   Log File                   : xcrg.log
+   Invocation Name            : C:/Xilinx/Vivado/2020.2/bin/unwrapped/win64.o/xcrg.exe
+
+
+                  Functional Coverage Report 
+
+ Restoring Coverage DB[s] from : 
+  1	xsim.covdb\mr_random_top_behav\xsim.covinfo
+
+
+ Creating Output Directory            : xsim.covdb/xcrg_mdb
+
+ Saving the Coverage Info at          : xsim.covdb/xcrg_mdb/xsim.covinfo
+
+ XILINX VIVADO is set as              : C:/Xilinx/Vivado/2020.2
+
+ Setting the report dir name as       : ./xcrg_report
+
+ INFO : Destination directory ./xcrg_report/.css is being overwritten
+ INFO : Destination directory ./xcrg_report/.js is being overwritten
+ INFO : Destination directory ./xcrg_report/.reportStyles is being overwritten
+ Creating dashboard.html 
+
+ Creating groups.html 
+
+ Creating grp0.html 
+
