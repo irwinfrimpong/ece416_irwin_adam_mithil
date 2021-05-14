@@ -5,6 +5,7 @@ lab03_manchestor_transmitter/lab03_manchestor_transmitter.cahce/
 Lab04_Asynchronous_Serial_Receiver/Lab04_Asynchronous_Serial_Receiver.cache/
 Lab05_Machester_Reciever/Lab05_Machester_Reciever.cache/
 Lab05_Constrained_Random_Simulation/Lab05_Constrained_Random_Simulation.cache/
+wimpfi_project/wimpfi_project.cache/
 
 #Ignoring hw directory
 Lab01_7Seg_LED_Ctrller/Lab01_7Seg_LED_Ctrller.hw/
@@ -13,6 +14,8 @@ lab03_manchestor_transmitter/lab03_manchestor_transmitter.hw/
 Lab04_Asynchronous_Serial_Receiver/Lab04_Asynchronous_Serial_Receiver.hw/
 Lab05_Machester_Reciever/Lab05_Machester_Reciever.hw/
 Lab05_Constrained_Random_Simulation/Lab05_Constrained_Random_Simulation.hw/
+wimpfi_project/wimpfi_project.hw/
+
 #Ignoring ip_user_files directory
 Lab01_7Seg_LED_Ctrller/Lab01_7Seg_LED_Ctrller.ip_user_files/
 Lab02_Serial_Data_Transmitter/Lab02_Serial_Data_Transmitter.ip_user_files/
@@ -20,6 +23,7 @@ lab03_manchestor_transmitter/lab03_manchestor_transmitter.ip_user_files/
 Lab04_Asynchronous_Serial_Receiver/Lab04_Asynchronous_Serial_Receiver.ip_user_files/
 Lab05_Machester_Reciever/Lab05_Machester_Reciever.ip_user_files/
 Lab05_Constrained_Random_Simulation/Lab05_Constrained_Random_Simulation.ip_user_files/
+wimpfi_project/wimpfi_project.ip_user_files/
 
 #Ignoring runs directory
 Lab01_7Seg_LED_Ctrller/Lab01_7Seg_LED_Ctrller.runs/
@@ -28,6 +32,7 @@ lab03_manchestor_transmitter/lab03_manchestor_transmitter.runs/
 Lab04_Asynchronous_Serial_Receiver/Lab04_Asynchronous_Serial_Receiver.runs/
 Lab05_Machester_Reciever/Lab05_Machester_Reciever.runs/
 Lab05_Constrained_Random_Simulation/Lab05_Constrained_Random_Simulation.runs/
+wimpfi_project/wimpfi_project.runs/
 
 
 #Ignoring sim directory
@@ -36,6 +41,7 @@ Lab02_Serial_Data_Transmitter/Lab02_Serial_Data_Transmitter.sim/
 lab03_manchestor_transmitter/lab03_manchestor_transmitter.sim/
 Lab04_Asynchronous_Serial_Receiver/Lab04_Asynchronous_Serial_Receiver.sim/
 Lab05_Machester_Reciever/Lab05_Machester_Reciever.sim/
+wimpfi_project/wimpfi_project.sim/
 
 #Ignoring the Vivado Project File
 Lab01_7Seg_LED_Ctrller/.xpr
@@ -43,3 +49,4 @@ Lab02_Serial_Data_Transmitter/.xpr
 lab03_manchestor_transmitter/.xpr
 Lab04_Asynchronous_Serial_Receiver/.xpr
 Lab05_Machester_Reciever/.xpr
+wimpfi_project/wimpfi_project/.xpr
