@@ -21,7 +21,7 @@
 
 // Reciver top level to test recieving data
 module datapath_2(input logic clk,rst,rxd,
-    output logic dp_n, a_txd,
+    output logic dp_n, a_txd, cfgclk,cfgdat,
     output logic [7:0] an_n,
     output logic [6:0] segs_n
     );
@@ -32,10 +32,12 @@ module datapath_2(input logic clk,rst,rxd,
     logic [3:0] hundreds_rcvr, tens_rcvr, ones_rcvr;
 
     assign blank = '0;
-
+    assign cfgclk = '1 ;
+    assign cfgdat = '1;
+    
     reciever RECIEVER (.clk(clk) ,.rst(rst),.rxd(rxd),.rrdy(rrdy),.rvalid(rvalid),.cardet(cardet),.rdata(rdata), .rerrcnt(rerrcnt));
 
-    uart_xmit #(.BAUD_RATE(9600)) SERIAL_TRANS (.clk(clk) , .rst(rst), .valid(valid), .data(rdata), .txd(a_txd), .rdy(rrdy));
+    uart_xmit #(.BAUD_RATE(9600)) SERIAL_TRANS (.clk(clk) , .rst(rst), .valid(rvalid), .data(rdata), .txd(a_txd), .rdy(rrdy));
 
     dbl_dabble BCD_RCVR (.b(rerrcnt), .hundreds(hundreds_rcvr), .tens(tens_rcvr), .ones(ones_rcvr));
 

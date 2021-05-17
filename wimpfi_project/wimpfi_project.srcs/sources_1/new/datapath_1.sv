@@ -37,7 +37,7 @@ module datapath_1(input logic clk, rst, a_rxd, cardet,
 
     datapath XMIT_DATAPATH(.clk(clk), .rst(rst),.xvalid(xvalid), .xsend(xsend), .cardet(cardet),.xdata(xdata),.xrdy(xrdy), .txen(txen), .txd(txd),.xerrcnt(xerrnt));
 
-    module xmit_adapter(.clk(clk), .rst(rst), .xrdy(xrdy), .valid(valid), .data(data), .xvalid(xvalid), .xsend(xsend), .rdy(rdy), .xdata(xdata));
+    xmit_adapter XMIT_ADAPTER(.clk(clk), .rst(rst), .xrdy(xrdy), .valid(valid), .data(data), .xvalid(xvalid), .xsend(xsend), .rdy(rdy), .xdata(xdata));
 
     uart_rcvr #(.BAUD_RATE(9600)) SERIAL_RCVR(.clk(clk),.rst(rst),.rxd(rxd),.rdy(rdy),.valid(calid),.ferr(ferr),.oerr(oerr),.data(data));
 

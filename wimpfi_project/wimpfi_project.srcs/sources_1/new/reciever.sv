@@ -31,7 +31,7 @@ module reciever(
     parameter BAUD_RATE = 50_000 ;
 
     // rst | rvalid to address the req of ignoring incoming frame until all bytes are read from buffer
-    mx_rcvr #(.BIT_RATE(BAUD_RATE)) U_RECEIVER(.clk(clk), .rst(rst|rvalid), .rxd(rxd), .valid(valid_fifo), .cardet(cardet), .error(error), .data(data_rcvr));
+    mx_rcvr #(.BIT_RATE(BAUD_RATE)) U_RECEIVER(.clk(clk), .rst(rst|rvalid_c), .rxd(rxd), .valid(valid_fifo), .cardet(cardet), .error(error), .data(data_rcvr));
     single_pulser SINGLE_PULSER (.clk(clk), .din(error),.d_pulse(error_pulse)) ;
     mac_check MAC_ADDY_CHECK (.clk(clk),.rst(rst),.rec_buffer_clr(rec_buffer_clr),.data_in(data_rcvr), .push(push));
     single_pulser PUSH_PULSER (.clk(clk), .din(valid_fifo & push),.d_pulse(push_pulse)) ;
@@ -39,7 +39,7 @@ module reciever(
     err_counter #(.W(8)) RCVR_ERR_COUNT(.clk(clk),.rst(rst),.enb(error_pulse),.q(rerrcnt)); // Revist for Type 1 Frame
 // To detect when cardet goes from high to low signal an end of tansmission
     cardet_det CARDET_DETECT (.clk(clk), .din(cardet),.d_pulse(cardet_det));
-    dreg CARDET_REG (.clk(clk),.rst(rst),.clr(empty),.enb(cardet_det),.q(rvalid));
-    rcvr_fsm U_CONTROLLER (.clk(clk),.rrdy(rrdy), .rst(rst),.rcvr_empty(empty),.rvalid(rvalid),.rcvr_buffdata(rcvr_buffdata),.rcvr_bufferpop(rcvr_bufferpop),.rcvr_dataout(rdata),.rec_buffer_clr(rec_buffer_clr));
+    dreg CARDET_REG (.clk(clk),.rst(rst),.clr(empty),.enb(cardet_det),.q(rvalid_c));
+    rcvr_fsm U_CONTROLLER (.clk(clk),.rrdy(rrdy), .rst(rst),.rcvr_empty(empty),.rvalid_c(rvalid_c),.rcvr_buffdata(rcvr_buffdata),.rcvr_bufferpop(rcvr_bufferpop),.rcvr_dataout(rdata),.rec_buffer_clr(rec_buffer_clr),.rvalid(rvalid));
 
 endmodule

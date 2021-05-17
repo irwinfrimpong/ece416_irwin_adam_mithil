@@ -21,9 +21,9 @@
 
 
 module rcvr_fsm(
-    input logic clk, rst,rcvr_empty,rvalid,rrdy,
+    input logic clk, rst,rcvr_empty,rvalid_c,rrdy,
     input logic [7:0] rcvr_buffdata,
-    output logic rcvr_bufferpop,rec_buffer_clr,
+    output logic rcvr_bufferpop,rec_buffer_clr, rvalid,
     output logic [7:0] rcvr_dataout
     );
 
@@ -51,10 +51,11 @@ module rcvr_fsm(
     always_comb begin
         rcvr_bufferpop = 0;
         rec_buffer_clr = 0;
+        rvalid = 0;
         case (state)
             IDLE:
             begin
-                if(rvalid && rrdy)
+                if(rvalid_c && rrdy)
                 begin
                     next = DEST_ADDY;
                     rcvr_bufferpop = 1;
@@ -81,6 +82,7 @@ module rcvr_fsm(
             TYPE:
             begin
                 next = DATA;
+                rvalid = 1;
                 rcvr_bufferpop = 1;
                 rcvr_dataout = rcvr_buffdata;
 
@@ -96,6 +98,7 @@ module rcvr_fsm(
                 else if(rrdy)
                 begin
                     next = DATA;
+                    rvalid = 1;
                     rcvr_bufferpop = 1;
                     rcvr_dataout = rcvr_buffdata;
                 end
