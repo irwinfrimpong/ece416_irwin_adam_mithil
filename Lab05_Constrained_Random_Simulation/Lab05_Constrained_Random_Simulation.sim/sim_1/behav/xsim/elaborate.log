@@ -7,30 +7,4 @@ Pass Through NonSizing Optimizer
 WARNING: [VRFC 10-696] first argument of $fatal is invalid, expecting 0, 1 or 2 [C:/Users/irwin/Desktop/ece416_irwin_adam_mithil/Lab05_Machester_Reciever/Lab05_Machester_Reciever.srcs/sources_1/new/clk_gen.sv:18]
 WARNING: [VRFC 10-696] first argument of $fatal is invalid, expecting 0, 1 or 2 [C:/Users/irwin/Desktop/ece416_irwin_adam_mithil/Lab05_Machester_Reciever/Lab05_Machester_Reciever.srcs/sources_1/new/clk_gen.sv:20]
 Completed static elaboration
-INFO: [XSIM 43-4329] Assuming default value 1 for the first arguement of $fatal at Line 18, File C:/Users/irwin/Desktop/ece416_irwin_adam_mithil/Lab05_Machester_Reciever/Lab05_Machester_Reciever.srcs/sources_1/new/clk_gen.sv
-INFO: [XSIM 43-4329] Assuming default value 1 for the first arguement of $fatal at Line 20, File C:/Users/irwin/Desktop/ece416_irwin_adam_mithil/Lab05_Machester_Reciever/Lab05_Machester_Reciever.srcs/sources_1/new/clk_gen.sv
-Starting simulation data flow analysis
-Completed simulation data flow analysis
-Time Resolution for simulation is 1ps
-Compiling module xil_defaultlib.clk_gen
-Compiling module xil_defaultlib.mr_random_tb_default
-Compiling module xil_defaultlib.single_pulser
-Compiling module xil_defaultlib.control_fsm
-Compiling module xil_defaultlib.correlator(W=7)
-Compiling module xil_defaultlib.correlator(LEN=16,W=5)
-Compiling module xil_defaultlib.correlator(LEN=8,W=4)
-Compiling module xil_defaultlib.dreg
-Compiling module xil_defaultlib.counter(MAX_VAL=10)
-Compiling module xil_defaultlib.counter(MAX_VAL=3)
-Compiling module xil_defaultlib.counter(MAX_VAL=16)
-Compiling module xil_defaultlib.counter(MAX_VAL=8)
-Compiling module xil_defaultlib.counter(MAX_VAL=7)
-Compiling module xil_defaultlib.sh_reg
-Compiling module xil_defaultlib.rate_enb(RATE_HZ=50000)
-Compiling module xil_defaultlib.rate_enb(RATE_HZ=200000)
-Compiling module xil_defaultlib.rate_enb(RATE_HZ=400000)
-Compiling module xil_defaultlib.datapath(BIT_RATE=50000)
-Compiling module xil_defaultlib.mx_rcvr(BIT_RATE=50000)
-Compiling module xil_defaultlib.mr_random_top
-Compiling module xil_defaultlib.glbl
-Built simulation snapshot mr_random_top_behav
+INFO: [XSIM 43-4323] No Change in HDL. Linking previously generated obj files to create kernel

@@ -11,7 +11,7 @@ module mr_random_tb (
     parameter CLKPD_NS = 10;
     parameter BIT_RATE = 50_000;
     localparam BITPD_NS = 1_000_000_000 / BIT_RATE;  // bit period in ns
-    parameter ERROR_RATE_PPM = 100; // error rate per million clock cycles
+    parameter ERROR_RATE_PPM = 2000; // error rate per million clock cycles
 
     // tasks for common functions including checking
 
@@ -136,7 +136,7 @@ module mr_random_tb (
         rand  int unsigned eof_len; // in bit periods
         rand int unsigned noise_len;
 
-        constraint c_ftype { ftype dist { FRAME_GOOD:=80, FRAME_NOEOF:=10, FRAME_BITERR:=10}; }
+        constraint c_ftype { ftype dist { FRAME_GOOD:=100, FRAME_NOEOF:=0, FRAME_BITERR:=0}; }
 
         constraint c_pre_len { preamble_len >=2 ; preamble_len <= 4; }
 
@@ -272,7 +272,7 @@ module mr_random_tb (
         for (int j=1; j<=NUM_FRAMES; j++) begin
             f.fill_frame();
             cv.sample();
-            f.print(0);
+            f.print(1);
             fork
                 f.send();
                 f.check_receive_frame();

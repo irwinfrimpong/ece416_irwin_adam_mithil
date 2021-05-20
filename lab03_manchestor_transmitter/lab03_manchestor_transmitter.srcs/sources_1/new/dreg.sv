@@ -8,13 +8,13 @@
 // Description   : d register
 //-----------------------------------------------------------------------------
 
-module dreg #(parameter W=4)
-            (input logic clk, rst, enb,
-             input logic [W-1:0] 	d,
-             output logic [W-1:0] q);
+module dreg (input logic clk,rst, clr, enb,
+             output logic q);
 
-    always_ff @(posedge clk)
-        if(rst) q <= '0;
-        else if(enb) q <= d;
+    always_ff @(posedge clk) begin
+        if (rst || clr) q <= 0;
+        else if (enb) q <= 1'b1;
         else q <= q;
-endmodule: dreg
+    end
+
+endmodule

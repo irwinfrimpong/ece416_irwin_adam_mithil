@@ -6,6 +6,7 @@ sv xil_defaultlib  \
 "../../../../../Lab05_Machester_Reciever/Lab05_Machester_Reciever.srcs/sources_1/new/counter.sv" \
 "../../../../../Lab05_Machester_Reciever/Lab05_Machester_Reciever.srcs/sources_1/new/datapath.sv" \
 "../../../../../Lab05_Machester_Reciever/Lab05_Machester_Reciever.srcs/sources_1/new/dreg.sv" \
+"../../../../../wimpfi_project/wimpfi_project.srcs/sources_1/new/err_counter.sv" \
 "../../../../Lab05_Constrained_Random_Simulation.srcs/sources_1/new/mr_random_tb.sv" \
 "../../../../../Lab05_Machester_Reciever/Lab05_Machester_Reciever.srcs/sources_1/new/mx_rcvr.sv" \
 "../../../../../Lab05_Machester_Reciever/Lab05_Machester_Reciever.srcs/sources_1/new/rate_enb.sv" \

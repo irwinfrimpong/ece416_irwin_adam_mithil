@@ -58,6 +58,7 @@ module rcvr_fsm(
                 if(rvalid_c && rrdy)
                 begin
                     next = DEST_ADDY;
+                    rvalid = 1;
                     rcvr_bufferpop = 1;
                     rec_buffer_clr = 1;
                     rcvr_dataout = rcvr_buffdata;
@@ -67,27 +68,41 @@ module rcvr_fsm(
 
             DEST_ADDY:
             begin
-                next = SOURCE_ADDY;
-                rcvr_bufferpop = 1;
-                source_addy = rcvr_buffdata;
-                rcvr_dataout = rcvr_buffdata;
-
+                rvalid = 1;
+                if(rrdy)
+                begin
+                    next = SOURCE_ADDY;
+                    rcvr_bufferpop = 1;
+                    source_addy = rcvr_buffdata;
+                    rcvr_dataout = rcvr_buffdata;
+                end
+                else next = DEST_ADDY;
             end
 
             SOURCE_ADDY:
                 begin
+                    rvalid = 1;
+                    if(rrdy)
+                    begin
                     rcvr_bufferpop = 1;
                     rtype = rcvr_buffdata;
                     rcvr_dataout = rcvr_buffdata;
                     next = TYPE;
+                    end
+                    else next = SOURCE_ADDY;
                 end
 
             TYPE:
             begin
-                next = DATA;
                 rvalid = 1;
-                rcvr_bufferpop = 1;
-                rcvr_dataout = rcvr_buffdata;
+                if(rrdy)
+                begin
+                    next = DATA;
+                    rcvr_bufferpop = 1;
+                    rcvr_dataout = rcvr_buffdata;
+                end
+
+                else next = TYPE;
 
             end
 

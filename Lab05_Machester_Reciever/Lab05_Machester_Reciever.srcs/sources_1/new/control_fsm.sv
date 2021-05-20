@@ -11,6 +11,7 @@
 
 module control_fsm(
     input logic clk, rst, sfd_cnt_eq, wait_eq, pre_det, sfd_det, eof_det, edgerise_det, edgefall_det, err_det,br_en, br_4en, br_8en, errct_eq, ct_eq, timeout_eq, sh_ct_max, errwaitct_eq,
+    input logic [3:0] byte_trans,
     output logic sfd_cnt_rst, sfd_cnt_enb,t_enb, enb_wait, rst_wait, rst_pre, rst_sfd, rst_eof, rst_edg, rst_err,br_st, br_4st, br_8st, errct_rst, ct_rst, ct_enb, sh_en, sh_ld, clr_cardet, set_cardet, clr_err_reg, set_err_reg, clr_valid, set_valid, clr_tout, set_sh_max, clr_sh_max, errwait_enb, errwaitct_rst);
 
     typedef enum logic [2:0]{
@@ -93,7 +94,7 @@ module control_fsm(
                 next = PREAMBLE;
                 clr_cardet = 1;
                 sfd_cnt_rst = 1;
-                set_err_reg = 1;
+                //set_err_reg = 1; HERE
             end
             else next = SFD;
         end
@@ -134,7 +135,7 @@ module control_fsm(
             begin
                 next = PREAMBLE;
                 clr_cardet = 1;
-                set_err_reg = 1;
+                // set_err_reg = 1; HERE
             end
             else next =  LOAD;
 
@@ -169,7 +170,8 @@ module control_fsm(
         begin
             clr_valid = 1;
             clr_cardet = 1;
-            set_err_reg = !sh_ct_max;
+            // set_err_reg = byte_trans != 1; //5/17 ADDITION causing problems!!!
+            // set_err_reg = !sh_ct_max;
             if(!eof_det) next = PREAMBLE;
             else next = EOF;
         end

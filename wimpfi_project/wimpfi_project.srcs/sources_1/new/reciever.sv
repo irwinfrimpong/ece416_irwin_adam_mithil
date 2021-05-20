@@ -26,12 +26,13 @@ module reciever(
     output logic [7:0] rdata, rerrcnt
     );
 
-    logic valid_fifo, empty, rcvr_bufferpop, error_pulse, push,cardet_det,full,push_pulse, rec_buffer_clr;
+    logic valid_fifo, empty, rcvr_bufferpop, error_pulse, push,cardet_det,full,push_pulse, rec_buffer_clr,rvalid_c;
     logic [7:0] data_rcvr,rcvr_buffdata;
     parameter BAUD_RATE = 50_000 ;
 
     // rst | rvalid to address the req of ignoring incoming frame until all bytes are read from buffer
-    mx_rcvr #(.BIT_RATE(BAUD_RATE)) U_RECEIVER(.clk(clk), .rst(rst|rvalid_c), .rxd(rxd), .valid(valid_fifo), .cardet(cardet), .error(error), .data(data_rcvr));
+    //mx_rcvr #(.BIT_RATE(BAUD_RATE)) U_RECEIVER(.clk(clk), .rst(rst|rvalid_c), .rxd(rxd), .valid(valid_fifo), .cardet(cardet), .error(error), .data(data_rcvr));
+    mx_rcvr #(.BIT_RATE(BAUD_RATE)) U_RECEIVER(.clk(clk), .rst(rst), .rxd(rxd), .valid(valid_fifo), .cardet(cardet), .error(error), .data(data_rcvr));
     single_pulser SINGLE_PULSER (.clk(clk), .din(error),.d_pulse(error_pulse)) ;
     mac_check MAC_ADDY_CHECK (.clk(clk),.rst(rst),.rec_buffer_clr(rec_buffer_clr),.data_in(data_rcvr), .push(push));
     single_pulser PUSH_PULSER (.clk(clk), .din(valid_fifo & push),.d_pulse(push_pulse)) ;
