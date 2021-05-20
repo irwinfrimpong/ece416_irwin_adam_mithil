@@ -60,6 +60,7 @@ module rcvr_fsm(
                     next = DEST_ADDY;
                     rcvr_bufferpop = 1;
                     rec_buffer_clr = 1;
+                    rcvr_dataout = rcvr_buffdata;
                 end
                 else next = IDLE;
             end
@@ -69,6 +70,7 @@ module rcvr_fsm(
                 next = SOURCE_ADDY;
                 rcvr_bufferpop = 1;
                 source_addy = rcvr_buffdata;
+                rcvr_dataout = rcvr_buffdata;
 
             end
 
@@ -76,6 +78,7 @@ module rcvr_fsm(
                 begin
                     rcvr_bufferpop = 1;
                     rtype = rcvr_buffdata;
+                    rcvr_dataout = rcvr_buffdata;
                     next = TYPE;
                 end
 

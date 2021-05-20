@@ -19,19 +19,22 @@
 //
 //////////////////////////////////////////////////////////////////////////////////
 
-
+//DATAPATH FOR LARGER WIMPFI PROJECT
 module datapath (
     input logic clk, rst,xvalid, xsend, cardet,
     input logic [7:0] xdata,
     output logic xrdy, txen, txd,
-    output logic [7:0] xerrcnt
+    output logic [7:0] xerrcnt,pop_count
 
     );
+
+
+    parameter RATE_HZ = 50_000;
 
     logic fs_cteq, rand_enb,slotreg_enb, difs_rst;
     logic [5:0] random_count,slotreg_out;
 
-    rate_enb #(.RATE_HZ(50000)) RATE_ENB(.clk(clk), .rst(rst), .clr(br_st), .enb_out(br_en));
+    rate_enb #(.RATE_HZ(RATE_HZ)) RATE_ENB(.clk(clk), .rst(rst), .clr(br_st), .enb_out(br_en));
 
     counter #(.MAX_VAL(80)) DIFS_COUNTER  (.ct_clr(difs_rst), .clk(clk), .rst(rst), .ct_en(difs_enb),.br_en(br_en), .ct_max(difs_eq));
 
@@ -43,6 +46,12 @@ module datapath (
 
     dreg FSAFE_REG(.clk(clk),.rst(rst), .clr(rst), .enb(fs_cteq), .q(sys_rst));
 
-    transmitter XMIT( .clk(clk), .rst(rst | sys_rst), .xvalid(xvalid), .xsend(xsend), .cardet(cardet), .fs_cteq(fs_cteq), .difs_eq(difs_eq),.slot_eq(slot_eq),.xdata(xdata),
-                    .xrdy(xrdy), .txd(txd), .xbusy(xbusy), .xerrcnt(xerrcnt), .txen(txen),.failsafe_enb(failsafe_enb), .failsafe_rst(failsafe_rst),.difs_rst(difs_rst),.difs_enb(difs_enb),.slot_clr(slot_clr),.slot_enb(slot_enb),.slotreg_enb(slotreg_enb));
-endmodule
+    // transmitter XMIT( .clk(clk), .rst(rst | sys_rst), .xvalid(xvalid), .xsend(xsend), .cardet(cardet), .fs_cteq(fs_cteq), .difs_eq(difs_eq),.slot_eq(slot_eq),.xdata(xdata),
+    //                 .xrdy(xrdy), .txd(txd), .xbusy(xbusy), .xerrcnt(xerrcnt), .txen(txen),.failsafe_enb(failsafe_enb), .failsafe_rst(failsafe_rst),.difs_rst(difs_rst),.difs_enb(difs_enb),.slot_clr(slot_clr),.slot_enb(slot_enb),.slotreg_enb(slotreg_enb));
+
+    transmitter #(.RATE_HZ(RATE_HZ)) XMIT( .clk(clk), .rst(rst | sys_rst), .xvalid(xvalid), .xsend(xsend), .cardet(cardet), .fs_cteq(fs_cteq), .difs_eq(difs_eq),.slot_eq(slot_eq),.xdata(xdata),
+                    .xrdy(xrdy), .txd(txd), .xbusy(xbusy), .xerrcnt(xerrcnt), .txen(txen),.failsafe_enb(failsafe_enb), .failsafe_rst(failsafe_rst),.difs_rst(difs_rst),.difs_enb(difs_enb),.slot_clr(slot_clr),.slot_enb(slot_enb),.slotreg_enb(slotreg_enb),.pop_count(pop_count));
+
+
+
+    endmodule

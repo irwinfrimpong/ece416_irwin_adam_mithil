@@ -103,6 +103,15 @@ module datapath2_1_sctb(
         transmit_bytes(20);
         valid = 0;
         #(BITPD_NS*1050);
+        valid= 1;
+        transmit_preamble;
+        transmit_sfd;
+        transmit_bytes(20);
+        valid = 0;
+        #(BITPD_NS*1050);
+        
+        
+        
 
 
         // data_trans = 8'b10100111;

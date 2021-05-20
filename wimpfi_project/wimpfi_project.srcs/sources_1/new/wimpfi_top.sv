@@ -38,12 +38,16 @@ module wimpfi_top(
 
     xmit_adapter SMIT_ADAPTER(.clk(clk), .rst(rst),.xrdy(xrdy),.valid(valid),.data(data),.xvalid(xvalid),.xsend(xsend),.rdy(rdy),.xdata(xdata));
 
-    datapath DATAPATH(.clk(clk), .rst(rst),.xvalid(xvalid), .xsend(xsend),.cardet(cardet),.xdata(xdata),.xrdy(xrdy),.txen(txen),.txd(txd),.xerrcnt(xerrcnt));
+    //datapath DATAPATH(.clk(clk), .rst(rst),.xvalid(xvalid),.xsend(xsend),.rrdy(rrdy),.rxd(a_rxd),.xdata(xdata),.xrdy(xrdy), .txen(txen), .txd,rvalid,xerrcnt, rdata, rerrcnt);
+
+
+    //uart_xmit #(.BAUD_RATE(9600)) SERIAL_TRANS (.clk(clk) , .rst(rst), .valid(rvalid), .data(rdata), .txd(a_txd), .rdy(rrdy));
 
     dbl_dabble BCD_TRANS(.b(xerrcnt), .hundreds(hundreds_trans), .tens(tens_trans), .ones(ones_trans));
 
     //dbl_dabble BCD_RECIEVR(.b(xerrcnt), .hundreds(hundreds), .tens(tens), .ones(ones));
 
     sevenseg_ctl SEVENSEG_CTL (.clk(clk), .rst(rst), .d7(blank), .d6(blank), .d5(blank), .d4(blank), .d3(blank), .d2({3'b000,hundreds_trans}), .d1({3'b000,tens_trans}),.d0({3'b000,ones_trans}), .segs_n(segs_n),.dp_n(dp_n), .an_n(an_n));
+
 
 endmodule

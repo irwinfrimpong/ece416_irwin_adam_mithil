@@ -21,7 +21,7 @@
 
 
 module xmit_adapter(
-    input logic clk, rst,xrdy, valid,
+    input logic xrdy, valid,
     input logic [7:0] data,
     output logic xvalid, xsend, rdy,
     output logic [7:0] xdata

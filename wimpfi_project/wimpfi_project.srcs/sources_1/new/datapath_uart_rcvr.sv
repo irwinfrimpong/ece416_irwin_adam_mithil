@@ -13,16 +13,15 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 module datapath_uart_rcvr(
-    input logic clk, rst,set_ferr, clr_ferr, set_oerr, clr_oerr, set_valid, clr_valid,
-    ct_initclr, ct_initenb, br_st, br_2st, sh_en, sh_ld,sh_rst, ct_clr, ct_en, rxd,
+    input logic clk, rst,set_ferr, clr_ferr, set_oerr, clr_oerr, set_valid, clr_valid,ct_initclr, ct_initenb, br_st, br_2st, sh_en, sh_ld,sh_rst, ct_clr, ct_en, rxd,
     output logic br_en, ct_initeq, br_2en, ct_eq, valid, ferr, oerr,
     output logic [7:0] data
     );
 
     parameter BAUD_RATE = 9600;
 
-    counter #(.MAX_VAL(8)) U_SHIFT_COUNTER (.ct_clr(ct_clr), .clk(clk), .rst(rst), .ct_en(ct_en),.ct_max(ct_eq));
-    counter #(.MAX_VAL(8)) U_INIT_COUNTER (.ct_clr(ct_initclr), .clk(clk), .rst(rst), .ct_en(ct_initenb),.ct_max(ct_initeq));
+    counter_uartrvcr #(.MAX_VAL(8)) U_SHIFT_COUNTER (.ct_clr(ct_clr), .clk(clk), .rst(rst), .ct_en(ct_en),.ct_max(ct_eq));
+    counter_uartrvcr #(.MAX_VAL(8)) U_INIT_COUNTER (.ct_clr(ct_initclr), .clk(clk), .rst(rst), .ct_en(ct_initenb),.ct_max(ct_initeq));
 
     dff U_OERR_REG(.clk(clk), .rst(rst), .clr(clr_oerr), .enb(set_oerr), .q(oerr));
     dff U_FERR_REG(.clk(clk), .rst(rst), .clr(clr_ferr), .enb(set_ferr), .q(ferr));
@@ -31,6 +30,6 @@ module datapath_uart_rcvr(
     rate_enb #(.RATE_HZ(BAUD_RATE)) U_RATE_EN (.clk(clk), .rst(rst), .clr(br_st), .enb_out(br_en));
     rate_enb #(.RATE_HZ(BAUD_RATE*16)) U_RATE_EN_16X (.clk(clk), .rst(rst), .clr(br_2st), .enb_out(br_2en));
 
-    sh_reg #(.W(8)) U_SHFT_REG (.clk(clk),.rxd(rxd),.rst(rst), .sh_en(sh_en),.sh_rst(sh_rst), .sh_ld(sh_ld),.data(data));
+    sh_reg_uartrcvr #(.W(8)) UARTRCVR_SHFT_REG (.clk(clk),.rxd(rxd),.rst(rst), .sh_en(sh_en),.sh_rst(sh_rst), .sh_ld(sh_ld),.data(data));
 
 endmodule

@@ -24,10 +24,8 @@ module trans_fsm(
     input logic clk, rst, rdy, difs_eq, xsend, cardet, slot_eq,buffdata_empty,
     input logic [7:0] trans_buffdata,
     output logic [7:0] data,
-    output logic xbusy, failsafe_enb, failsafe_rst, difs_rst, slot_clr,slot_enb,buffer_pop, valid,difs_enb,slotreg_enb,buffer_clr,xrdy_assert
+    output logic xbusy, failsafe_enb, failsafe_rst, difs_rst, slot_clr,slot_enb,buffer_pop, valid,difs_enb,slotreg_enb,buffer_clr,xrdy_assert,xrdy_clear
     );
-
-
 
     typedef enum logic [3:0]{
     IDLE = 4'd0,
@@ -37,8 +35,8 @@ module trans_fsm(
     SFD = 4'd4,
     DEST_ADD = 4'd5,
     SOURCE_ADD = 4'd6,
-    TYPE = 4'd7,
-    DATA = 4'd8
+    TYPE_T = 4'd7,
+    DATA_T = 4'd8
     } state_t ;
 
     state_t state , next ;
@@ -67,7 +65,10 @@ module trans_fsm(
         difs_enb = 0;
         buffer_clr = 0;
         xrdy_assert = 0;
-        case(state)
+        data = 8'd0; // ADDED AT 5/18
+        xrdy_clear = '0;
+
+        unique case(state)
             IDLE:
             begin
                 xbusy = 0;
@@ -95,6 +96,7 @@ module trans_fsm(
                 else
                 begin
                     next = PREAMBLE;
+                    xrdy_clear = 1;
                     data = 8'b10101010;
                     valid = 1;
                 end
@@ -114,23 +116,24 @@ module trans_fsm(
 
             PREAMBLE:
             begin
+            valid = 1;
                 if(rdy)
                 begin
                     next = SFD;
                     data = 8'b11010000;
-                    valid = 1;
-                end
+                 end
                 else next = PREAMBLE;
             end
 
             SFD:
             begin
+                valid= 1;
                 if(rdy)
                 begin
                     next = DEST_ADD;
                     buffer_pop = 1;
                     data = trans_buffdata;
-                    valid= 1;
+
                     //trans_count = trans_count_c;
                 end
                 else next = SFD;
@@ -138,57 +141,63 @@ module trans_fsm(
 
             DEST_ADD:
             begin
+                valid= 1;
                 if(rdy)
                 begin
                     next = SOURCE_ADD;
                     buffer_pop = 1;
                     data = trans_buffdata;
-                    valid= 1;
+
                 end
                 else next = DEST_ADD;
             end
 
             SOURCE_ADD:
             begin
+                valid = 1;
                 if(rdy)
                 begin
-                    next = TYPE;
+                    next = TYPE_T;
                     buffer_pop = 1;
                     data = trans_buffdata;
-                    valid = 1;
+
                 end
                 else next = SOURCE_ADD;
             end
 
-            TYPE:
+            TYPE_T:
             begin
+                valid= 1;
                 if(rdy)
                 begin
-                    next = DATA;
+                    next = DATA_T;
                     buffer_pop = 1;
                     data = trans_buffdata;
-                    valid= 1;
+
                 end
-                else next = TYPE;
+                else next = TYPE_T;
             end
 
-            DATA:
+            DATA_T:
             begin
+                valid= 1;
                 if(rdy && !buffdata_empty)
                 begin
                     buffer_pop = 1;
                     data = trans_buffdata;
-                    valid= 1;
+
+                    next = DATA_T; // added 5/19
                 end
                 else if(buffdata_empty && rdy)
                 begin
                     next = IDLE;
                     buffer_clr = 1;
-                    xrdy_assert = 1;
+                    //xrdy_assert = 1;
                 end
-                else next = DATA;
+                else next = DATA_T;
 
             end
+            default: next = IDLE; // Added 5/18
         endcase
     end
 

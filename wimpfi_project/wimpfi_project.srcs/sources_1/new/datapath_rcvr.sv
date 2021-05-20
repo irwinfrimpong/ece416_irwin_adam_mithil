@@ -14,8 +14,8 @@
 module datapath_rcvr(
     input logic clk, rst, rxd, sfd_cnt_enb, sfd_cnt_rst, rst_wait, rst_pre,rst_sfd, rst_eof, rst_edg, rst_err,br_st, br_4st, br_8st, errct_rst,ct_rst,ct_enb, sh_en, sh_ld, clr_cardet, set_cardet, clr_err_reg, set_err_reg, clr_valid, set_valid, clr_tout, t_enb, enb_wait,clr_sh_max,set_sh_max, errwait_enb, errwaitct_rst,
     output logic sfd_cnt_eq, wait_eq, pre_det, sfd_det, eof_det, edgerise_det, edgefall_det, err_det, br_4en,br_en, br_8en, errct_eq, ct_eq,errwaitct_eq, valid, error, cardet , timeout_eq,sh_ct_max,
-    output logic [7:0] data
-
+    output logic [7:0] data,
+    output logic [3:0] byte_trans
     );
 parameter BIT_RATE = 9600;
 parameter CORLEN = 64;
@@ -85,6 +85,9 @@ counter #(.MAX_VAL(8)) ERR_COUNTER(.ct_clr(errct_rst), .clk(clk), .rst(rst), .ct
 // ERRWAIT_COUNTER
 
 counter #(.MAX_VAL(7)) ERRWAIT_COUNTER(.ct_clr(errwaitct_rst), .clk(clk), .rst(rst), .ct_en(errwait_enb), .br_en(br_8en),.ct_max(errwaitct_eq));
+
+//BYTE COUNTER
+err_counter #(.W(4)) BYTE_COUNTER (.clk(clk), .rst(rst||ct_rst), .enb(ct_enb), .q(byte_trans));
 
 
 //SHIFT REGISTER
