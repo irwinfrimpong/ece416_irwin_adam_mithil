@@ -49,8 +49,8 @@ module datapath (
     // transmitter XMIT( .clk(clk), .rst(rst | sys_rst), .xvalid(xvalid), .xsend(xsend), .cardet(cardet), .fs_cteq(fs_cteq), .difs_eq(difs_eq),.slot_eq(slot_eq),.xdata(xdata),
     //                 .xrdy(xrdy), .txd(txd), .xbusy(xbusy), .xerrcnt(xerrcnt), .txen(txen),.failsafe_enb(failsafe_enb), .failsafe_rst(failsafe_rst),.difs_rst(difs_rst),.difs_enb(difs_enb),.slot_clr(slot_clr),.slot_enb(slot_enb),.slotreg_enb(slotreg_enb));
 
-    transmitter #(.RATE_HZ(RATE_HZ)) XMIT( .clk(clk), .rst(rst | sys_rst), .xvalid(xvalid), .xsend(xsend), .cardet(cardet), .fs_cteq(fs_cteq), .difs_eq(difs_eq),.slot_eq(slot_eq),.xdata(xdata),
-                    .xrdy(xrdy), .txd(txd), .xbusy(xbusy), .xerrcnt(xerrcnt), .txen(txen),.failsafe_enb(failsafe_enb), .failsafe_rst(failsafe_rst),.difs_rst(difs_rst),.difs_enb(difs_enb),.slot_clr(slot_clr),.slot_enb(slot_enb),.slotreg_enb(slotreg_enb),.pop_count(pop_count));
+     transmitter #(.RATE_HZ(RATE_HZ)) XMIT( .clk(clk), .rst(rst | sys_rst), .xvalid(xvalid), .xsend(xsend), .cardet(cardet), .fs_cteq(fs_cteq), .difs_eq(difs_eq),.slot_eq(slot_eq),.xdata(xdata),
+                     .xrdy(xrdy), .txd(txd), .xbusy(xbusy), .xerrcnt(xerrcnt), .txen(txen),.failsafe_enb(failsafe_enb), .failsafe_rst(failsafe_rst),.difs_rst(difs_rst),.difs_enb(difs_enb),.slot_clr(slot_clr),.slot_enb(slot_enb),.slotreg_enb(slotreg_enb),.pop_count(pop_count));
 
 
 

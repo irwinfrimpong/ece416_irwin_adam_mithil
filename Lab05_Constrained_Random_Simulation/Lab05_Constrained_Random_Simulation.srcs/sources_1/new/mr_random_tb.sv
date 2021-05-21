@@ -55,9 +55,13 @@ module mr_random_tb (
         @(posedge clk) #1;
     endtask
 
+    logic first_half;
+
     task send_bit(input logic d);
         txd_clean = d;
+        first_half = 1;
         #(BITPD_NS/2);
+        first_half = 0;
         txd_clean = !d;
         #(BITPD_NS/2);
     endtask

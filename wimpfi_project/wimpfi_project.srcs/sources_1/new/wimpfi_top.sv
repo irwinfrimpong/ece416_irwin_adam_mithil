@@ -38,6 +38,8 @@ module wimpfi_top(
 
     xmit_adapter SMIT_ADAPTER(.clk(clk), .rst(rst),.xrdy(xrdy),.valid(valid),.data(data),.xvalid(xvalid),.xsend(xsend),.rdy(rdy),.xdata(xdata));
 
+
+
     //datapath DATAPATH(.clk(clk), .rst(rst),.xvalid(xvalid),.xsend(xsend),.rrdy(rrdy),.rxd(a_rxd),.xdata(xdata),.xrdy(xrdy), .txen(txen), .txd,rvalid,xerrcnt, rdata, rerrcnt);
 
 

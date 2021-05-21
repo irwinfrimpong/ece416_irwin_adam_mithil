@@ -10,7 +10,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 module control_fsm(
-    input logic clk, rst, sfd_cnt_eq, wait_eq, pre_det, sfd_det, eof_det, edgerise_det, edgefall_det, err_det,br_en, br_4en, br_8en, errct_eq, ct_eq, timeout_eq, sh_ct_max, errwaitct_eq,
+    input logic clk, rst, sfd_cnt_eq, wait_eq, pre_det, sfd_det, eof_det, edgerise_det, edgefall_det,br_en, br_4en, br_8en, errct_eq, ct_eq, timeout_eq, sh_ct_max, errwaitct_eq,
     input logic [3:0] byte_trans,
     output logic sfd_cnt_rst, sfd_cnt_enb,t_enb, enb_wait, rst_wait, rst_pre, rst_sfd, rst_eof, rst_edg, rst_err,br_st, br_4st, br_8st, errct_rst, ct_rst, ct_enb, sh_en, sh_ld, clr_cardet, set_cardet, clr_err_reg, set_err_reg, clr_valid, set_valid, clr_tout, set_sh_max, clr_sh_max, errwait_enb, errwaitct_rst);
 
@@ -88,13 +88,21 @@ module control_fsm(
                 br_4st = 1;
                 br_st = 1;
                 rst_wait = 1;
+
+//                  next = LOAD;
+//                  clr_err_reg = 1;
+//                  ct_rst = 1;
+//                  clr_tout = 1;
+//                  clr_sh_max = 1; 
+//                  br_4st = 1;
+//                  br_st = 1;
             end
             else if(sfd_cnt_eq)
             begin
                 next = PREAMBLE;
                 clr_cardet = 1;
                 sfd_cnt_rst = 1;
-                //set_err_reg = 1; HERE
+                set_err_reg = 1;
             end
             else next = SFD;
         end
@@ -116,8 +124,8 @@ module control_fsm(
         LOAD:
         begin
             t_enb = br_8en;
-            set_err_reg = err_det;
-            clr_cardet = err_det;
+            //set_err_reg = err_det; //causing problems!!
+            //clr_cardet = err_det;
 
             if(edgerise_det || edgefall_det)
             begin
@@ -135,7 +143,7 @@ module control_fsm(
             begin
                 next = PREAMBLE;
                 clr_cardet = 1;
-                // set_err_reg = 1; HERE
+               // set_err_reg = 1; // Possibly sus
             end
             else next =  LOAD;
 
@@ -155,10 +163,10 @@ module control_fsm(
 
         ERRWAIT:
         begin
-            errwait_enb= 1'b1;
+            errwait_enb= ~errwaitct_eq;
             clr_valid = 1;
             rst_err = 1;
-            if(errwaitct_eq)
+            if(errwaitct_eq && !(edgerise_det || edgefall_det))
             begin
                 errwaitct_rst = 1'b1;
                 next = LOAD;
@@ -170,7 +178,7 @@ module control_fsm(
         begin
             clr_valid = 1;
             clr_cardet = 1;
-            // set_err_reg = byte_trans != 1; //5/17 ADDITION causing problems!!!
+            //set_err_reg = byte_trans != 0; //5/17 ADDITION causing problems!!!
             // set_err_reg = !sh_ct_max;
             if(!eof_det) next = PREAMBLE;
             else next = EOF;
