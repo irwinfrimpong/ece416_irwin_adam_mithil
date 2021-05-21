@@ -124,9 +124,6 @@ module control_fsm(
         LOAD:
         begin
             t_enb = br_8en;
-            //set_err_reg = err_det; //causing problems!!
-            //clr_cardet = err_det;
-
             if(edgerise_det || edgefall_det)
             begin
                 rst_wait = 1'b1;
@@ -143,7 +140,7 @@ module control_fsm(
             begin
                 next = PREAMBLE;
                 clr_cardet = 1;
-               // set_err_reg = 1; // Possibly sus
+               // set_err_reg = 1; 
             end
             else next =  LOAD;
 
@@ -178,8 +175,7 @@ module control_fsm(
         begin
             clr_valid = 1;
             clr_cardet = 1;
-            //set_err_reg = byte_trans != 0; //5/17 ADDITION causing problems!!!
-            // set_err_reg = !sh_ct_max;
+            set_err_reg = byte_trans != 0; 
             if(!eof_det) next = PREAMBLE;
             else next = EOF;
         end

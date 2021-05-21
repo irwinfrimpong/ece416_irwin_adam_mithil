@@ -30,12 +30,12 @@ timeunit 1ns / 100ps;
 
 
 logic clk, rst,xvalid,xsend,cardet, xrdy,txen, txd, valid,rdy,rxd, ferr,oerr;
-logic [7:0] xdata , xerrcnt, data, pop_count;
+logic [7:0] xdata , xerrcnt, data,pop_count;
 assign cardet = '0;
 
 clk_gen #(.CLKPD(CLKPD)) CG(.clk(clk));
 
-datapath #(.RATE_HZ(50)) XMIT_DATAPATH(.clk(clk), .rst(rst),.xvalid(xvalid), .xsend(xsend), .cardet(cardet),.xdata(xdata),.xrdy(xrdy), .txen(txen), .txd(txd),.xerrcnt(xerrcnt),.pop_count(pop_count));
+datapath #(.RATE_HZ(50_000)) XMIT_DATAPATH(.clk(clk), .rst(rst),.xvalid(xvalid), .xsend(xsend), .cardet(cardet),.xdata(xdata),.xrdy(xrdy), .txen(txen), .txd(txd),.xerrcnt(xerrcnt),.pop_count(pop_count));
 
 xmit_adapter XMIT_ADAPTER(.xrdy(xrdy), .valid(valid), .data(data), .xvalid(xvalid), .xsend(xsend), .rdy(rdy), .xdata(xdata));
 

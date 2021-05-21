@@ -52,6 +52,8 @@ module rcvr_fsm(
         rcvr_bufferpop = 0;
         rec_buffer_clr = 0;
         rvalid = 0;
+        rcvr_dataout= 8'd0; // Added for latch
+        next = IDLE;
         case (state)
             IDLE:
             begin

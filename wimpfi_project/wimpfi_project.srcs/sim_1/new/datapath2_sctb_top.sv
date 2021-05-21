@@ -29,7 +29,8 @@ module datapath2_sctb_top;
    clk_gen #(.CLKPD(CLKPD)) CG(.clk(clk));
 
    logic clk,rst,rxd, dp_n,a_txd, cfgclk, cfgdat,a_rxd,o_txd;
-   logic [7:0] an_n, segs_n;
+   logic [7:0] an_n;
+   logic [6:0] segs_n;
 
    datapath_2 DATAPATH_2(.clk(clk),.rst(rst),.rxd(rxd),.dp_n(dp_n),.a_txd(a_txd),.cfgclk(cfgclk),.cfgdat(cfgdat),.a_rxd(a_rxd),.o_txd(o_txd),.an_n(an_n),.segs_n(segs_n));
 

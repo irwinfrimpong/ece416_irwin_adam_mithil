@@ -25,7 +25,7 @@ module datapath_1(
     input logic clk, rst, a_rxd,
    // output logic txd, txen,cfgdat,
     output logic txd,cfgdat,
-    output logic dp_n,cfgclk,txen_led,txd_led,
+    output logic dp_n,cfgclk,
     output logic [7:0] an_n,
     output logic [6:0] segs_n
     );
@@ -38,12 +38,11 @@ module datapath_1(
     assign cfgclk = '0 ;
     assign cfgdat = '1;
     assign cardet = '0;
-    assign txen_led= ~txen ;
-    assign txd_led = txd;
 
 
-    datapath #(.RATE_HZ(50_000)) XMIT_DATAPATH(.clk(clk), .rst(rst),.xvalid(xvalid), .xsend(xsend), .cardet(cardet),.xdata(xdata),.xrdy(xrdy), .txen(txen), .txd(txd),.xerrcnt(xerrcnt), .pop_count(pop_count));
 
+    //datapath #(.RATE_HZ(50_000)) XMIT_DATAPATH(.clk(clk), .rst(rst),.xvalid(xvalid), .xsend(xsend), .cardet(cardet),.xdata(xdata),.xrdy(xrdy), .txen(txen), .txd(txd),.xerrcnt(xerrcnt), .pop_count(pop_count));
+    datapath TRANSMITTER(.clk(clk),.rst(rst),.xvalid(xvalid),.xsend(xsend),.cardet(cardet),.xdata(xdata),.xrdy(xrdy),.txen(txen),.txd(txd),.xerrcnt(xerrcnt),.pop_count(pop_count), .difs_eq(difs_eq));
     xmit_adapter XMIT_ADAPTER(.xrdy(xrdy), .valid(valid), .data(data), .xvalid(xvalid), .xsend(xsend), .rdy(rdy), .xdata(xdata));
 
     uart_rcvr #(.BAUD_RATE(9600)) SERIAL_RCVR(.clk(clk),.rst(rst),.rxd(a_rxd),.rdy(rdy),.valid(valid),.ferr(ferr),.oerr(oerr),.data(data));

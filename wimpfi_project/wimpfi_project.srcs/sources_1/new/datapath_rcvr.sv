@@ -20,20 +20,21 @@ module datapath_rcvr(
 parameter BIT_RATE = 9600;
 parameter CORLEN = 64;
 parameter CORW = $clog2(CORLEN)+1 ;
-logic l_out_pre, l_out_sfd, l_out_eof, br_100en, br_100st;
-logic [CORW-1:0] csum_pre, csum_sfd;
-logic [$clog2(8):0] csum_edgerise;
+logic l_out_pre, l_out_sfd, l_out_eof, br_100en, br_100st , br_16en, br_16st;
+logic [CORW-1:0] csum_sfd;
+logic [$clog2(16):0] csum_edgerise;
 logic [$clog2(16):0] csum_eof;
+logic [127:0] csum_pre;
 
 
 //CORRELATORS
 
 //PREAMBLE CORRELATOR
-correlator #(.LEN(CORLEN), .PATTERN(64'b11110000_00001111_11110000_00001111_11110000_00001111_11110000_00001111), .HTHRESH(60), .LTHRESH(4), .W(CORW)) PREAMBLE_COR(
-.clk(clk),.rst(rst),.enb(br_8en),.d_in(rxd), .csum(csum_pre),.h_out(pre_det),.l_out(l_out_pre));
+correlator #(.LEN(128), .PATTERN(128'b1111111100000000_0000000011111111_1111111100000000_0000000011111111_1111111100000000_0000000011111111_1111111100000000_0000000011111111), .HTHRESH(121), .LTHRESH(7), .W($clog2(128)+1)) PREAMBLE_COR(
+.clk(clk),.rst(rst),.enb(br_16en),.d_in(rxd), .csum(csum_pre),.h_out(pre_det),.l_out(l_out_pre));
 
 //SFD CORRELATOR
-correlator #(.LEN(CORLEN), .PATTERN(64'b00001111_00001111_00001111_00001111_11110000_00001111_11110000_11110000), .HTHRESH(58), .LTHRESH(6), .W(CORW)) SFD_COR(
+correlator #(.LEN(CORLEN), .PATTERN(64'b00001111_00001111_00001111_00001111_11110000_00001111_11110000_11110000), .HTHRESH(54), .LTHRESH(10), .W(CORW)) SFD_COR(
 .clk(clk),.rst(rst),.enb(br_8en),.d_in(rxd), .csum(csum_sfd),.h_out(sfd_det),.l_out(l_out_sfd));
 // 11110000_11110000_00001111_11110000_00001111_00001111_00001111_00001111
 
@@ -68,13 +69,13 @@ dreg SHIFT_MAX_REG(.clk(clk),.rst(rst),.clr(clr_sh_max),.enb(set_sh_max),.q(sh_c
 //COUNTERS
 
 // SFD COUNTER
-counter #(.MAX_VAL(10)) SFD_COUNTER(.ct_clr(sfd_cnt_rst), .clk(clk), .rst(rst), .ct_en(sfd_cnt_enb),.br_en(br_en),.ct_max(sfd_cnt_eq));
+counter #(.MAX_VAL(16)) SFD_COUNTER(.ct_clr(sfd_cnt_rst), .clk(clk), .rst(rst), .ct_en(sfd_cnt_enb),.br_en(br_en),.ct_max(sfd_cnt_eq));
 
 // WAIT COUNTER
 counter #(.MAX_VAL(1)) WAIT_COUNTER(.ct_clr(rst_wait), .clk(clk), .rst(rst), .ct_en(enb_wait), .br_en(br_4en),.ct_max(wait_eq));
 
 //TIMEOUT COUNTER
-counter #(.MAX_VAL(16)) TIMEOUT_COUNTER(.ct_clr(clr_tout), .clk(clk), .rst(rst), .ct_en(t_enb), .br_en(br_8en),.ct_max(timeout_eq));
+counter #(.MAX_VAL(32)) TIMEOUT_COUNTER(.ct_clr(clr_tout), .clk(clk), .rst(rst), .ct_en(t_enb), .br_en(br_8en),.ct_max(timeout_eq));
 
 //SHIFT COUNTER
 counter #(.MAX_VAL(8)) SHIFT_COUNTER(.ct_clr(ct_rst), .clk(clk), .rst(rst), .ct_en(ct_enb), .br_en(1'b1),.ct_max(ct_eq));
@@ -105,6 +106,9 @@ rate_enb #(.RATE_HZ(BIT_RATE*4)) RATE_4EN(.clk(clk),.rst(rst),.clr(br_4st),.enb_
 
 //8X
 rate_enb #(.RATE_HZ(BIT_RATE*8)) RATE_8EN(.clk(clk),.rst(rst),.clr(br_8st),.enb_out(br_8en));
+
+//16X
+rate_enb #(.RATE_HZ(BIT_RATE*16)) RATE_16EN(.clk(clk),.rst(rst),.clr(br_16st),.enb_out(br_16en));
 
 //64x
 rate_enb #(.RATE_HZ(BIT_RATE*100)) RATE_100EN(.clk(clk),.rst(rst),.clr(br_100st),.enb_out(br_100en));

@@ -23,7 +23,7 @@
 module transmitter(
     input logic clk, rst, xvalid, xsend, cardet, fs_cteq, difs_eq,slot_eq,
     input logic [7:0] xdata,
-    output logic [7:0] xerrcnt,pop_count,
+    output logic [7:0] xerrcnt, pop_count,
     output logic xrdy, txd, xbusy, txen,failsafe_enb, failsafe_rst,difs_rst, difs_enb,slot_clr,slot_enb,slotreg_enb
     );
 
