@@ -1,25 +1,20 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company:
-// Engineer:
+// Company: Lafayette College
+// Engineer: Adam Tunnell, Irwin Frimpong, Mithil Shah
 //
 // Create Date: 04/29/2021 02:29:25 PM
-// Design Name:
 // Module Name: datapath
-// Project Name:
-// Target Devices:
-// Tool Versions:
-// Description:
+// Project Name: WimpFi Project
+// Description: Datapath for the WimpFi project. Instantiates and connects all
+// modules used for the transmitter.
 //
-// Dependencies:
+// Dependencies:rate_enb, counter, err_counter, dregre, slot_counter, dreg,
+// transmitter
 //
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
 //
 //////////////////////////////////////////////////////////////////////////////////
 
-//DATAPATH FOR LARGER WIMPFI PROJECT
 module datapath (
     input logic clk, rst,xvalid, xsend, cardet,
     input logic [7:0] xdata,
@@ -45,9 +40,6 @@ module datapath (
     counter #(.MAX_VAL(510*8)) FSAFE_COUNTER (.ct_clr(failsafe_rst), .clk(clk), .rst(rst), .ct_en(failsafe_enb),.br_en(br_en), .ct_max(fs_cteq));
 
     dreg FSAFE_REG(.clk(clk),.rst(rst), .clr(rst), .enb(fs_cteq), .q(sys_rst));
-
-     //transmitter XMIT( .clk(clk), .rst(rst | sys_rst), .xvalid(xvalid), .xsend(xsend), .cardet(cardet), .fs_cteq(fs_cteq), .difs_eq(difs_eq),.slot_eq(slot_eq),.xdata(xdata),
-                     //.xrdy(xrdy), .txd(txd), .xbusy(xbusy), .xerrcnt(xerrcnt), .txen(txen),.failsafe_enb(failsafe_enb), .failsafe_rst(failsafe_rst),.difs_rst(difs_rst),.difs_enb(difs_enb),.slot_clr(slot_clr),.slot_enb(slot_enb),.slotreg_enb(slotreg_enb));
 
      transmitter #(.RATE_HZ(RATE_HZ)) XMIT( .clk(clk), .rst(rst | sys_rst), .xvalid(xvalid), .xsend(xsend), .cardet(cardet), .fs_cteq(fs_cteq), .difs_eq(difs_eq),.slot_eq(slot_eq),.xdata(xdata),
                     .xrdy(xrdy), .txd(txd), .xbusy(xbusy), .xerrcnt(xerrcnt), .txen(txen),.failsafe_enb(failsafe_enb), .failsafe_rst(failsafe_rst),.difs_rst(difs_rst),.difs_enb(difs_enb),.slot_clr(slot_clr),.slot_enb(slot_enb),.slotreg_enb(slotreg_enb),.pop_count(pop_count));

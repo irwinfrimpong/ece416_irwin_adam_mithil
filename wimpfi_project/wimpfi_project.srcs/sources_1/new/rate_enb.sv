@@ -1,21 +1,13 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company:
-// Engineer:
+// Company: Lafayette College
+// Engineer: Adam Tunnell, Irwin Frimpong, Mithil Shah
 //
 // Create Date: 04/29/2021 02:55:04 PM
-// Design Name:
 // Module Name: rate_enb
-// Project Name:
-// Target Devices:
-// Tool Versions:
-// Description:
-// 
-// Dependencies:
+// Project Name: WimpFi Project
+// Description: Rate Enable to create clocks based on the main one
 //
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
 //
 //////////////////////////////////////////////////////////////////////////////////
 

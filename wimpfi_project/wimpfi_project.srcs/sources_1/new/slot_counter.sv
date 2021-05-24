@@ -1,21 +1,15 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company:
-// Engineer:
+// Company: Lafayette College
+// Engineer: Adam Tunnell, Irwin Frimpong, Mithil Shah
 //
-// Create Date: 05/08/2021 04:43:23 PM
-// Design Name:
+// Create Date: 05/08/2021 04:43:23 PM]
 // Module Name: slot_counter
-// Project Name:
-// Target Devices:
-// Tool Versions:
-// Description:
+// Project Name: WimpFi Project
+// Description: Counter for selecting a random number to be used for backoff
 //
-// Dependencies:
+// Dependencies: None
 //
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
 //
 //////////////////////////////////////////////////////////////////////////////////
 

@@ -1,25 +1,15 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company:
-// Engineer:
-//
+// Company: Lafayette College
+// Engineer: Adam Tunnell, Irwin Frimpong, Mithil Shah
 // Create Date: 05/12/2021 08:35:26 PM
-// Design Name:
 // Module Name: datapath_2
-// Project Name:
-// Target Devices:
-// Tool Versions:
-// Description:
-//
-// Dependencies:
-//
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-//
+// Project Name: WimpFi Project
+// Description: Hardware Top Level file used for testing the Reciever side of Wimpfi
+// independently
+// Dependencies:reciever,uart_xmit,dbl_dabble,sevenseg_ctl
 //////////////////////////////////////////////////////////////////////////////////
 
-// Reciver top level to test recieving data
 module datapath_2(input logic clk,rst,rxd,
     output logic dp_n, a_txd, cfgclk,cfgdat,a_rxd,o_txd,
     output logic [7:0] an_n,

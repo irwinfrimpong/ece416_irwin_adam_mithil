@@ -1,29 +1,18 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company:
-// Engineer:
-//
+// Company: lafayette College
+// Engineer:Adam Tunnell, Irwin Frimpong, Mithil Shah
 // Create Date: 05/14/2021 10:25:35 AM
-// Design Name:
 // Module Name: datapath_1
-// Project Name:
-// Target Devices:
-// Tool Versions:
-// Description:
-//
-// Dependencies:
-//
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-//
+// Project Name: WimpFi Project
+// Description: Hawrdare Top Level used to tests the transmitter independently in hardware
+// Dependencies: datapath, xmit_adapter,uart_rcvr,dbl_dabble, sevenseg_ctl
 //////////////////////////////////////////////////////////////////////////////////
 
 // Hardware Top Level File for the Transmitter Side
 
 module datapath_1(
     input logic clk, rst, a_rxd,
-   // output logic txd, txen,cfgdat,
     output logic txd,cfgdat,
     output logic dp_n,cfgclk,
     output logic [7:0] an_n,
@@ -41,7 +30,6 @@ module datapath_1(
 
 
 
-    //datapath #(.RATE_HZ(50_000)) XMIT_DATAPATH(.clk(clk), .rst(rst),.xvalid(xvalid), .xsend(xsend), .cardet(cardet),.xdata(xdata),.xrdy(xrdy), .txen(txen), .txd(txd),.xerrcnt(xerrcnt), .pop_count(pop_count));
     datapath TRANSMITTER(.clk(clk),.rst(rst),.xvalid(xvalid),.xsend(xsend),.cardet(cardet),.xdata(xdata),.xrdy(xrdy),.txen(txen),.txd(txd),.xerrcnt(xerrcnt),.pop_count(pop_count), .difs_eq(difs_eq));
     xmit_adapter XMIT_ADAPTER(.xrdy(xrdy), .valid(valid), .data(data), .xvalid(xvalid), .xsend(xsend), .rdy(rdy), .xdata(xdata));
 

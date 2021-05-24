@@ -1,22 +1,13 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
+// Company: Lafayette College
+// Engineer: Adam Tunnell, Irwin Frimpong, Mithil Shah
 // Create Date: 05/13/2021 11:47:53 AM
-// Design Name: 
 // Module Name: uart_xmit
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
+// Project Name: WimpFi Project
+// Description: Top Level module for UART Transmitter
 // 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
+// Dependencies: controller_uart_trans, datapath_uart_trans
 //////////////////////////////////////////////////////////////////////////////////
 
 
@@ -27,7 +18,7 @@ module uart_xmit(
 
     );
       parameter BAUD_RATE = 9600;
-      
+
 
     logic sh_ld, sh_idle, sh_en, br_st,ct_clr, ct_en, ct_eq9;
 

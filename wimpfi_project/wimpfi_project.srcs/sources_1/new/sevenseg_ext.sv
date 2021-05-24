@@ -10,13 +10,7 @@
 // Target Devices:
 // Tool Versions:
 // Description: Extended Seven-segment decoder module with active high d input and acitve low segs_n and dp_n output
-//
-// Dependencies:
-//
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-//
+
 //////////////////////////////////////////////////////////////////////////////////
 
 

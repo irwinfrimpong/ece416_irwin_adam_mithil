@@ -1,21 +1,16 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company:
-// Engineer:
+// Company: Lafayette College
+// Engineer: Adam Tunnell, Irwin Frimpong, Mithil Shah
 //
 // Create Date: 04/29/2021 02:53:37 PM
-// Design Name:
 // Module Name: transmitter
-// Project Name:
-// Target Devices:
-// Tool Versions:
-// Description:
+// Project Name: WimpFi Project
+// Description: Transmitter module for the WimpFi Project. Instantiates all
+// modules that are part of the transmitter.
 //
-// Dependencies:
-//
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
+// Dependencies: single_pulser, manchester_xmit, trans_fsm, sync_fifo, err_counter,
+// dreg
 //
 //////////////////////////////////////////////////////////////////////////////////
 
@@ -29,7 +24,6 @@ module transmitter(
 
     logic valid, buffer_pop, full, empty, rdy, buffer_clr, xrdy_assert, xvalid_pulse, xsend_pulse,xrdy_clear;
     logic [7:0] trans_buffdata, cntl_data;
-    // assign xrdy =empty && xrdy_assert;
     parameter RATE_HZ = 50_000 ;
 
 
@@ -47,7 +41,6 @@ module transmitter(
 
     err_counter #(.W(8)) X_ERR_COUNT (.clk(clk), .rst(rst), .enb(fs_cteq),.q(xerrcnt));
 
-    //ADDED FOR DEBUGGING
     err_counter #(.W(8)) BUFFER_POP_COUNT (.clk(clk), .rst(rst), .enb(buffer_pop),.q(pop_count));
 
     dreg XRDY_REG (.clk(clk),.rst(rst), .clr(xrdy_clear), .enb(empty && xrdy_assert),.q(xrdy));

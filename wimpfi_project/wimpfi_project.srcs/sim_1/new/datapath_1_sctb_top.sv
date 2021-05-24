@@ -1,21 +1,14 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company:
-// Engineer:
+// Company: Lafayette College
+// Engineer: Adam Tunnell, Irwin Frimpong, Mithil Shah
 //
 // Create Date: 05/17/2021 06:37:47 PM
-// Design Name:
 // Module Name: datapath_1_sctb_top
-// Project Name:
-// Target Devices:
-// Tool Versions:
-// Description:
+// Project Name: WimpFi Project
+// Description: Top level module for the datapath1_sctb testbench
 //
-// Dependencies:
-//
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
+// Dependencies: clk_gen, datapath, xmit_adapter, uart_rcvr, datapath1_sctb
 //
 //////////////////////////////////////////////////////////////////////////////////
 
@@ -31,7 +24,7 @@ timeunit 1ns / 100ps;
 
 logic clk, rst,xvalid,xsend,cardet, xrdy,txen, txd, valid,rdy,rxd, ferr,oerr;
 logic [7:0] xdata , xerrcnt, data,pop_count;
-assign cardet = '0;
+
 
 clk_gen #(.CLKPD(CLKPD)) CG(.clk(clk));
 
@@ -41,8 +34,7 @@ xmit_adapter XMIT_ADAPTER(.xrdy(xrdy), .valid(valid), .data(data), .xvalid(xvali
 
 uart_rcvr #(.BAUD_RATE(9600)) SERIAL_RCVR(.clk(clk),.rst(rst),.rxd(rxd),.rdy(rdy),.valid(valid),.ferr(ferr),.oerr(oerr),.data(data));
 
-//datapath1_sctb DUV_SCTB (.clk(clk), .rst(rst), .rxd(rxd), .rdy(rdy));
-datapath1_sctb DUV_SCTB (.clk(clk), .rst(rst), .rxd(rxd));
+datapath1_sctb DUV_SCTB (.clk(clk), .rst(rst), .rxd(rxd), .data(data),.cardet(cardet),.txd(txd),.txen(txen),.rdy(rdy),.xsend(xsend));
 
 
 

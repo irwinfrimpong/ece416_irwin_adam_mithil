@@ -36,7 +36,6 @@ correlator #(.LEN(128), .PATTERN(128'b1111111100000000_0000000011111111_11111111
 //SFD CORRELATOR
 correlator #(.LEN(CORLEN), .PATTERN(64'b00001111_00001111_00001111_00001111_11110000_00001111_11110000_11110000), .HTHRESH(54), .LTHRESH(10), .W(CORW)) SFD_COR(
 .clk(clk),.rst(rst),.enb(br_8en),.d_in(rxd), .csum(csum_sfd),.h_out(sfd_det),.l_out(l_out_sfd));
-// 11110000_11110000_00001111_11110000_00001111_00001111_00001111_00001111
 
 //EOF CORRELATOR
 correlator #(.LEN(16), .PATTERN(16'b11111111_11111111), .HTHRESH(15), .LTHRESH(1), .W($clog2(16)+1)) EOF_COR(
@@ -45,10 +44,6 @@ correlator #(.LEN(16), .PATTERN(16'b11111111_11111111), .HTHRESH(15), .LTHRESH(1
 //EDGE DETECTION CORRELATOR
 correlator #(.LEN(16), .PATTERN(16'b0000000011111111), .HTHRESH(12), .LTHRESH(4), .W($clog2(16)+1)) EDGERISE_COR(
 .clk(clk),.rst(rst || rst_edg),.enb(br_100en),.d_in(rxd), .csum(csum_edgerise),.h_out(edgerise_det),.l_out(edgefall_det));
-
-//ERROR CORRELATOR
-//correlator #(.LEN(8), .PATTERN(8'd0), .HTHRESH(8), .LTHRESH(0), .W($clog2(8)+1)) ERR_COR(
-//.clk(clk),.rst(rst),.enb(br_8en),.d_in(rxd), .csum(csum_err),.h_out(err_det),.l_out(l_out_err));
 
 
 //REGISTERS

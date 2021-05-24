@@ -1,22 +1,15 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company:
-// Engineer:
+// Company: Lafayette College
+// Engineer: Adam Tunnell, Irwin Frimpong, Mithil Shah
 //
 // Create Date: 05/20/2021 10:59:38 PM
-// Design Name:
 // Module Name: network_interface
-// Project Name:
-// Target Devices:
-// Tool Versions:
-// Description:
+// Project Name: WimpFi Project
+// Description: Top-Level Module for the WimpFi Project. Connects the Receiver
+// and Transmitter modules.
 //
-// Dependencies:
-//
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-//
+// Dependencies: receiver, datapath
 //////////////////////////////////////////////////////////////////////////////////
 
 

@@ -23,6 +23,6 @@ module mux8 #(parameter W=8)
      3'd6 : y = d6;
      3'd7 : y = d7;
      default : y = '0;
-    endcase // case ((sel))
+    endcase
 
 endmodule: mux8

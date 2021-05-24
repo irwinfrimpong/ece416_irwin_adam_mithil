@@ -1,22 +1,14 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company:
-// Engineer:
+// Company: Lafayette College
+// Engineer: Adam Tunnell, Irwin Frimpong, Mithil Shah
 //
 // Create Date: 05/12/2021 08:55:37 PM
-// Design Name:
 // Module Name: cardet_det
-// Project Name:
-// Target Devices:
-// Tool Versions:
-// Description:
-//
-// Dependencies:
-//
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-//
+// Project Name: WimpFi Project
+// Description: Detects the falling edge of a signal. Used to detect falling
+// edge of cardet
+// Dependencies: None
 //////////////////////////////////////////////////////////////////////////////////
 
 

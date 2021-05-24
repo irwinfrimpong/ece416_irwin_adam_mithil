@@ -27,11 +27,10 @@ module wf_pkt_top;
     wf_pkt_tb  #(.CLKPD_NS(CLKPD_NS),.BIT_RATE(BIT_RATE)) BENCH (
         .clk, .rst, .txd, .mac, .cardet, .rdata, .rvalid, .rrdy, .rerrcnt
     );
-
+    
+     // WIMPFI RECIEVER 
      reciever #(.BAUD_RATE(BIT_RATE))WIMPFI_RCVR (.clk(clk) ,.rst(rst), .rxd(txd), .rrdy(rrdy),.rvalid(rvalid), .cardet(cardet),.rdata(rdata), .rerrcnt(rerrcnt));
-    // add your WimpFi receiver here
-   // wf_rcvr #(.BIT_RATE(BIT_RATE)) DUV (
-   //      .clk, .rst, .rxd, ,rdata, .rvalid, .cardet, .rrdy, .rerrcnt
-   //  );
+   
+
 
 endmodule: wf_pkt_top

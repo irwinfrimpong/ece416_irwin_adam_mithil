@@ -1,22 +1,13 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
+// Company: Lafayette College
+// Engineer: Adam Tunnell, Irwin Frimpong, Mithil Shah
+//
 // Create Date: 05/13/2021 11:47:53 AM
-// Design Name: 
 // Module Name: controller_uart_trans
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: Controller FSM for UART Transmitter
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
+// Project Name: Serial Transmitter
+// Description: State machine for UART Transmitter
+// Dependencies: None
 //////////////////////////////////////////////////////////////////////////////////
 
 
@@ -60,7 +51,6 @@ module controller_uart_trans(
                     next = SHIFT;
                     sh_ld = 1'b1;
                     sh_idle = 1'b0;
-                    //rdy = 1'b0;
                     ct_clr = 1'b1;
                     br_st = 1'b1 ;
                 end
@@ -87,8 +77,6 @@ module controller_uart_trans(
                 else
                 begin
                     next = SHIFT;
-                    //ct_en = 1'b1;
-                    //sh_en = 1'b1;
                 end
 
 

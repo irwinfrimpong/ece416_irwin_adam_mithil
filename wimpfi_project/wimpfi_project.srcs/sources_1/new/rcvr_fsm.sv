@@ -1,22 +1,13 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company:
-// Engineer:
+// Company: Lafayette College
+// Engineer: Adam Tunnell, Irwin Frimpong, Mithil Shah
 //
 // Create Date: 04/29/2021 02:30:21 PM
-// Design Name:
 // Module Name: rcvr_fsm
-// Project Name:
-// Target Devices:
-// Tool Versions:
-// Description:
-//
-// Dependencies:
-//
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-//
+// Project Name: WimpFi Project
+// Description: Controller for the receiver module. Manages data coming from the
+// Serial Receiver and going to the Manchester Transmitter
 //////////////////////////////////////////////////////////////////////////////////
 
 
@@ -52,7 +43,7 @@ module rcvr_fsm(
         rcvr_bufferpop = 0;
         rec_buffer_clr = 0;
         rvalid = 0;
-        rcvr_dataout= 8'd0; // Added for latch
+        rcvr_dataout= 8'd0; 
         next = IDLE;
         case (state)
             IDLE:

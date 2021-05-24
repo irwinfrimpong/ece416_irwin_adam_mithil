@@ -1,22 +1,13 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company:
-// Engineer:
-//
+// Company: Lafayette College
+// Engineer: Adam Tunnell, Irwin Frimpong, Mithil Shah
 // Create Date: 05/12/2021 09:47:04 AM
-// Design Name:
 // Module Name: xmit_adapter
-// Project Name:
-// Target Devices:
-// Tool Versions:
-// Description:
-//
-// Dependencies:
-//
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-//
+// Project Name: WimpFi Project
+// Description: Adapter for telling the transmitter fsm when the data frame is
+// finished
+// Dependencies: None
 //////////////////////////////////////////////////////////////////////////////////
 
 

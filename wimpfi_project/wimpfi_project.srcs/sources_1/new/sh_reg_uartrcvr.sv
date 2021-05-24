@@ -1,24 +1,12 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
+// Company:  Lafayette College
+// Engineer: Adam Tunnell, Irwin Frimpong, Mithil Shah
 // Create Date: 05/17/2021 05:51:13 PM
-// Design Name: 
 // Module Name: sh_reg_uartrcvr
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
+// Project Name: WimpFi Project
+// Description: Shift Register Module used for the UART Receiver
 //////////////////////////////////////////////////////////////////////////////////
-
 
 module sh_reg_uartrcvr#(parameter W=8)(
     input logic clk,rst,rxd, sh_en,sh_rst, sh_ld,
@@ -26,7 +14,6 @@ module sh_reg_uartrcvr#(parameter W=8)(
     );
 
     logic [7:0] d ;
-    //assign data = sh_en ? d : data;
 
     always_ff @(posedge clk)
     if (rst || sh_rst)

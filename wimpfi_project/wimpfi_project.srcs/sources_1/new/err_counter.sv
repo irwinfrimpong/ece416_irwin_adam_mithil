@@ -1,4 +1,4 @@
-  
+
 //-----------------------------------------------------------------------------
 // Module Name   : counter
 // Project       : RTL Hardware Design and Verification using SystemVerilog

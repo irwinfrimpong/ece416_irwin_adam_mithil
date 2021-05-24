@@ -1,27 +1,23 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company:
-// Engineer:
+// Company: Lafayette College
+// Engineer: Adam Tunnell, Irwin Frimpong, Mithil Shah
 //
 // Create Date: 05/16/2021 04:05:10 PM
-// Design Name:
 // Module Name: datapath2_sctb
-// Project Name:
-// Target Devices:
-// Tool Versions:
-// Description:
+// Project Name: WimpFi Project
+// Description: Self-Checking Testbench for the WimpFi Receiver. Sends manchester
+// coded data to the Receiver module and tests for accurate receival of type 0
+// transmissions with the broadcast address, matching MAC address, and wrong
+// destination address
 //
-// Dependencies:
-//
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
+// Dependencies: manchester_xmit
 //
 //////////////////////////////////////////////////////////////////////////////////
 
 
 module datapath2_sctb(
-    input logic clk,
+    input logic clk, a_txd,
     output logic rst, rxd
     );
 
@@ -31,435 +27,174 @@ module datapath2_sctb(
     parameter CLOCK_PD = 10;  // clock period in nanoseconds
     parameter BAUD_RATE = 50_000;
     localparam BITPD_NS= 1_000_000_000/ BAUD_RATE; // bit period in ns
+    parameter UART_RATE = 9600;
+    localparam UART_BITPD_NS = 1_000_000_000/ UART_RATE;
     int errcount = 0;
-
+    parameter MESSAGE_LEN = 24;
     manchester_xmit #(.BAUD_RATE(BAUD_RATE)) MANCHESTER_TRANSMITTER(.clk(clk), .rst(rst), .valid(valid), .data(data),.rdy(rdy), .txen(txen),.txd(rxd));
+    logic  [7:0] preamble,sfd;
+    assign preamble =  8'b10101010;
+    assign sfd = 8'b11010000;
+
+    task check(a_txd, exp_a_txd);
+       if (a_txd != exp_a_txd) begin
+           $display("%t error: expected a_txd=%h actual a_txd=%h",
+           $time, exp_a_txd, a_txd);
+           errcount++;
+       end
+    endtask: check
 
       task reset_duv;
           rst = 1;
           @(posedge clk) #1;
           rst = 0;
-          // check(txd,1,rdy,1,txen,0);
       endtask: reset_duv
 
-      task single_transmission( logic [7:0] d);
+      task report_errors;
+          if (errcount == 0) $display("Testbench PASSED");
+          else $display("Testbench FAILED with %d errors", errcount);
+      endtask: report_errors
+
+      task send_preamble;
           valid = 1'b1;
-          data = d;
+          data = preamble;
           do begin
               @(posedge clk);
           end while (rdy == 0);
           #1 valid = 0;
           do begin
-              @(posedge clk) #1;
+              @(posedge clk);
           end while (rdy == 1);
-          valid = 0;
-          wait(txen == 1);
-          for (int i = 0; i <= 15; i++) begin
-              // $display("Checking i:%d at t:%t",i,$time);
-              // if(i % 2) check(txd, ~d[i/2], rdy, 0, txen, 1);
-              // else check(txd, d[i/2], rdy, 0, txen, 1);
-              #(BITPD_NS/2);
-          end
-      endtask: single_transmission
+      endtask
 
-      task multi_transmission( logic [7:0] d1,d2,d3,d4,d5,d6,d7,d8,d9,d10,d11,d12,d13,d14,d15,d16,d17,d18,d19,d20,d21,d22,d23,d24,d25);
-      valid = 1'b1;
-      data = d1;
-      do begin
-          @(posedge clk);
-      end while (rdy == 0);
-      #1 valid = 0;
-      do begin
-          @(posedge clk) #1;
-      end while (rdy == 1);
-      valid = 0;
-      wait(txen == 1);
-      $display("1st Transmission");
-      for (int i = 0; i <= 16; i++) begin
-          // if(i % 2) check(txd, ~d1[i/2], rdy, 0, txen, 1);
-          // else check(txd, d1[i/2], rdy, 0, txen, 1);
-          if(i !=15) #(BITPD_NS/2);
-          else
-          begin
-              data= d2;
-              #1 valid = 1'b1;
-          end
-      end
-      do begin
-          @(posedge clk) #1;
-      end while (rdy == 1);
-      #1 valid = 0;
-      $display("2nd Transmission");
-      for (int i = 0; i <= 16; i++) begin
-          // if(i % 2) check(txd, ~d2[i/2], rdy, 0, txen, 1);
-          // else check(txd, d2[i/2], rdy, 0, txen, 1);
-          if(i !=15) #(BITPD_NS/2);
-          else
-          begin
-              data= d3;
-              #1 valid = 1'b1;
-          end
-      end
-      do begin
-          @(posedge clk) #1;
-      end while (rdy == 1);
-      #1 valid = 0;
-      $display("3rd Transmission");
-      for (int i = 0; i <= 16; i++) begin
-          // if(i % 2) check(txd, ~d3[i/2], rdy, 0, txen, 1);
-          // else check(txd, d3[i/2], rdy, 0, txen, 1);
-          if(i !=15) #(BITPD_NS/2);
-          else
-          begin
-              data= d4;
-              #1 valid = 1'b1;
-          end
-      end
-      do begin
-          @(posedge clk) #1;
-      end while (rdy == 1);
-      #1 valid = 0;
-      $display("4th Transmission");
-      for (int i = 0; i <= 16; i++) begin
-          // if(i % 2) check(txd, ~d4[i/2], rdy, 0, txen, 1);
-          // else check(txd, d4[i/2], rdy, 0, txen, 1);
-          if(i !=15) #(BITPD_NS/2);
-          else
-          begin
-              data= d5;
-              #1 valid = 1'b1;
-          end
-      end
-      do begin
-          @(posedge clk) #1;
-      end while (rdy == 1);
-      #1 valid = 0;
-      $display("5th Transmission");
-      for (int i = 0; i <= 16; i++) begin
-          // if(i % 2) check(txd, ~d4[i/2], rdy, 0, txen, 1);
-          // else check(txd, d4[i/2], rdy, 0, txen, 1);
-          if(i !=15) #(BITPD_NS/2);
-          else
-          begin
-              data= d6;
-              #1 valid = 1'b1;
-          end
-      end
-      do begin
-          @(posedge clk) #1;
-      end while (rdy == 1);
-      #1 valid = 0;
-      $display("6th Transmission");
-      for (int i = 0; i <= 16; i++) begin
-          // if(i % 2) check(txd, ~d4[i/2], rdy, 0, txen, 1);
-          // else check(txd, d4[i/2], rdy, 0, txen, 1);
-          if(i !=15) #(BITPD_NS/2);
-          else
-          begin
-              data= d7;
-              #1 valid = 1'b1;
-          end
-      end
-      do begin
-          @(posedge clk) #1;
-      end while (rdy == 1);
-      #1 valid = 0;
-      $display("7th Transmission");
-      for (int i = 0; i <= 16; i++) begin
-          // if(i % 2) check(txd, ~d4[i/2], rdy, 0, txen, 1);
-          // else check(txd, d4[i/2], rdy, 0, txen, 1);
-          if(i !=15) #(BITPD_NS/2);
-          else
-          begin
-              data= d8;
-              #1 valid = 1'b1;
-          end
-      end
-      do begin
-          @(posedge clk) #1;
-      end while (rdy == 1);
-      #1 valid = 0;
-      $display("8th Transmission");
-      for (int i = 0; i <= 16; i++) begin
-          // if(i % 2) check(txd, ~d4[i/2], rdy, 0, txen, 1);
-          // else check(txd, d4[i/2], rdy, 0, txen, 1);
-          if(i !=15) #(BITPD_NS/2);
-          else
-          begin
-              data= d9;
-              #1 valid = 1'b1;
-          end
-      end
-      do begin
-          @(posedge clk) #1;
-      end while (rdy == 1);
-      #1 valid = 0;
-      $display("9th Transmission");
-      for (int i = 0; i <= 16; i++) begin
-          // if(i % 2) check(txd, ~d4[i/2], rdy, 0, txen, 1);
-          // else check(txd, d4[i/2], rdy, 0, txen, 1);
-          if(i !=15) #(BITPD_NS/2);
-          else
-          begin
-              data= d10;
-              #1 valid = 1'b1;
-          end
-      end
-      do begin
-          @(posedge clk) #1;
-      end while (rdy == 1);
-      #1 valid = 0;
-      $display("10 Transmission");
-      for (int i = 0; i <= 16; i++) begin
-          // if(i % 2) check(txd, ~d4[i/2], rdy, 0, txen, 1);
-          // else check(txd, d4[i/2], rdy, 0, txen, 1);
-          if(i !=15) #(BITPD_NS/2);
-          else
-          begin
-              data= d11;
-              #1 valid = 1'b1;
-          end
-      end
-      do begin
-          @(posedge clk) #1;
-      end while (rdy == 1);
-      #1 valid = 0;
-      $display("11th Transmission");
-      for (int i = 0; i <= 16; i++) begin
-          // if(i % 2) check(txd, ~d4[i/2], rdy, 0, txen, 1);
-          // else check(txd, d4[i/2], rdy, 0, txen, 1);
-          if(i !=15) #(BITPD_NS/2);
-          else
-          begin
-              data= d12;
-              #1 valid = 1'b1;
-          end
-      end
-      do begin
-          @(posedge clk) #1;
-      end while (rdy == 1);
-      #1 valid = 0;
-      $display("12th Transmission");
-      for (int i = 0; i <= 16; i++) begin
-          // if(i % 2) check(txd, ~d4[i/2], rdy, 0, txen, 1);
-          // else check(txd, d4[i/2], rdy, 0, txen, 1);
-          if(i !=15) #(BITPD_NS/2);
-          else
-          begin
-              data= d13;
-              #1 valid = 1'b1;
-          end
-      end
-      do begin
-          @(posedge clk) #1;
-      end while (rdy == 1);
-      #1 valid = 0;
-      $display("13th Transmission");
-      for (int i = 0; i <= 16; i++) begin
-          // if(i % 2) check(txd, ~d4[i/2], rdy, 0, txen, 1);
-          // else check(txd, d4[i/2], rdy, 0, txen, 1);
-          if(i !=15) #(BITPD_NS/2);
-          else
-          begin
-              data= d14;
-              #1 valid = 1'b1;
-          end
-      end
-      do begin
-          @(posedge clk) #1;
-      end while (rdy == 1);
-      #1 valid = 0;
-      $display("14th Transmission");
-      for (int i = 0; i <= 16; i++) begin
-          // if(i % 2) check(txd, ~d4[i/2], rdy, 0, txen, 1);
-          // else check(txd, d4[i/2], rdy, 0, txen, 1);
-          if(i !=15) #(BITPD_NS/2);
-          else
-          begin
-              data= d15;
-              #1 valid = 1'b1;
-          end
-      end
-      do begin
-          @(posedge clk) #1;
-      end while (rdy == 1);
-      #1 valid = 0;
-      $display("15th Transmission");
-      for (int i = 0; i <= 16; i++) begin
-          // if(i % 2) check(txd, ~d4[i/2], rdy, 0, txen, 1);
-          // else check(txd, d4[i/2], rdy, 0, txen, 1);
-          if(i !=15) #(BITPD_NS/2);
-          else
-          begin
-              data= d16;
-              #1 valid = 1'b1;
-          end
-      end
-      do begin
-          @(posedge clk) #1;
-      end while (rdy == 1);
-      #1 valid = 0;
-      $display("16th Transmission");
-      for (int i = 0; i <= 16; i++) begin
-          // if(i % 2) check(txd, ~d4[i/2], rdy, 0, txen, 1);
-          // else check(txd, d4[i/2], rdy, 0, txen, 1);
-          if(i !=15) #(BITPD_NS/2);
-          else
-          begin
-              data= d17;
-              #1 valid = 1'b1;
-          end
-      end
-      do begin
-          @(posedge clk) #1;
-      end while (rdy == 1);
-      #1 valid = 0;
-      $display("17th Transmission");
-      for (int i = 0; i <= 16; i++) begin
-          // if(i % 2) check(txd, ~d4[i/2], rdy, 0, txen, 1);
-          // else check(txd, d4[i/2], rdy, 0, txen, 1);
-          if(i !=15) #(BITPD_NS/2);
-          else
-          begin
-              data= d18;
-              #1 valid = 1'b1;
-          end
-      end
-      do begin
-          @(posedge clk) #1;
-      end while (rdy == 1);
-      #1 valid = 0;
-      $display("18th Transmission");
-      for (int i = 0; i <= 16; i++) begin
-          // if(i % 2) check(txd, ~d4[i/2], rdy, 0, txen, 1);
-          // else check(txd, d4[i/2], rdy, 0, txen, 1);
-          if(i !=15) #(BITPD_NS/2);
-          else
-          begin
-              data= d19;
-              #1 valid = 1'b1;
-          end
-      end
-      do begin
-          @(posedge clk) #1;
-      end while (rdy == 1);
-      #1 valid = 0;
-      $display("19th Transmission");
-      for (int i = 0; i <= 16; i++) begin
-          // if(i % 2) check(txd, ~d4[i/2], rdy, 0, txen, 1);
-          // else check(txd, d4[i/2], rdy, 0, txen, 1);
-          if(i !=15) #(BITPD_NS/2);
-          else
-          begin
-              data= d20;
-              #1 valid = 1'b1;
-          end
-      end
-      do begin
-          @(posedge clk) #1;
-      end while (rdy == 1);
-      #1 valid = 0;
-      $display("20th Transmission");
-      for (int i = 0; i <= 16; i++) begin
-          // if(i % 2) check(txd, ~d4[i/2], rdy, 0, txen, 1);
-          // else check(txd, d4[i/2], rdy, 0, txen, 1);
-          if(i !=15) #(BITPD_NS/2);
-          else
-          begin
-              data= d21;
-              #1 valid = 1'b1;
-          end
-      end
-      do begin
-          @(posedge clk) #1;
-      end while (rdy == 1);
-      #1 valid = 0;
-      $display("21st Transmission");
-      for (int i = 0; i <= 16; i++) begin
-          // if(i % 2) check(txd, ~d4[i/2], rdy, 0, txen, 1);
-          // else check(txd, d4[i/2], rdy, 0, txen, 1);
-          if(i !=15) #(BITPD_NS/2);
-          else
-          begin
-              data= d22;
-              #1 valid = 1'b1;
-          end
-      end
-      do begin
-          @(posedge clk) #1;
-      end while (rdy == 1);
-      #1 valid = 0;
-      $display("22nd Transmission");
-      for (int i = 0; i <= 16; i++) begin
-          // if(i % 2) check(txd, ~d4[i/2], rdy, 0, txen, 1);
-          // else check(txd, d4[i/2], rdy, 0, txen, 1);
-          if(i !=15) #(BITPD_NS/2);
-          else
-          begin
-              data= d23;
-              #1 valid = 1'b1;
-          end
-      end
-      do begin
-          @(posedge clk) #1;
-      end while (rdy == 1);
-      #1 valid = 0;
-      $display("23rd Transmission");
-      for (int i = 0; i <= 16; i++) begin
-          // if(i % 2) check(txd, ~d4[i/2], rdy, 0, txen, 1);
-          // else check(txd, d4[i/2], rdy, 0, txen, 1);
-          if(i !=15) #(BITPD_NS/2);
-          else
-          begin
-              data= d24;
-              #1 valid = 1'b1;
-          end
-      end
-      do begin
-          @(posedge clk) #1;
-      end while (rdy == 1);
-      #1 valid = 0;
-      $display("24th Transmission");
-      for (int i = 0; i <= 16; i++) begin
-          // if(i % 2) check(txd, ~d4[i/2], rdy, 0, txen, 1);
-          // else check(txd, d4[i/2], rdy, 0, txen, 1);
-          if(i !=15) #(BITPD_NS/2);
-          else
-          begin
-              data= d25;
-              #1 valid = 1'b1;
-          end
-      end
-      do begin
-          @(posedge clk) #1;
-      end while (rdy == 1);
-      #1 valid = 0;
-      $display("25th Transmission");
-      for (int i = 0; i <= 16; i++) begin
-          // if(i % 2) check(txd, ~d4[i/2], rdy, 0, txen, 1);
-          // else check(txd, d4[i/2], rdy, 0, txen, 1);
-          if(i !=15) #(BITPD_NS/2);
-      end
+      task send_sfd;
+          valid = 1'b1;
+          data = sfd;
+          do begin
+              @(posedge clk);
+          end while (rdy == 0);
+          #1 valid = 0;
+          do begin
+              @(posedge clk);
+          end while (rdy == 1);
+      endtask
 
-  endtask
+      task broadcast_transmission;
+          byte unsigned message[MESSAGE_LEN] = {"*","N","0","L","a","f","a","y","e","t","t","e"," ","E","C","E"," ","W","i","m","p","F","i", 8'h04};
+          send_preamble;
+          send_sfd;
+          for(int j = 0; j < MESSAGE_LEN; j++)
+          begin
+              valid = 1'b1;
+              data = message[j];
+              do begin
+                  @(posedge clk);
+              end while (rdy == 0);
+              #1 valid = 0;
+              do begin
+                  @(posedge clk);
+              end while (rdy == 1);
+          end
+          do begin
+              @(posedge clk);
+          end while (rdy == 0);
+          #(UART_BITPD_NS/2);
+          for (int a = 0; a < MESSAGE_LEN; a++)
+          begin
+              check(a_txd,0);
+              #(UART_BITPD_NS);
+              for (int i = 0; i < 8; i++)
+              begin
+                  check(a_txd, message[a][i]);
+                  #(UART_BITPD_NS);
 
+              end
+              check(a_txd, 1);
+              #(UART_BITPD_NS);
+          end
+      endtask: broadcast_transmission
+
+      task right_dest_transmission;
+          byte unsigned message[MESSAGE_LEN] = {"$","N","0","L","a","f","a","y","e","t","t","e"," ","E","C","E"," ","W","i","m","p","F","i", 8'h04};
+          send_preamble;
+          send_sfd;
+          for(int j = 0; j < MESSAGE_LEN; j++)
+          begin
+              valid = 1'b1;
+              data = message[j];
+              do begin
+                  @(posedge clk);
+              end while (rdy == 0);
+              #1 valid = 0;
+              do begin
+                  @(posedge clk);
+              end while (rdy == 1);
+          end
+          do begin
+              @(posedge clk);
+          end while (rdy == 0);
+          #(UART_BITPD_NS/2);
+          for (int a = 0; a < MESSAGE_LEN; a++)
+          begin
+              check(a_txd,0);
+              #(UART_BITPD_NS);
+              for (int i = 0; i < 8; i++)
+              begin
+                  check(a_txd, message[a][i]);
+                  #(UART_BITPD_NS);
+
+              end
+              check(a_txd, 1);
+              #(UART_BITPD_NS);
+          end
+      endtask: right_dest_transmission
+
+      task wrong_dest_transmission;
+          byte unsigned message[MESSAGE_LEN] = {"A","N","0","L","a","f","a","y","e","t","t","e"," ","E","C","E"," ","W","i","m","p","F","i", 8'h04};
+          send_preamble;
+          send_sfd;
+          for(int j = 0; j < MESSAGE_LEN; j++)
+          begin
+              valid = 1'b1;
+              data = message[j];
+              do begin
+                  @(posedge clk);
+              end while (rdy == 0);
+              #1 valid = 0;
+              do begin
+                  @(posedge clk);
+              end while (rdy == 1);
+          end
+          do begin
+              @(posedge clk);
+          end while (rdy == 0);
+          #(UART_BITPD_NS/2);
+          for (int a = 0; a < MESSAGE_LEN; a++)
+          begin
+              check(a_txd, 1);
+              #(UART_BITPD_NS);
+              for (int i = 0; i < 8; i++)
+              begin
+                  check(a_txd, 1);
+                  #(UART_BITPD_NS);
+
+              end
+              check(a_txd, 1);
+              #(UART_BITPD_NS);
+          end
+      endtask: wrong_dest_transmission
 
       initial begin
         $timeformat(-9, 0, "ns", 6);
-        $monitor( /* add signals to monitor in console */ );
         reset_duv;
-
-        // $display("Single Transmission");
-        // single_transmission(8'b01010101);
-        // #(BITPD_NS*2)
-        // check(txd,1,rdy,1,txen,0);
-
-         $display("Multi Transmission");
-         multi_transmission(8'b01010101,8'b11010000,"$","N","0","L","a","f","a","y","e","t","t","e"," ","E","C","E"," ","W","i","m","p","F","i");
-         #(BITPD_NS*2000)
-        // check(txd,1,rdy,1,txen,0);
-
-        $finish;  // suspend simulation (use $finish to exit)
+        $display("Testing Broadcast Transmission at %t", $time);
+        broadcast_transmission;
+        $display("Testing Correct Address Transmission at %t", $time);
+        right_dest_transmission;
+        $display("Testing Incorrect Address Transmission at %t", $time);
+        wrong_dest_transmission;
+        report_errors;
+        $finish;
     end
 
 

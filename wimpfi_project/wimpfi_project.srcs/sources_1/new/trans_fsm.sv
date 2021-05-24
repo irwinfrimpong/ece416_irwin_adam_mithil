@@ -1,21 +1,15 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company:
-// Engineer:
+// Company: Lafayette College
+// Engineer: Adam Tunnell, Irwin Frimpong, Mithil Shah
 //
 // Create Date: 04/29/2021 02:30:51 PM
-// Design Name:
 // Module Name: trans_fsm
-// Project Name:
-// Target Devices:
-// Tool Versions:
-// Description:
+// Project Name: WimpFi Project
+// Description: State machine for controlling the timing of data being received
+// by the Serial Receiver to then be transmitted by the Manchester Transmitter
 //
-// Dependencies:
-//
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
+// Dependencies: None
 //
 //////////////////////////////////////////////////////////////////////////////////
 
@@ -65,7 +59,7 @@ module trans_fsm(
         difs_enb = 0;
         buffer_clr = 0;
         xrdy_assert = 0;
-        data = 8'd0; // ADDED AT 5/18
+        data = 8'd0;
         xrdy_clear = '0;
 
         unique case(state)
@@ -76,7 +70,6 @@ module trans_fsm(
                 failsafe_rst = 1;
                 difs_rst = 1;
                 xrdy_assert = 1;
-                //buffer_clr =1;
                 if(xsend) next = DIFS;
                 else next = IDLE;
             end
@@ -133,8 +126,6 @@ module trans_fsm(
                     next = DEST_ADD;
                     buffer_pop = 1;
                     data = trans_buffdata;
-
-                    //trans_count = trans_count_c;
                 end
                 else next = SFD;
             end
@@ -186,18 +177,17 @@ module trans_fsm(
                     buffer_pop = 1;
                     data = trans_buffdata;
 
-                    next = DATA_T; // added 5/19
+                    next = DATA_T;
                 end
                 else if(buffdata_empty && rdy)
                 begin
                     next = IDLE;
                     buffer_clr = 1;
-                    //xrdy_assert = 1;
                 end
                 else next = DATA_T;
 
             end
-            default: next = IDLE; // Added 5/18
+            default: next = IDLE;
         endcase
     end
 

@@ -7,15 +7,10 @@
 // Design Name: 7-Segment LED Controller
 // Module Name: sevenseg_ctl
 // Project Name: 7-Segment LED Controller
-// Target Devices:
-// Tool Versions:
 // Description: Generates time multiplexed display of eight digits on the Nexys Board Seven-Seg displays
 //
 // Dependencies: rate_enb, counter, dec_3_8_n, mux8,sevenseg_ext
 //
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
 //
 //////////////////////////////////////////////////////////////////////////////////
 

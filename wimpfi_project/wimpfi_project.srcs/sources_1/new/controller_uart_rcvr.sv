@@ -104,7 +104,7 @@ output logic set_oerr, clr_oerr, set_ferr, clr_ferr, br_st, ct_initclr, ct_inite
                 ct_clr = 1'd1;
                 ct_initclr = 1'd1;
                 br_2st = 1'd1;
-                br_st = 1'd1; 
+                br_st = 1'd1;
                 sh_ld = 1'd0;
                 next = STOPBIT;
             end
